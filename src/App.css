@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer base {
+
+  main#detail {
+    margin-left: auto;
+     margin-right: auto;
+  }
   .App {
     text-align: center;
   }

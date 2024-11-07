@@ -13,6 +13,9 @@ import {
 // import Navbar from "./components/layout/Navbar";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
+import About from "./pages/About";
+import Shop from "./pages/Shop";
+import Contact from "./pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -26,14 +29,22 @@ const router = createBrowserRouter([
       },
       {
         path: "/about",
-        element: <>about</>,
+        element: <About />,
+      },
+      {
+        path: "/shop",
+        element: <Shop />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
       },
       {
         path: "/app",
         element: (
           <div>
             <h1>Hello World</h1>
-            <Link to="about">About Us</Link>
+            <Link to="/about">About Us</Link>
           </div>
         ),
       },

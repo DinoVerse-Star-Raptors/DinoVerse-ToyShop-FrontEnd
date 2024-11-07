@@ -8,7 +8,7 @@ export default function SimpleFooter() {
         <span className="text-sm  text-white sm:text-center">
           © 2024{" "}
           <Link to="#" className="hover:underline">
-            Dino Verse Team.
+            Dino Verse Team.{" "}
           </Link>
           All Rights Reserved.
         </span>

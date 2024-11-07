@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Navbar />
-      <main id="detail" className="min-h-svh">
+      <main id="detail" className="min-h-svh max-w-[1440px]">
         <Suspense fallback={<div>loading...</div>}>
           <Outlet />
         </Suspense>
