@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 // import Navbar from "./components/layout/Navbar";
 import ErrorPage from "./pages/ErrorPage";
+import Home from "./pages/Home";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <>home</>,
+        element: <Home />,
       },
       {
         path: "/about",
