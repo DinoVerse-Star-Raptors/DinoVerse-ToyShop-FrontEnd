@@ -50,9 +50,11 @@ export default function Navbar() {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           </div>
           <ShoppingCart className="text-gray-600 w-[24px] min-w-[24px] h-[24px] min-h-[24px]" />
-          <button className="bg-blue-500 hover:bg-blue-600 text-white text-[1rem] leading-[1rem] rounded-[20px] w-[70px] min-w-[70px] h-[40px]">
-            Login
-          </button>
+          <Link to="/login">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white text-[1rem] leading-[1rem] rounded-[20px] w-[70px] min-w-[70px] h-[40px]">
+              Login
+            </button>
+          </Link>
           <Menu className="text-gray-600 w-[36px] min-w-[36px] h-[36px] min-h-[36px] lg:hidden" />
         </div>
       </nav>
