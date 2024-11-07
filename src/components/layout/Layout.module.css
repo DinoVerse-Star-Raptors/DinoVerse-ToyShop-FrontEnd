@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container {
+    margin: 0;
+    padding: 0;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .backToHome {
+    margin: 3rem 0 0;
+  }
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .search_section {
+    @apply hidden md:flex relative m-[20px] my-0;
+    @apply lg:m-[80px] lg:my-0 lg:ml-[20px];
+    width: calc(100%);
+    max-width: calc(100% - 290px);
+  }
+
+  .nav_right {
+    @apply w-full flex items-center space-x-4 justify-end;
+    max-width: calc(100% - 600px);
+    @apply md:max-w-screen-sm lg:max-w-screen-md;
+  }
+}
