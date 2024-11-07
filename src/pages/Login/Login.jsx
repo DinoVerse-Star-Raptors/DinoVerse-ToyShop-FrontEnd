@@ -1,14 +1,15 @@
 import React from "react";
 // import uiStyle from "./Login.module.css";
 import reactLogo from "./assets/logo192.png";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-row justify-center">
-        <a href="#" target="_blank" rel="noreferrer">
+        <Link to="#" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo" alt="React logo" />
-        </a>
+        </Link>
       </div>
       <h1>Login</h1>
       <div className="card">
