@@ -62,7 +62,7 @@ function Login() {
                       maxLength="255"
                       minLength="5"
                       autoComplete="off"
-                      placeholder="Mark Zuckerberg"
+                      placeholder="Enter username"
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                     />
                   </div>
@@ -86,7 +86,7 @@ function Login() {
                         maxLength="255"
                         minLength="8"
                         autoComplete="off"
-                        placeholder="New password"
+                        placeholder="Enter password"
                         className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                       />
                       <button

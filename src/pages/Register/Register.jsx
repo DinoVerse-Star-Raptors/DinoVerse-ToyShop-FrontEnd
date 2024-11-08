@@ -34,7 +34,7 @@ function Register() {
       <header>
         <SimpleNavbar />
       </header>
-      <main className="min-h-svh max-w-[1440px] mt-[64px]">
+      <main className="mt-[64px]">
         <section className="py-[64px] flex justify-center">
           <div className="w-full max-w-[768px]">
             <div className="flex-col justify-start items-center text-center">
