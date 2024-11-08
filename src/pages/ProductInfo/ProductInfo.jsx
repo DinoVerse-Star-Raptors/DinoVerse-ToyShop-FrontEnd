@@ -1,18 +1,17 @@
 import React from "react";
-// import uiStyle from "./About.module.css";
+// import uiStyle from "./ProductInfo.module.css";
 import reactLogo from "./assets/logo192.png";
 import { Link } from "react-router-dom";
 
-const About = () => {
+const ProductInfo = () => {
   return (
     <div className="flex flex-col items-center">
-      {/* inline */}
       <div className="flex flex-row justify-center">
         <Link to="#" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo" alt="React logo" />
         </Link>
       </div>
-      <h1>About</h1>
+      <h1>Cart</h1>
       <div className="card">
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
@@ -25,4 +24,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default ProductInfo;
