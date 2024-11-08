@@ -14,7 +14,7 @@ export default function SimpleFooter() {
         </span>
         <ul className="hidden flex-wrap items-center mt-3 text-sm font-medium text-white sm:mt-0 lg:flex">
           <li>
-            <Link to="#" className="hover:underline me-4 md:me-6">
+            <Link to="/about" className="hover:underline me-4 md:me-6">
               About
             </Link>
           </li>
@@ -29,8 +29,13 @@ export default function SimpleFooter() {
             </Link>
           </li>
           <li>
-            <Link to="#" className="hover:underline">
-              Contact
+            <Link to="/login/" className="hover:underline me-4 md:me-6">
+              Login
+            </Link>
+          </li>
+          <li>
+            <Link to="/register/" className="hover:underline me-4 md:me-6">
+              Register
             </Link>
           </li>
         </ul>
