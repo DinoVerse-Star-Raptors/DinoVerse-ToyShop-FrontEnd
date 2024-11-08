@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const About = () => {
   return (
     <div className="flex flex-col items-center">
+      {/* inline */}
       <div className="flex flex-row justify-center">
         <Link to="#" target="_blank" rel="noreferrer">
           <img src={reactLogo} className="logo" alt="React logo" />
