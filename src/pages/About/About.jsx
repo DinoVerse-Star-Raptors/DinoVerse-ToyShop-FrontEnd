@@ -11,7 +11,7 @@ const About = () => {
           <img src={reactLogo} className="logo" alt="React logo" />
         </Link>
       </div>
-      <h1>About</h1>
+      <h1>About Branch</h1>
       <div className="card">
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
