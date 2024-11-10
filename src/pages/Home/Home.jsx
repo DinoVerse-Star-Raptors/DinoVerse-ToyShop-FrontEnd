@@ -1,7 +1,7 @@
 import React from "react";
 import uiStyle from "./Home.module.css";
 import Recommended from "../../components/layout/Recommended";
-import HomeCategories from "../../components/HomeCategories";
+import HomeCategories from "../../components/layout/HomeCategories";
 import HomeShopbyage from "../../components/layout/HomeShopbyage";
 import HomeHero from "../../components/layout/HomeHero";
 
