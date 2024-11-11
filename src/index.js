@@ -3,14 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-// import { BrowserRouter } from "react-router-dom";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  // Route,
-  Link,
-} from "react-router-dom";
-// import Navbar from "./components/layout/Navbar";
+import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -18,8 +11,17 @@ import Shop from "./pages/Shop";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProductInfo from "./pages/ProductInfo";
 
 const router = createBrowserRouter([
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
   {
     path: "/",
     element: <App />,
@@ -48,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "/productinfo",
+        element: <ProductInfo />,
       },
       {
         path: "/app",
