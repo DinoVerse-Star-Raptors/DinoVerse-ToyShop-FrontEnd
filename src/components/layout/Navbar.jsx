@@ -32,7 +32,7 @@ export default function Navbar() {
           <Link to="/shop" className="text-black hover:text-gray-900">
             Toys
           </Link>
-          <Link to="/productinfo" className="text-black hover:text-gray-900">
+          <Link to="/shop" className="text-black hover:text-gray-900">
             Age
           </Link>
           <Link to="/contact" className="text-black hover:text-gray-900">
