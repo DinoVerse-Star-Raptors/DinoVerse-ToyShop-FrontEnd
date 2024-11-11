@@ -1,18 +1,46 @@
 import React from 'react'
+import Creative from './assets/images/IconCategories/iconCreative.png'
+import Emotion from './assets/images/IconCategories/iconEmotion.png'
+import FineMotor from './assets/images/IconCategories/iconFineMotor.png'
+import GrossMotor from './assets/images/IconCategories/iconMotor.png'
+import Language from './assets/images/IconCategories/iconCommunication.png'
+import Musical from './assets/images/IconCategories/iconMusical.png'
+import Social from './assets/images/IconCategories/iconSocial.png'
 
 function HomeCategories() {
   return (
-    <section class="container mx-auto my-8 ">
-        <nav class="text-2xl font-bold mb-4 text-center">Categories</nav>
-        <div class="grid grid-cols-1 sm:grid-cols-7 gap-4">
+    <section className="container mx-auto my-8 ">
+        <nav className="text-4xl font-bold mb-4 text-center">Categories</nav>
+        <div className="grid grid-cols-1 sm:grid-cols-7 gap-4">
             {/* <!-- Empty category boxes for now --> */}
-            <div class="bg-gray-200 p-8 rounded-md">Creative</div>
-            <div class="bg-gray-200 p-8 rounded-md">Emotion</div>
-            <div class="bg-gray-200 p-8 rounded-md">Fine Motir</div>
-            <div class="bg-gray-200 p-8 rounded-md">Gross Motor</div>
-            <div class="bg-gray-200 p-8 rounded-md">Language</div>
-            <div class="bg-gray-200 p-8 rounded-md">Musical</div>
-            <div class="bg-gray-200 p-8 rounded-md">Social</div>
+            <div className="bg-white p-8 rounded-md">
+              <img src={Creative} alt="creative" />
+              <h3>Creative</h3>
+            </div>
+            <div className="bg-white p-8 rounded-md">
+              <img src={Emotion} alt="Emotion" />
+              <h3>Emotion</h3>
+            </div>
+            <div className="bg-white p-8 rounded-md">
+              <img src={FineMotor} alt="Finemotor" />
+              <h3>Fine Motor</h3>
+            </div>
+            <div className="bg-white p-8 rounded-md">
+              <img src={GrossMotor} alt="Grossmotor" />
+              <h3>Gross Motor</h3>
+            </div>
+            <div className="bg-white p-8 rounded-md">
+              <img src={Language} alt="Language" />
+              <h3>Language</h3>
+            </div>
+            <div className="bg-white p-8 rounded-md">
+              <img src={Musical} alt="Musical" />
+              <h3>Musical</h3>
+            </div>
+            <div className="bg-white p-8 rounded-md">
+              <img src={Social} alt="Social" />
+              <h3>Social</h3>
+            </div>
         </div>
     </section>
   )
