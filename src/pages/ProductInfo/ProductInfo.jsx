@@ -102,7 +102,7 @@ const ProductInfo = () => {
               </p>
               <p className="flex items-center">
                 <span className="text-green-500 font-bold mr-2">✓</span> Free
-                shipping on orders over ฿20
+                shipping on orders over ฿500
               </p>
               <p className="flex items-center space-x-2">
                 <span className="text-green-500 font-bold">✓</span>
