@@ -12,6 +12,8 @@ const ItemInfo = ({
   factorsForChildDevelopment = [],
 }) => {
   if (!product && !reviews && !factorsForChildDevelopment) return <></>;
+  // factorsForChildDevelopment = [...product.factor];
+  factorsForChildDevelopment = [...product.factors];
   return (
     <>
       <div className="ml-14">
@@ -27,7 +29,7 @@ const ItemInfo = ({
           <img
             src={product?.image}
             alt={product?.name}
-            className="hover:scale-125 max-w-[700px]"
+            className="hover:scale-100 max-w-[700px]"
           />
         </div>
 
@@ -332,7 +334,7 @@ ItemInfo.propTypes = {
     price: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
     recommendationTag: PropTypes.string.isRequired,
-    additionalInfo: PropTypes.arrayOf(PropTypes.string).isRequired,
+    // additionalInfo: PropTypes.arrayOf(PropTypes.string).isRequired,
     reviewsCount: PropTypes.number.isRequired,
     starDistribution: PropTypes.arrayOf(
       PropTypes.shape({

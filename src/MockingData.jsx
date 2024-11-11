@@ -245,7 +245,7 @@ const factors = [
     icon: "../assets/icon-ChildDevelopment-text_Social.png",
   },
 ];
-const getRandomFactors = (factors) => {
+const getRandomFactors = () => {
   const shuffledFactors = factors.sort(() => 0.5 - Math.random());
   return shuffledFactors.slice(0, 5);
 };
@@ -253,6 +253,7 @@ const getRandomFactors = (factors) => {
 const prodMocking = Array.from({ length: 50 }, (_, i) => ({
   pid: `pid-${i + 1}`,
   name: `Toy ${i + 1}`,
+  rating: 5,
   ageGroup: "18M+",
   breadcrumb: `Home / Age / 18M+ / Toy ${i + 1}`,
   image: getRandomImage(imageUrls),
@@ -282,7 +283,7 @@ const prodMocking = Array.from({ length: 50 }, (_, i) => ({
         "Bought this as a birthday gift for my nephew, and he loves it! The train set is bright and engaging, and it came in nice packaging, so it felt very special. It’s also safe, with rounded edges on the tracks and no small parts, which I appreciate. Great purchase!",
     },
   ],
-  factors: getRandomFactors(factors),
+  factors: getRandomFactors(),
 }));
 
 export default prodMocking;
