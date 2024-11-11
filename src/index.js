@@ -12,6 +12,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductInfo from "./pages/ProductInfo";
+import ProductItem from "./pages/ProductItem";
 import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "/productinfo",
         element: <ProductInfo />,
+      },
+      {
+        path: "/productitem",
+        element: <ProductItem />,
       },
       {
         path: "/app",

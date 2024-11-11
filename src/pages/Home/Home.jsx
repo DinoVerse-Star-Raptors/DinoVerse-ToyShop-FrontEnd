@@ -15,13 +15,13 @@ const Home = () => {
       </div> */}
       {/* Other sections of the homepage can go here */}
       {/* Hero */}
-          <HomeHero />
+      <HomeHero />
       {/* Recommended */}
-      <section class="container mx-auto my-8 ">
-        <div class="">
-        <h2 class="text-2xl font-bold mb-4 text-center">Recommended</h2>
+      <section className="container mx-auto my-8 ">
+        <div>
+          <h2 className="text-2xl font-bold mb-4 text-center">Recommended</h2>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
           <Recommended />
           <Recommended />
           <Recommended />
@@ -29,12 +29,10 @@ const Home = () => {
         </div>
       </section>
       {/* Categories */}
-          <HomeCategories />
+      <HomeCategories />
       {/* Shop by age */}
-          <HomeShopbyage />
+      <HomeShopbyage />
     </div>
-     
-   
   );
 };
 
