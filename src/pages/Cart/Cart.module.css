@@ -1,0 +1,5 @@
+.Product_Image {
+    display: flex;
+    max-width: 200px;
+    max-height: 200px;
+}
