@@ -206,43 +206,56 @@ function getRandomImage(images) {
   return images[randomIndex];
 }
 
-// const ageGroups = ["0-6M", "6M+", "12M+", "18M+", "2Yrs+", "5Yrs+"];
+const fullImageUrl = `${window.location.origin}/assets/`;
+const ageGroups = ["0-6M", "6M+", "12M+", "18M+", "2Yrs+", "5Yrs+"];
 const factors = [
-  { name: "Auditory", icon: "../assets/icon-ChildDevelopment-Auditory.png" },
+  {
+    name: "Auditory",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-Auditory.png"}`,
+  },
   {
     name: "Cause & Effect",
-    icon: "../assets/icon-ChildDevelopment-CauseEffect.png",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-CauseEffect.png"}`,
   },
   {
     name: "Concentration",
-    icon: "../assets/icon-ChildDevelopment-Concentration.png",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-Concentration.png"}`,
   },
   {
     name: "Coordination",
-    icon: "../assets/icon-ChildDevelopment-Coordination.png",
-  },
-  { name: "Creativity", icon: "../assets/icon-ChildDevelopment-Creative.png" },
-  { name: "Emotion", icon: "../assets/icon-ChildDevelopment-Emotion.png" },
-  {
-    name: "Fine Motor Skills",
-    icon: "../assets/icon-ChildDevelopment-FineMotor.png",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-Coordination.png"}`,
   },
   {
-    name: "Gross Motor Skills",
-    icon: "../assets/icon-ChildDevelopment-GrossMotor.png",
+    name: "Creativity",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-Creative.png"}`,
+  },
+  {
+    name: "Emotion",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-Emotion.png"}`,
+  },
+  {
+    name: "Fine Motor",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-FineMotor.png"}`,
+  },
+  {
+    name: "Gross Motor",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-GrossMotor.png"}`,
   },
   {
     name: "Imagination",
-    icon: "../assets/icon-ChildDevelopment-Imagination.png",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-Imagination.png"}`,
   },
   {
     name: "Language & Communication",
-    icon: "../assets/icon-ChildDevelopment-LanguageCommunication.png",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-LanguageCommunication.png"}`,
   },
-  { name: "Musical", icon: "../assets/icon-ChildDevelopment-Musical.png" },
   {
-    name: "Social Skills",
-    icon: "../assets/icon-ChildDevelopment-text_Social.png",
+    name: "Musical",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-Musical.png"}`,
+  },
+  {
+    name: "Social",
+    icon: `${fullImageUrl}${"icon-ChildDevelopment-text_Social.png"}`,
   },
 ];
 const getRandomFactors = () => {
@@ -250,18 +263,23 @@ const getRandomFactors = () => {
   return shuffledFactors.slice(0, 5);
 };
 
+const ageGroup = ageGroups[Math.floor(Math.random() * ageGroups.length)];
+const breadcrumb = `Home / Age / ${ageGroup} / Toy No.`;
+// const fullImageUrl = `${window.location.origin}${imagePath}`;
+
 const prodMocking = Array.from({ length: 50 }, (_, i) => ({
   pid: `pid-${i + 1}`,
   name: `Toy ${i + 1}`,
   rating: 5,
-  ageGroup: "18M+",
-  breadcrumb: `Home / Age / 18M+ / Toy ${i + 1}`,
-  image: getRandomImage(imageUrls),
+  ageGroup: ageGroup,
+  // breadcrumb: `Home / Age / 18M+ / Toy ${i + 1}`,
+  breadcrumb: breadcrumb,
+  image: `${imageUrls[i % imageUrls.length]}` || getRandomImage(imageUrls),
   quantity: Math.floor(Math.random() * 10) + 1,
   stockStatus: i % 3 > 0 ? "In Stock" : "Out of Stock",
   description:
     "A fun and educational toy for children featuring a colorful train engine and a passenger car. It encourages imaginative play and helps develop motor skills.",
-  price: (100 + i).toFixed(2),
+  price: (100 + Math.floor(Math.random() * 10)).toFixed(2),
   recommendationTag: i % 2 === 0 ? "Recommend" : "",
   reviewsCount: 0,
   starDistribution: [],

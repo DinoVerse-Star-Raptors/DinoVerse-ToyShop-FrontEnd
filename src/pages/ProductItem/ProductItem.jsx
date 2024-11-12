@@ -13,6 +13,7 @@ const ItemInfo = ({
 }) => {
   if (!product && !reviews && !factorsForChildDevelopment) return <></>;
   // factorsForChildDevelopment = [...product.factor];
+  // const fullImageUrl = `${window.location.origin}${imagePath}`;
   factorsForChildDevelopment = [...product.factors];
   return (
     <>
