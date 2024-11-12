@@ -1,8 +1,4 @@
 const imageUrls = [
-  "https://cdn.shopify.com/s/files/1/0608/9618/2503/files/5283_-_Main_2048x.jpg",
-  "https://cdn.shopify.com/s/files/1/0608/9618/2503/files/8606_-_Main_-_sq_2048x.jpg",
-  "https://cdn.shopify.com/s/files/1/0608/9618/2503/files/Pre_BFCM_1040.jpg",
-  "https://cdn.shopify.com/s/files/1/0608/9618/2503/products/5229_-_Packshot_-_01_2048x.jpg",
   "https://th.plantoys.com/cdn/shop/files/1655_-_Main.jpg",
   "https://th.plantoys.com/cdn/shop/files/1657_-_Main.jpg",
   "https://th.plantoys.com/cdn/shop/files/2403_-_Main.jpg",
@@ -267,7 +263,7 @@ const ageGroup = ageGroups[Math.floor(Math.random() * ageGroups.length)];
 const breadcrumb = `Home / Age / ${ageGroup} / Toy No.`;
 // const fullImageUrl = `${window.location.origin}${imagePath}`;
 
-const prodMocking = Array.from({ length: 50 }, (_, i) => ({
+const prodMocking = Array.from({ length: imageUrls.length - 1 }, (_, i) => ({
   pid: `pid-${i + 1}`,
   name: `Toy ${i + 1}`,
   rating: 5,

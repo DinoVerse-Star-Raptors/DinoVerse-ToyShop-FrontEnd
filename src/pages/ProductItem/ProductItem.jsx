@@ -4,17 +4,36 @@ import uiStyle from "./ProductItem.module.css";
 import { Link } from "react-router-dom";
 // import ProductImage from "./assets/product-image.png";
 import data from "../../MockingData";
-// MockingData.jsx;
+// import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-const ItemInfo = ({
-  product = {},
-  reviews = [],
-  factorsForChildDevelopment = [],
-}) => {
-  if (!product && !reviews && !factorsForChildDevelopment) return <></>;
-  // factorsForChildDevelopment = [...product.factor];
-  // const fullImageUrl = `${window.location.origin}${imagePath}`;
-  factorsForChildDevelopment = [...product.factors];
+// let fakeCache = {};
+
+// async function fakeNetwork(key) {
+//   if (!key) {
+//     fakeCache = {};
+//   }
+
+//   if (fakeCache[key]) {
+//     return;
+//   }
+
+//   fakeCache[key] = true;
+//   return new Promise((res) => {
+//     setTimeout(res, Math.random() * 800);
+//   });
+// }
+
+// export async function loader({ params }) {
+//   await fakeNetwork();
+//   const product = data[params.itemId];
+//   return { product };
+// }
+
+const ItemInfo = ({ product = {} }) => {
+  if (!product) return <></>;
+  const factorsForChildDevelopment = [...product.factors];
+  const reviews = [...product.reviews];
   return (
     <>
       <div className="ml-14">
@@ -41,7 +60,7 @@ const ItemInfo = ({
 
             <div className="flex justify-between py-3">
               <h1 className="text-3xl font-bold">{product?.name}</h1>
-              <Link to="#">
+              <Link to="#" className="text-red-500 hover:text-red-700">
                 <p>Add to Wishlist</p>
               </Link>
             </div>
@@ -241,83 +260,19 @@ const ItemInfo = ({
 };
 
 const ProductItem = () => {
-  // const productData = {
-  //   name: "Toy Train",
-  //   ageGroup: "18M+",
-  //   breadcrumb: "Home / Age / 18M+ / Toy Train",
-  //   image: "./assets/product-image.png",
-  //   stockStatus: "In Stock",
-  //   description:
-  //     "A fun and educational toy for children featuring a colorful train engine and a passenger car. It encourages imaginative play and helps develop motor skills.",
-  //   rating: 5,
-  //   price: "฿350.00",
-  //   quantity: 1,
-  //   recommendationTag: "Recommend",
-  //   additionalInfo: [
-  //     "Eco-friendly materials",
-  //     "Free shipping on orders over ฿500",
-  //     "Secure payment",
-  //   ],
-  //   reviewsCount: 11,
-  //   starDistribution: [
-  //     { rating: 5, count: 4 },
-  //     { rating: 4, count: 5 },
-  //     { rating: 3, count: 2 },
-  //     { rating: 2, count: 0 },
-  //     { rating: 1, count: 0 },
-  //   ],
-  // };
-  const productData = data[0];
+  const { itemId } = useParams();
+  if (!itemId) return <></>;
+  // const productData = data[itemId];
+  // Find the product that matches the itemId
+  const productData = data.find((product) => product.pid === itemId);
 
-  const reviewsData = [
-    {
-      reviewer: "Erica",
-      rating: 4,
-      date: "03/10/2023",
-      title: "Happy",
-      comment:
-        "My son enjoys playing with the train, but I have to say, the tracks don’t always stay connected when he pushes the train around too quickly. It can be a bit frustrating. It’s a good toy, but it might be better suited for gentle play or older kids.",
-    },
-    {
-      reviewer: "Raelyn",
-      rating: 5,
-      date: "04/09/2023",
-      title: "Wonderful Gift Idea",
-      comment:
-        "Bought this as a birthday gift for my nephew, and he loves it! The train set is bright and engaging, and it came in nice packaging, so it felt very special. It’s also safe, with rounded edges on the tracks and no small parts, which I appreciate. Great purchase!",
-    },
-  ];
-
-  const factorsData = [
-    {
-      name: "Motor Skills",
-      icon: "../assets/icon-ChildDevelopment-GrossMotor.png",
-    },
-    {
-      name: "Concentration",
-      icon: "../assets/icon-ChildDevelopment-Concentration.png",
-    },
-    {
-      name: "Imagination",
-      icon: "../assets/icon-ChildDevelopment-Imagination.png",
-    },
-    {
-      name: "Creativity",
-      icon: "../assets/icon-ChildDevelopment-Creative.png",
-    },
-    {
-      name: "Coordination",
-      icon: "../assets/icon-ChildDevelopment-Coordination.png",
-    },
-  ];
-
+  if (!productData) {
+    return <p>Product not found.</p>;
+  }
+  if (!productData) return <></>;
   return (
     <>
-      <ItemInfo
-        product={productData}
-        reviews={reviewsData}
-        factorsForChildDevelopment={factorsData}
-      />
+      <ItemInfo product={productData} />
     </>
   );
 };
@@ -335,7 +290,6 @@ ItemInfo.propTypes = {
     price: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
     recommendationTag: PropTypes.string.isRequired,
-    // additionalInfo: PropTypes.arrayOf(PropTypes.string).isRequired,
     reviewsCount: PropTypes.number.isRequired,
     starDistribution: PropTypes.arrayOf(
       PropTypes.shape({
@@ -344,27 +298,6 @@ ItemInfo.propTypes = {
       })
     ).isRequired,
   }),
-  reviews: PropTypes.arrayOf(
-    PropTypes.shape({
-      reviewer: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      comment: PropTypes.string.isRequired,
-    })
-  ),
-  factorsForChildDevelopment: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      icon: PropTypes.string.isRequired,
-    })
-  ),
 };
-
-// // Default props (optional)
-// ItemInfo.defaultProps = {
-//   reviews: [],
-//   factorsForChildDevelopment: [],
-// };
 
 export default ProductItem;
