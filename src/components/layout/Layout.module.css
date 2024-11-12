@@ -36,10 +36,12 @@
     @apply md:max-w-screen-sm lg:max-w-screen-md;
   }
 
+  /* HomePage */
+
   .HomeHero {
     display: flex;
-    background-image: url("./assets/images/Homebanner.jpg");
-    height: 850px;
+    background-image: url("./assets/images/Homebanner.png");
+    height: 40rem;
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
