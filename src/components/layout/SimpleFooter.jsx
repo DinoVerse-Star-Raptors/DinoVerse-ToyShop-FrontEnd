@@ -19,8 +19,8 @@ export default function SimpleFooter() {
             </Link>
           </li>
           <li>
-            <Link to="item/1" className="hover:underline me-4 md:me-6">
-              item/1
+            <Link to="item/pid-1" className="hover:underline me-4 md:me-6">
+              item:1
             </Link>
           </li>
           <li>

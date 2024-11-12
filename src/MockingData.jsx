@@ -192,8 +192,6 @@ const imageUrls = [
   "https://www.plantoys.com/cdn/shop/files/9430_-_Lifestyle_-_sq_-_04.jpg",
   "https://www.plantoys.com/cdn/shop/files/9430_-_Main_-_sq.jpg",
   "https://www.plantoys.com/cdn/shop/files/9850_-_Main_-_sq.jpg",
-  "https://www.plantoys.com/cdn/shop/files/Pre_BFCM_section02_1024x1024.jpg",
-  "https://www.plantoys.com/cdn/shop/files/Pre_BFCM_section03_1024x1024.jpg",
 ];
 
 // Function to generate random image for a mock product
