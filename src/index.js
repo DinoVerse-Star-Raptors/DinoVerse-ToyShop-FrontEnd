@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -12,6 +12,9 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductInfo from "./pages/ProductInfo";
+// import ProductItem, { loader as ItemLoader } from "./pages/ProductItem";
+import ProductItem from "./pages/ProductItem";
+import ProductList from "./pages/ProductList";
 import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
@@ -49,25 +52,16 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
         path: "/productinfo",
         element: <ProductInfo />,
       },
       {
-        path: "/app",
-        element: (
-          <div>
-            <h1>Hello World</h1>
-            <Link to="/about">About Us</Link>
-          </div>
-        ),
+        path: "/item/:itemId",
+        element: <ProductItem />,
+      },
+      {
+        path: "/list",
+        element: <ProductList />,
       },
     ],
   },
