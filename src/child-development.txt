@@ -1,0 +1,73 @@
+https://www.plantoys.com/pages/child-development (HTML)
+A. Physical
+- Fine Motor
+- Gross Motor
+- Coordination
+- Visual
+- Auditory
+- Tactile
+
+B. Social & Emotional
+- Emotion
+- Musical
+- Social
+- Theory of Mind
+
+C. Intellectual
+- Cause & Effect
+- Explore
+- Concentration
+- Creative
+- Memory
+- Logical
+- Mathematical
+- Problem Solving
+- Imagination
+
+D. Language
+- Language & Communications
+- Sign Language
+- Pre Braille
+
+sitemap_collections_1: (XML)
+- 0-6M
+- 6M+
+- 12M+
+- 18M+
+- 2Yrs+
+- 3Yrs+
+- 5Yrs+ (Dino)
+- Active Play
+- Baby
+- Blocks & Construction
+- Dollhouse
+- Games & Puzzles
+- Kitchen
+- Learning & Education
+- Music
+- New Products
+- PlanHome
+- PlanMini
+- PlanWorld
+- Pretend Play
+- Push & Pull
+- Role Play
+- Water Play
+
+Shop By Categories (HTML)
+- Active Play
+- Baby
+- Better Aging
+- Blocks & Construction
+- Games & Puzzles
+- Learning & Education
+- Music
+- PlanHome
+- PlanMini
+- Pretend Play
+- ⠀⠀● Dollhouse
+- ⠀⠀● Kitchen
+- ⠀⠀● PlanWorld
+- ⠀⠀● Role Play
+- Push & Pull
+- Water Play
