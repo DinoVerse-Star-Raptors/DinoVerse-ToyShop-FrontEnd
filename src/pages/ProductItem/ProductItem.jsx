@@ -3,9 +3,11 @@ import PropTypes from "prop-types"; // Import PropTypes
 import uiStyle from "./ProductItem.module.css";
 import { Link } from "react-router-dom";
 // import ProductImage from "./assets/product-image.png";
-import data from "../../MockingData";
+// import data from "../../MockingData";
+import getAllProduct from "../../data/allProduct";
 // import { useLoaderData } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 // let fakeCache = {};
 
@@ -34,11 +36,13 @@ const ItemInfo = ({ product = {} }) => {
   if (!product) return <></>;
   const factorsForChildDevelopment = [...product.factors];
   const reviews = [...product.reviews];
+  // const factorsForChildDevelopment = [];
+  // const reviews = [];
   return (
     <>
       <div className="ml-14">
         {/* Page Title */}
-        <h2 className="text-2xl font-bold mt-4">{product?.ageGroup}</h2>
+        <h2 className="mt-4 text-2xl font-bold">{product.ageGroup}</h2>
         {/* Breadcrumb Navigation - Path */}
         <p>{product?.breadcrumb}</p>
       </div>
@@ -49,14 +53,19 @@ const ItemInfo = ({ product = {} }) => {
           <img
             src={product?.image}
             alt={product?.name}
-            className="hover:scale-100 max-w-[700px]"
+            className="max-w-[700px] hover:scale-100"
           />
         </div>
 
         {/* Product Details */}
         <div className="flex flex-col space-y-4">
           <div className="text-wrap">
-            <h3 className="text-green-600 font-bold">{product?.stockStatus}</h3>
+            {/* <h3 className="font-bold text-green-600">{product?.stockStatus}</h3> */}
+            {product?.stockStatus === 1 ? (
+              <h3 className="font-bold text-green-600">In Stock</h3> // Green color for In Stock
+            ) : product?.stockStatus === 0 ? (
+              <h3 className="font-bold text-green-600">Out of Stock</h3> // Red color for Out of Stock
+            ) : null}
 
             <div className="flex justify-between py-3">
               <h1 className="text-3xl font-bold">{product?.name}</h1>
@@ -68,13 +77,13 @@ const ItemInfo = ({ product = {} }) => {
             <p>{product?.description}</p>
 
             {/* rating star - recommend tag */}
-            <div className="flex items-center mt-3">
+            <div className="mt-3 flex items-center">
               {Array(5)
                 .fill(0)
                 .map((_, index) => (
                   <span
                     key={index}
-                    className={`text-yellow-500 text-xl ${
+                    className={`text-xl text-yellow-500 ${
                       index < product.rating
                         ? "text-yellow-500"
                         : "text-gray-300"
@@ -83,9 +92,11 @@ const ItemInfo = ({ product = {} }) => {
                     &#9733;
                   </span>
                 ))}
-              <span className="bg-yellow-100 text-yellow-600 ml-3 px-3 py-1 rounded-full font-bold">
-                {product?.recommendationTag}
-              </span>
+              {product?.recommendationTag === 1 && (
+                <span className="ml-3 rounded-full bg-yellow-100 px-3 py-1 font-bold text-yellow-600">
+                  Recommend
+                </span>
+              )}
             </div>
 
             <div className="mt-3 flex justify-between">
@@ -94,7 +105,7 @@ const ItemInfo = ({ product = {} }) => {
               <div className="flex justify-between">
                 <label
                   htmlFor="quantity"
-                  className="text-2xl font-semibold mr-2"
+                  className="mr-2 text-2xl font-semibold"
                 >
                   Qty:&nbsp;
                 </label>
@@ -102,7 +113,7 @@ const ItemInfo = ({ product = {} }) => {
                   defaultValue={1}
                   id="quantity"
                   type="number"
-                  className="w-[80px] p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-300"
+                  className="w-[80px] rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-pink-300"
                   min={1}
                   max={product?.quantity}
                   minLength={1}
@@ -111,10 +122,10 @@ const ItemInfo = ({ product = {} }) => {
               </div>
             </div>
             <div className="flex justify-between gap-x-4 py-3">
-              <button className="w-full bg-blue-600 text-white font-semibold py-3 rounded-full hover:bg-blue-700">
+              <button className="w-full rounded-full bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700">
                 Add to Cart
               </button>
-              <button className="w-full bg-indigo-600 text-white font-semibold py-3 rounded-full flex items-center justify-center hover:bg-indigo-700">
+              <button className="flex w-full items-center justify-center rounded-full bg-indigo-600 py-3 font-semibold text-white hover:bg-indigo-700">
                 Buy Now
               </button>
             </div>
@@ -136,37 +147,38 @@ const ItemInfo = ({ product = {} }) => {
             ))} */}
             {/* <!-- Additional Info --> */}
             <p className="flex items-center">
-              <span className="text-green-500 font-bold mr-2">✓</span>{" "}
+              <span className="mr-2 font-bold text-green-500">✓</span>{" "}
               Eco-friendly materials
             </p>
             <p className="flex items-center">
-              <span className="text-green-500 font-bold mr-2">✓</span> Free
+              <span className="mr-2 font-bold text-green-500">✓</span> Free
               shipping on orders over ฿20
             </p>
             <p className="flex items-center space-x-2">
-              <span className="text-green-500 font-bold">✓</span>
+              <span className="font-bold text-green-500">✓</span>
               <span>Secure payment</span>
             </p>
 
             {/* Factors for Child Development Section */}
             <div className="my-5">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+              <h2 className="mb-4 text-xl font-semibold text-gray-800">
                 Factors for Child Development
               </h2>
-              <div className="flex space-x-6 justify-start">
-                {factorsForChildDevelopment.map((factor) => (
-                  <div
-                    key={factor.name}
-                    className="text-center min-w-[110px] max-w-[110px]"
-                  >
-                    <img
-                      src={factor.icon}
-                      alt={factor.name}
-                      className={`mx-auto mb-2 ${uiStyle.Child_Image}`}
-                    />
-                    <p className="text-gray-600">{factor.name}</p>
-                  </div>
-                ))}
+              <div className="flex justify-start space-x-6">
+                {factorsForChildDevelopment.length > 0 &&
+                  factorsForChildDevelopment.map((factor) => (
+                    <div
+                      key={factor.name}
+                      className="min-w-[110px] max-w-[110px] text-center"
+                    >
+                      <img
+                        src={factor.icon}
+                        alt={factor.name}
+                        className={`mx-auto mb-2 ${uiStyle.Child_Image}`}
+                      />
+                      <p className="text-gray-600">{factor.name}</p>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -174,17 +186,17 @@ const ItemInfo = ({ product = {} }) => {
       </div>
 
       {/* Review Section */}
-      <div className="p-8 bg-white">
-        <div className="text-2xl font-bold mb-4">What Parents Are Saying</div>
+      <div className="bg-white p-8">
+        <div className="mb-4 text-2xl font-bold">What Parents Are Saying</div>
 
-        <div className="flex items-center mb-4">
+        <div className="mb-4 flex items-center">
           <div className="flex items-center">
             {Array(5)
               .fill(0)
               .map((_, index) => (
                 <span
                   key={index}
-                  className={`text-yellow-500 text-2xl ${
+                  className={`text-2xl text-yellow-500 ${
                     index < product.rating ? "text-yellow-500" : "text-gray-300"
                   }`}
                 >
@@ -192,44 +204,45 @@ const ItemInfo = ({ product = {} }) => {
                 </span>
               ))}
           </div>
-          <span className="ml-2 text-gray-700 font-semibold">
+          <span className="ml-2 font-semibold text-gray-700">
             4.5 out of 5 |
           </span>
-          <span className="ml-2 text-gray-700 font-semibold">
+          <span className="ml-2 font-semibold text-gray-700">
             {product?.reviewsCount} reviews
           </span>
         </div>
 
         {/* Review Star Distribution */}
-        <div className="space-y-1 mb-6">
-          {product?.starDistribution.map((star, index) => (
-            <div key={index} className="flex items-center">
-              <span className="text-gray-700 font-medium w-16">
-                {star.rating} Star
-              </span>
-              <div className="bg-gray-200 rounded-full w-full h-2 mx-2">
-                <div
-                  className={`bg-yellow-500 h-2 rounded-full max-w-[100%]`}
-                  style={{
-                    width: `${(star.count / product.reviewsCount) * 100}%`,
-                  }}
-                ></div>
+        <div className="mb-6 space-y-1">
+          {product?.starDistribution &&
+            product?.starDistribution.map((star, index) => (
+              <div key={index} className="flex items-center">
+                <span className="w-16 font-medium text-gray-700">
+                  {star.rating} Star
+                </span>
+                <div className="mx-2 h-2 w-full rounded-full bg-gray-200">
+                  <div
+                    className={`h-2 max-w-[100%] rounded-full bg-yellow-500`}
+                    style={{
+                      width: `${(star.count / product.reviewsCount) * 100}%`,
+                    }}
+                  ></div>
+                </div>
+                <span className="text-gray-700">({star.count})</span>
               </div>
-              <span className="text-gray-700">({star.count})</span>
-            </div>
-          ))}
+            ))}
         </div>
 
         {/* Reviews Header */}
-        <div className="text-xl font-semibold mb-4 border-b border-yellow-400 pb-2">
+        <div className="mb-4 border-b border-yellow-400 pb-2 text-xl font-semibold">
           Review ({product?.reviewsCount})
         </div>
 
         {/* Review Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {reviews.map((review, index) => (
-            <div key={index} className="p-4 bg-gray-50 rounded-lg shadow">
-              <div className="flex items-center mb-2">
+            <div key={index} className="rounded-lg bg-gray-50 p-4 shadow">
+              <div className="mb-2 flex items-center">
                 {Array(5)
                   .fill(0)
                   .map((_, starIndex) => (
@@ -244,13 +257,13 @@ const ItemInfo = ({ product = {} }) => {
                       &#9733;
                     </span>
                   ))}
-                <span className="text-gray-400 ml-2 text-sm">
+                <span className="ml-2 text-sm text-gray-400">
                   {review.date}
                 </span>
               </div>
               <div className="font-semibold">{review.reviewer}</div>
               <div className="text-sm text-gray-700">{review.title}</div>
-              <p className="text-gray-600 text-sm mt-2">{review.comment}</p>
+              <p className="mt-2 text-sm text-gray-600">{review.comment}</p>
             </div>
           ))}
         </div>
@@ -261,20 +274,45 @@ const ItemInfo = ({ product = {} }) => {
 
 const ProductItem = () => {
   const { itemId } = useParams();
-  if (!itemId) return <></>;
-  // const productData = data[itemId];
-  // Find the product that matches the itemId
-  const productData = data.find((product) => product.pid === itemId);
+  const [product, setProduct] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!productData) {
-    return <p>Product not found.</p>;
-  }
-  if (!productData) return <></>;
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const data = await getAllProduct(); // Assuming this fetches and returns your products
+        console.log(data[itemId].product);
+        setProduct(data[itemId].product); // Update state with the fetched data (object with 'pid' as key)
+      } catch (error) {
+        setError("Error loading products");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (!itemId) return <></>;
+
   return (
-    <>
-      <ItemInfo product={productData} />
-    </>
+    <div>
+      {isLoading && <p>Loading products...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {!isLoading && product && (
+        <div>
+          <ItemInfo product={product} />
+        </div>
+      )}
+      {!isLoading && !product && <p>No products found.</p>}
+    </div>
   );
+  // return (
+  //   <>
+  //     <ItemInfo product={productData} />
+  //   </>
+  // );
 };
 
 // Prop types definition
@@ -284,18 +322,18 @@ ItemInfo.propTypes = {
     ageGroup: PropTypes.string.isRequired,
     breadcrumb: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
-    stockStatus: PropTypes.string.isRequired,
+    stockStatus: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,
-    price: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
-    recommendationTag: PropTypes.string.isRequired,
+    // recommendationTag: PropTypes.string.isRequired,
     reviewsCount: PropTypes.number.isRequired,
     starDistribution: PropTypes.arrayOf(
       PropTypes.shape({
         rating: PropTypes.number.isRequired,
         count: PropTypes.number.isRequired,
-      })
+      }),
     ).isRequired,
   }),
 };

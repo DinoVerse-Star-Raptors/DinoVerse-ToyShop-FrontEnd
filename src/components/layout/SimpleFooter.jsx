@@ -4,37 +4,40 @@ import { Link } from "react-router-dom";
 export default function SimpleFooter() {
   return (
     <footer>
-      <div className="w-full px-6 py-4 md:flex md:items-center md:justify-between bg-gray-700">
-        <span className="text-sm  text-white sm:text-center">
+      <div className="w-full bg-gray-700 px-6 py-4 md:flex md:items-center md:justify-between">
+        <span className="text-sm text-white sm:text-center">
           © 2024{" "}
           <Link to="#" className="hover:underline">
             Dino Verse Team.{" "}
           </Link>
           All Rights Reserved.
         </span>
-        <ul className="hidden flex-wrap items-center mt-3 text-sm font-medium text-white sm:mt-0 lg:flex">
+        <ul className="mt-3 hidden flex-wrap items-center text-sm font-medium text-white sm:mt-0 lg:flex">
           <li>
-            <Link to="list" className="hover:underline me-4 md:me-6">
+            <Link to="list" className="me-4 hover:underline md:me-6">
               list
             </Link>
           </li>
           <li>
-            <Link to="item/pid-1" className="hover:underline me-4 md:me-6">
-              item:1
+            <Link
+              to="item/7679504941227"
+              className="me-4 hover:underline md:me-6"
+            >
+              item
             </Link>
           </li>
           <li>
-            <Link to="#" className="hover:underline me-4 md:me-6">
+            <Link to="#" className="me-4 hover:underline md:me-6">
               About
             </Link>
           </li>
           <li>
-            <Link to="#" className="hover:underline me-4 md:me-6">
+            <Link to="#" className="me-4 hover:underline md:me-6">
               Privacy Policy
             </Link>
           </li>
           <li>
-            <Link to="#" className="hover:underline me-4 md:me-6">
+            <Link to="#" className="me-4 hover:underline md:me-6">
               Licensing
             </Link>
           </li>
