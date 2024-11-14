@@ -116,6 +116,7 @@ function mapCsvToProductCard(csvRow) {
       recommendationTag: csvRow["recommendationTag"], // Recommendation tag
       reviewsCount: parseInt(csvRow["reviewsCount"], 0), // Number of reviews (parse as integer)
       starDistribution: [], // Star distribution (parse if exists)
+      ratingOjb: { rate: 3.9, count: 2 },
       reviews: [
         {
           reviewer: "Erica",
@@ -154,7 +155,17 @@ const getAllProduct = async () => {
   // console.log("Mapped products by pid:"); // Log the mapped product cards object
   return mappedProductCards; // Return the object
 };
-
+const item = {
+  id: 101,
+  title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+  price: 109.95,
+  description:
+    "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+  category: "men's clothing",
+  image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+  rating: { rate: 3.9, count: 120 },
+};
+console.log(item);
 // Call the function to map the products and log the output
 // getAllProduct();
 // Call the function to map and log the data
