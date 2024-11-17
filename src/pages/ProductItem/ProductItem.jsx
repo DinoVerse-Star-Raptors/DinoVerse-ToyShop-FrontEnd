@@ -33,16 +33,15 @@ import { useState, useEffect } from "react";
 // }
 
 const ItemInfo = ({ product = {} }) => {
+  // Comment
   if (!product) return <></>;
-  const factorsForChildDevelopment = [...product.factors];
-  const reviews = [...product.reviews];
-  // const factorsForChildDevelopment = [];
-  // const reviews = [];
+  const factorsForChildDevelopment = product.factors;
+  const reviews = product.reviews;
   return (
     <>
       <div className="ml-14">
         {/* Page Title */}
-        <h2 className="mt-4 text-2xl font-bold">{product.ageGroup}</h2>
+        <h2 className="mt-4 text-2xl font-bold">{product?.ageGroup}</h2>
         {/* Breadcrumb Navigation - Path */}
         <p>{product?.breadcrumb}</p>
       </div>
@@ -308,11 +307,6 @@ const ProductItem = () => {
       {!isLoading && !product && <p>No products found.</p>}
     </div>
   );
-  // return (
-  //   <>
-  //     <ItemInfo product={productData} />
-  //   </>
-  // );
 };
 
 // Prop types definition

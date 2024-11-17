@@ -12,7 +12,13 @@ export default function SimpleFooter() {
           </Link>
           All Rights Reserved.
         </span>
+
         <ul className="mt-3 hidden flex-wrap items-center text-sm font-medium text-white sm:mt-0 lg:flex">
+          <li>
+            <Link to="exam-home" className="me-4 hover:underline md:me-6">
+              Exam Home
+            </Link>
+          </li>
           <li>
             <Link to="list" className="me-4 hover:underline md:me-6">
               list

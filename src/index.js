@@ -12,10 +12,10 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductInfo from "./pages/ProductInfo";
-// import ProductItem, { loader as ItemLoader } from "./pages/ProductItem";
 import ProductItem from "./pages/ProductItem";
 import ProductList from "./pages/ProductList";
 import Cart from "./pages/Cart";
+import ExamHome from "./pages/ExamHome";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +63,10 @@ const router = createBrowserRouter([
         path: "/list",
         element: <ProductList />,
       },
+      {
+        path: "/exam-home",
+        element: <ExamHome />,
+      },
     ],
   },
 ]);
@@ -72,7 +76,7 @@ root &&
   root.render(
     <React.StrictMode>
       <RouterProvider router={router} />
-    </React.StrictMode>
+    </React.StrictMode>,
   );
 
 // If you want to start measuring performance in your app, pass a function
