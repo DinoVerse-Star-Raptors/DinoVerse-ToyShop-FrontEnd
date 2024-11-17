@@ -6,7 +6,7 @@ const DevCard = ({ handle, name, imageUrl }) => {
   return (
     <div
       key={handle}
-      className="relative mx-auto mb-8 w-[140px] overflow-hidden hover:scale-105"
+      className="relative mx-auto mb-4 w-full overflow-hidden p-3 hover:translate-y-[-10px] md:max-w-[240px]"
     >
       {/* Link to navigate to the individual development page using the handle */}
       <Link to={`/exam-shop/${handle}`} rel="noopener noreferrer">
@@ -14,7 +14,7 @@ const DevCard = ({ handle, name, imageUrl }) => {
         <img
           src={imageUrl}
           alt={name}
-          className="h-[140px] w-[140px] rounded-l-md object-cover duration-300" // Ensure the image covers the whole card
+          className="aspect-square w-full rounded-l-md object-cover duration-300" // Ensure the image covers the whole card
         />
         {/* Overlay with text at the bottom */}
         <div className="w-full py-2 text-center">

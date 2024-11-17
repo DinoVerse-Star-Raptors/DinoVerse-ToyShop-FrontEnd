@@ -47,7 +47,7 @@ const DevTagSection = () => {
     <div className="w-full py-8">
       <h2 className="mb-8 text-center text-3xl font-bold">Categories</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-7">
+      <div className="grid grid-cols-2 gap-x-3 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-7">
         {devTags.map(({ handle, name, imageUrl }) => (
           <DevCard
             key={handle} // Use the handle as the unique key

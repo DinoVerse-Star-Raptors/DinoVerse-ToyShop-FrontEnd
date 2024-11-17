@@ -47,7 +47,7 @@ const AgeTagSection = () => {
     <div className="w-full py-8">
       <h2 className="mb-8 text-center text-3xl font-bold">Shop Toys By Age</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-x-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
         {ageTags.map(({ handle, name, imageUrl }) => (
           <AgeCard
             key={handle} // Use the handle as the unique key
