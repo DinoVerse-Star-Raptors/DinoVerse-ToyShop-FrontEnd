@@ -6,7 +6,7 @@ const DevCard = ({ handle, name, imageUrl }) => {
   return (
     <div
       key={handle}
-      className="relative mx-auto mb-4 w-full overflow-hidden p-3 hover:translate-y-[-10px] md:max-w-[240px]"
+      className="relative mx-auto mb-4 w-full overflow-hidden p-3 hover:translate-y-[-10px] md:max-w-[220px]"
     >
       {/* Link to navigate to the individual development page using the handle */}
       <Link to={`/exam-shop/${handle}`} rel="noopener noreferrer">
