@@ -1,56 +1,30 @@
-import React from "react";
-import PropTypes from "prop-types"; // Import PropTypes
-import uiStyle from "./ProductItem.module.css";
-import { Link } from "react-router-dom";
-// import ProductImage from "./assets/product-image.png";
-// import data from "../../MockingData";
-import getAllProduct from "../../data/allProduct";
-// import { useLoaderData } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-
-// let fakeCache = {};
-
-// async function fakeNetwork(key) {
-//   if (!key) {
-//     fakeCache = {};
-//   }
-
-//   if (fakeCache[key]) {
-//     return;
-//   }
-
-//   fakeCache[key] = true;
-//   return new Promise((res) => {
-//     setTimeout(res, Math.random() * 800);
-//   });
-// }
-
-// export async function loader({ params }) {
-//   await fakeNetwork();
-//   const product = data[params.itemId];
-//   return { product };
-// }
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { Link, useParams } from "react-router-dom";
+// Assuming no CSS module is used for now
+// import uiStyle from "./ProductItem.module.css";
 
 const ItemInfo = ({ product = {} }) => {
-  // Comment
   if (!product) return <></>;
-  const factorsForChildDevelopment = product.factors;
-  const reviews = product.reviews;
+
+  const reviews = product.reviews || [];
+  const rating = product.rating?.rate || 0;
+  const recommendationTag = product.recommended ? "Recommend" : null;
+
   return (
     <>
       <div className="ml-14">
         {/* Page Title */}
         <h2 className="mt-4 text-2xl font-bold">{product?.ageGroup}</h2>
         {/* Breadcrumb Navigation - Path */}
-        <p>{product?.breadcrumb}</p>
+        <p>{product?.handle}</p>
       </div>
 
       <div className="container mx-auto grid grid-cols-2 gap-10">
         {/* Product Image */}
         <div>
           <img
-            src={product?.image}
+            src={product?.imageUrl}
             alt={product?.name}
             className="max-w-[700px] hover:scale-100"
           />
@@ -59,12 +33,11 @@ const ItemInfo = ({ product = {} }) => {
         {/* Product Details */}
         <div className="flex flex-col space-y-4">
           <div className="text-wrap">
-            {/* <h3 className="font-bold text-green-600">{product?.stockStatus}</h3> */}
-            {product?.stockStatus === 1 ? (
-              <h3 className="font-bold text-green-600">In Stock</h3> // Green color for In Stock
-            ) : product?.stockStatus === 0 ? (
-              <h3 className="font-bold text-green-600">Out of Stock</h3> // Red color for Out of Stock
-            ) : null}
+            {product?.stock ? (
+              <h3 className="font-bold text-green-600">In Stock</h3>
+            ) : (
+              <h3 className="font-bold text-red-600">Out of Stock</h3>
+            )}
 
             <div className="flex justify-between py-3">
               <h1 className="text-3xl font-bold">{product?.name}</h1>
@@ -75,7 +48,7 @@ const ItemInfo = ({ product = {} }) => {
 
             <p>{product?.description}</p>
 
-            {/* rating star - recommend tag */}
+            {/* Rating stars and recommend tag */}
             <div className="mt-3 flex items-center">
               {Array(5)
                 .fill(0)
@@ -83,15 +56,13 @@ const ItemInfo = ({ product = {} }) => {
                   <span
                     key={index}
                     className={`text-xl text-yellow-500 ${
-                      index < product.rating
-                        ? "text-yellow-500"
-                        : "text-gray-300"
+                      index < rating ? "text-yellow-500" : "text-gray-300"
                     }`}
                   >
                     &#9733;
                   </span>
                 ))}
-              {product?.recommendationTag === 1 && (
+              {recommendationTag && (
                 <span className="ml-3 rounded-full bg-yellow-100 px-3 py-1 font-bold text-yellow-600">
                   Recommend
                 </span>
@@ -99,7 +70,7 @@ const ItemInfo = ({ product = {} }) => {
             </div>
 
             <div className="mt-3 flex justify-between">
-              <p className="text-2xl font-semibold">{product?.price}</p>
+              <p className="text-2xl font-semibold">${product?.price}</p>
 
               <div className="flex justify-between">
                 <label
@@ -115,11 +86,10 @@ const ItemInfo = ({ product = {} }) => {
                   className="w-[80px] rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-pink-300"
                   min={1}
                   max={product?.quantity}
-                  minLength={1}
-                  maxLength={2}
                 />
               </div>
             </div>
+
             <div className="flex justify-between gap-x-4 py-3">
               <button className="w-full rounded-full bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700">
                 Add to Cart
@@ -128,23 +98,10 @@ const ItemInfo = ({ product = {} }) => {
                 Buy Now
               </button>
             </div>
-
-            <Link
-              to="#payment"
-              className="hidden text-center text-gray-500 hover:text-gray-700"
-            >
-              More payment options
-            </Link>
           </div>
 
           {/* Additional Info */}
           <div className="mt-4 text-gray-600">
-            {/* {product?.additionalInfo.map((info, index) => (
-              <p key={index} className="flex items-center">
-                <span className="text-green-500 font-bold mr-2">✓</span> {info}
-              </p>
-            ))} */}
-            {/* <!-- Additional Info --> */}
             <p className="flex items-center">
               <span className="mr-2 font-bold text-green-500">✓</span>{" "}
               Eco-friendly materials
@@ -157,29 +114,6 @@ const ItemInfo = ({ product = {} }) => {
               <span className="font-bold text-green-500">✓</span>
               <span>Secure payment</span>
             </p>
-
-            {/* Factors for Child Development Section */}
-            <div className="my-5">
-              <h2 className="mb-4 text-xl font-semibold text-gray-800">
-                Factors for Child Development
-              </h2>
-              <div className="flex justify-start space-x-6">
-                {factorsForChildDevelopment.length > 0 &&
-                  factorsForChildDevelopment.map((factor) => (
-                    <div
-                      key={factor.name}
-                      className="min-w-[110px] max-w-[110px] text-center"
-                    >
-                      <img
-                        src={factor.icon}
-                        alt={factor.name}
-                        className={`mx-auto mb-2 ${uiStyle.Child_Image}`}
-                      />
-                      <p className="text-gray-600">{factor.name}</p>
-                    </div>
-                  ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -196,7 +130,7 @@ const ItemInfo = ({ product = {} }) => {
                 <span
                   key={index}
                   className={`text-2xl text-yellow-500 ${
-                    index < product.rating ? "text-yellow-500" : "text-gray-300"
+                    index < rating ? "text-yellow-500" : "text-gray-300"
                   }`}
                 >
                   &#9733;
@@ -204,40 +138,11 @@ const ItemInfo = ({ product = {} }) => {
               ))}
           </div>
           <span className="ml-2 font-semibold text-gray-700">
-            4.5 out of 5 |
-          </span>
-          <span className="ml-2 font-semibold text-gray-700">
-            {product?.reviewsCount} reviews
+            {rating} out of 5 | {reviews.length} reviews
           </span>
         </div>
 
-        {/* Review Star Distribution */}
-        <div className="mb-6 space-y-1">
-          {product?.starDistribution &&
-            product?.starDistribution.map((star, index) => (
-              <div key={index} className="flex items-center">
-                <span className="w-16 font-medium text-gray-700">
-                  {star.rating} Star
-                </span>
-                <div className="mx-2 h-2 w-full rounded-full bg-gray-200">
-                  <div
-                    className={`h-2 max-w-[100%] rounded-full bg-yellow-500`}
-                    style={{
-                      width: `${(star.count / product.reviewsCount) * 100}%`,
-                    }}
-                  ></div>
-                </div>
-                <span className="text-gray-700">({star.count})</span>
-              </div>
-            ))}
-        </div>
-
-        {/* Reviews Header */}
-        <div className="mb-4 border-b border-yellow-400 pb-2 text-xl font-semibold">
-          Review ({product?.reviewsCount})
-        </div>
-
-        {/* Review Cards */}
+        {/* Reviews */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {reviews.map((review, index) => (
             <div key={index} className="rounded-lg bg-gray-50 p-4 shadow">
@@ -257,11 +162,10 @@ const ItemInfo = ({ product = {} }) => {
                     </span>
                   ))}
                 <span className="ml-2 text-sm text-gray-400">
-                  {review.date}
+                  {new Date(review.createdAt).toLocaleDateString()}
                 </span>
               </div>
               <div className="font-semibold">{review.reviewer}</div>
-              <div className="text-sm text-gray-700">{review.title}</div>
               <p className="mt-2 text-sm text-gray-600">{review.comment}</p>
             </div>
           ))}
@@ -273,63 +177,67 @@ const ItemInfo = ({ product = {} }) => {
 
 const ProductItem = () => {
   const { itemId } = useParams();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProduct = async () => {
       try {
-        const data = await getAllProduct(); // Assuming this fetches and returns your products
-        console.log(data[itemId].product);
-        setProduct(data[itemId].product); // Update state with the fetched data (object with 'pid' as key)
+        const response = await fetch(
+          `https://dinothink.vercel.app/api/products/${itemId}`,
+        );
+        const productData = await response.json();
+
+        // Check if the product exists and set the state
+        if (productData) {
+          setProduct(productData);
+        } else {
+          setError("Product not found.");
+        }
       } catch (error) {
-        setError("Error loading products");
+        setError("Error loading product.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProducts();
-  }, []);
+    fetchProduct();
+  }, [itemId]);
 
-  if (!itemId) return <></>;
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
-  return (
-    <div>
-      {isLoading && <p>Loading products...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {!isLoading && product && (
-        <div>
-          <ItemInfo product={product} />
-        </div>
-      )}
-      {!isLoading && !product && <p>No products found.</p>}
-    </div>
-  );
+  return <ItemInfo product={product} />;
 };
 
-// Prop types definition
+// PropTypes definition for ItemInfo
 ItemInfo.propTypes = {
   product: PropTypes.shape({
+    productId: PropTypes.string.isRequired,
+    handle: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    ageGroup: PropTypes.string.isRequired,
-    breadcrumb: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    stockStatus: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    price: PropTypes.number.isRequired,
+    stock: PropTypes.bool.isRequired,
     quantity: PropTypes.number.isRequired,
-    // recommendationTag: PropTypes.string.isRequired,
-    reviewsCount: PropTypes.number.isRequired,
-    starDistribution: PropTypes.arrayOf(
+    ageGroup: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    recommended: PropTypes.bool.isRequired,
+    price: PropTypes.number.isRequired,
+    isActive: PropTypes.bool.isRequired,
+    rating: PropTypes.shape({
+      rate: PropTypes.number.isRequired,
+      count: PropTypes.number.isRequired,
+    }),
+    reviews: PropTypes.arrayOf(
       PropTypes.shape({
+        reviewer: PropTypes.string.isRequired,
         rating: PropTypes.number.isRequired,
-        count: PropTypes.number.isRequired,
+        comment: PropTypes.string.isRequired,
+        createdAt: PropTypes.string.isRequired,
       }),
-    ).isRequired,
-  }),
+    ),
+    imageUrl: PropTypes.string,
+  }).isRequired,
 };
 
 export default ProductItem;

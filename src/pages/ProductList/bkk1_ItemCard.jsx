@@ -2,28 +2,24 @@ import React from "react";
 import { Link } from "react-router-dom"; // Assuming you are using React Router for navigation
 import PropTypes from "prop-types";
 
-const ItemCard = ({ product }) => {
+const ItemCard = ({ product = {} }) => {
   const {
-    productId,
-    imageUrl,
+    pid,
+    image,
     name,
     price,
     rating,
-    stock,
-    quantity,
-    recommended,
+    stockStatus,
+    description,
+    recommendationTag,
   } = product;
-
-  // Determine stock status based on 'stock' and 'quantity'
-  const stockStatus = stock && quantity > 0 ? 1 : 0; // 1 for In Stock, 0 for Out of Stock
-  const recommendationTag = recommended ? 1 : 0; // 1 for recommended, 0 for not
 
   return (
     <div className="transform overflow-hidden rounded-lg border border-gray-300 bg-white shadow-md transition-transform hover:translate-y-[-10px]">
       {/* Link to product detail page */}
-      <Link to={`/item/${productId}`} className="block">
+      <Link to={`/item/${pid}`} className="block">
         <img
-          src={imageUrl || "https://via.placeholder.com/150"} // Placeholder if no image
+          src={image}
           alt={name}
           className="h-80 w-full border-b border-gray-300 object-cover"
         />
@@ -31,14 +27,13 @@ const ItemCard = ({ product }) => {
       <div className="p-4" title={`${name}`}>
         {/* Product Name with Link */}
         <Link
-          to={`/item/${productId}`}
+          to={`/item/${pid}`}
           className="mb-2 line-clamp-1 text-xl font-semibold text-gray-900 hover:text-blue-600"
         >
           {name}
         </Link>
-        <div className="mb-2 text-yellow-500">
-          Rating: {rating.rate} / 5 ({rating.count} reviews)
-        </div>
+        <p className="mb-2 hidden text-sm text-gray-600">{description}</p>
+        <div className="mb-2 text-yellow-500">Rating: {rating} / 5</div>
         <div className="mb-2 text-lg font-bold text-gray-900">${price}</div>
         {stockStatus === 1 ? (
           <div className="text-sm text-green-600">In Stock</div> // Green color for In Stock
@@ -47,7 +42,7 @@ const ItemCard = ({ product }) => {
         ) : null}
         {recommendationTag === 1 && (
           <span className="mt-2 inline-block rounded-md bg-yellow-400 px-3 py-1 text-sm font-semibold text-gray-800">
-            Recommended
+            Recommend
           </span>
         )}
       </div>
@@ -58,17 +53,14 @@ const ItemCard = ({ product }) => {
 // Define PropTypes for the `ItemCard` component
 ItemCard.propTypes = {
   product: PropTypes.shape({
-    productId: PropTypes.string.isRequired, // Product ID (string, required)
+    pid: PropTypes.string.isRequired, // Product ID (string, required)
     name: PropTypes.string.isRequired, // Product Name (string, required)
-    imageUrl: PropTypes.string, // Product Image URL (string, optional)
-    price: PropTypes.number.isRequired, // Product Price (number, required)
-    rating: PropTypes.shape({
-      rate: PropTypes.number.isRequired, // Rating value (number, required)
-      count: PropTypes.number.isRequired, // Review count (number, required)
-    }).isRequired, // Rating is an object with 'rate' and 'count' (required)
-    stock: PropTypes.bool.isRequired, // In stock status (boolean, required)
-    quantity: PropTypes.number.isRequired, // Product quantity (number, required)
-    recommended: PropTypes.bool, // Whether the product is recommended (boolean, optional)
+    image: PropTypes.string.isRequired, // Product Image (string, required)
+    price: PropTypes.string.isRequired, // Product Price (string, required)
+    rating: PropTypes.number.isRequired, // Product Rating (number, required)
+    stockStatus: PropTypes.string.isRequired, // Stock Status (string, required)
+    description: PropTypes.string.isRequired, // Product Description (string, required)
+    recommendationTag: PropTypes.string, // Recommendation Tag (string, optional)
   }).isRequired, // The product prop must be an object and is required
 };
 
