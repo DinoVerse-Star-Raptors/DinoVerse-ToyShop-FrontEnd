@@ -156,7 +156,7 @@ const ItemInfo = ({ product = {} }) => {
           </a>{" "}
           /{" "}
           <a
-            href={`/products/${product?.handle}`}
+            href={`/item/${product?.productId}`}
             className="text-blue-500 hover:underline"
           >
             {product?.name}
@@ -189,8 +189,12 @@ const ItemInfo = ({ product = {} }) => {
                 <p>Add to Wishlist</p>
               </Link>
             </div>
-
-            <p>{product?.description}</p>
+            <div className="mt-10">
+              <h3 className="mb-2 text-xl font-semibold text-gray-800">
+                Product Description
+              </h3>
+              <p className="text-gray-600">{product?.description}</p>
+            </div>
 
             {/* Rating stars and recommend tag */}
             <div className="mt-3 flex items-center">

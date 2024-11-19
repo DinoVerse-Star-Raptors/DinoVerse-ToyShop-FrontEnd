@@ -40,7 +40,7 @@ const ProductList = () => {
         <div>
           <h1 className="py-6 text-center text-3xl font-bold">Our Products</h1>
           <div className="grid grid-cols-1 gap-6 p-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            {products.slice(0, 60).map((product) => {
+            {products.map((product) => {
               return <ItemCard key={product.productId} product={product} />;
             })}
           </div>
