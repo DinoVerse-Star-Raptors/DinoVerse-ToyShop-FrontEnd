@@ -67,6 +67,10 @@ const ItemInfo = ({ product = {} }) => {
       icon: `${fullImageUrl}${"icon-ChildDevelopment-Creative.png"}`,
     },
     {
+      name: "Creative",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Creative.png"}`,
+    },
+    {
       name: "Emotion",
       icon: `${fullImageUrl}${"icon-ChildDevelopment-Emotion.png"}`,
     },
