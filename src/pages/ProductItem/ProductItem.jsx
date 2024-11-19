@@ -283,7 +283,7 @@ const ItemInfo = ({ product = {} }) => {
       </div>
 
       <section className="mt-6 rounded-lg bg-white p-6 shadow-md">
-        <h2 className="mb-4 text-xl font-semibold">Tags</h2>
+        <h2 className="mb-4 text-xl font-semibold">Tags:</h2>
         {/* Pass the tags array as a prop to the TagGrid component */}
         <TagGrid tags={tags} />
       </section>
