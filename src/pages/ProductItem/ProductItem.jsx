@@ -1,15 +1,132 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
-// Assuming no CSS module is used for now
-// import uiStyle from "./ProductItem.module.css";
+import uiStyle from "./ProductItem.module.css";
+
+const TagGrid = ({ tags = [] }) => {
+  return (
+    <div className="flex flex-wrap gap-3">
+      {tags.map((tag, index) => (
+        <span
+          key={index} // Unique key for each element in list
+          className="rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-800 transition-colors hover:bg-blue-200"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+};
 
 const ItemInfo = ({ product = {} }) => {
   if (!product) return <></>;
 
-  const reviews = product.reviews || [];
-  const rating = product.rating?.rate || 0;
-  const recommendationTag = product.recommended ? "Recommend" : null;
+  // const reviews = product.reviews || [];
+  const reviews = [
+    {
+      createdAt: "03/10/2023",
+      reviewer: "Erica",
+      rating: Math.floor(Math.random() * 5) + 1,
+      date: "03/10/2023",
+      title: "Happy",
+      comment:
+        "My son enjoys playing with the train, but I have to say, the tracks don’t always stay connected when he pushes the train around too quickly. It can be a bit frustrating. It’s a good toy, but it might be better suited for gentle play or older kids.",
+    },
+    {
+      createdAt: "03/10/2023",
+      reviewer: "Raelyn",
+      rating: Math.floor(Math.random() * 5) + 1,
+      date: "04/09/2023",
+      title: "Wonderful Gift Idea",
+      comment:
+        "Bought this as a birthday gift for my nephew, and he loves it! The train set is bright and engaging, and it came in nice packaging, so it felt very special. It’s also safe, with rounded edges on the tracks and no small parts, which I appreciate. Great purchase!",
+    },
+  ];
+  const rating = product?.rating?.rate || 0;
+  const recommended = product.recommended ? "Recommend" : null;
+  const fullImageUrl = `${window.location.origin}/assets/`;
+  const factorsImage = [
+    {
+      name: "Auditory",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Auditory.png"}`,
+    },
+    {
+      name: "Cause & Effect",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-CauseEffect.png"}`,
+    },
+    {
+      name: "Concentration",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Concentration.png"}`,
+    },
+    {
+      name: "Coordination",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Coordination.png"}`,
+    },
+    {
+      name: "Creativity",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Creative.png"}`,
+    },
+    {
+      name: "Emotion",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Emotion.png"}`,
+    },
+    {
+      name: "Fine Motor",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-FineMotor.png"}`,
+    },
+    {
+      name: "Gross Motor",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-GrossMotor.png"}`,
+    },
+    {
+      name: "Imagination",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Imagination.png"}`,
+    },
+    {
+      name: "Language",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-LanguageCommunication.png"}`,
+    },
+    {
+      name: "Musical",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Musical.png"}`,
+    },
+    {
+      name: "Social",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-text_Social.png"}`,
+    },
+  ];
+
+  // Define the categories you're interested in
+  const categoriesOfInterest = [
+    "Fine Motor",
+    "Gross Motor",
+    "Musical",
+    "Social",
+    "Creative",
+    "Language",
+    "Emotion",
+  ];
+
+  const tags = product?.tags || [];
+  // Filter factors based on the tags (categoriesOfInterest)
+  const factorsDev = (product?.tags || [])
+    .filter((factor) => categoriesOfInterest.includes(factor)) // Filter tags by categories of interest
+    .map((factor) => {
+      // Try to find the factor in the factorsImage array
+      const factorObj = factorsImage.find((item) => item.name === factor);
+
+      // Return either the factor object or a default image URL
+      return factorObj
+        ? { name: factorObj.name, imageUrl: factorObj.icon }
+        : {
+            name: factor, // Use the factor name as a fallback
+            imageUrl:
+              "https://cdn.shopify.com/s/files/1/0608/9618/2503/files/Icon_ChildDev-08_FineMotor.2d219be.svg?v=1638866543",
+          };
+    })
+    .filter(Boolean);
+
+  console.log(tags);
 
   return (
     <>
@@ -77,14 +194,14 @@ const ItemInfo = ({ product = {} }) => {
                 .map((_, index) => (
                   <span
                     key={index}
-                    className={`text-xl text-yellow-500 ${
+                    className={`text-xl ${
                       index < rating ? "text-yellow-500" : "text-gray-300"
                     }`}
                   >
                     &#9733;
                   </span>
                 ))}
-              {recommendationTag && (
+              {recommended && (
                 <span className="ml-3 rounded-full bg-yellow-100 px-3 py-1 font-bold text-yellow-600">
                   Recommend
                 </span>
@@ -92,7 +209,7 @@ const ItemInfo = ({ product = {} }) => {
             </div>
 
             <div className="mt-3 flex justify-between">
-              <p className="text-2xl font-semibold">${product?.price}</p>
+              <p className="text-2xl font-semibold">฿{product?.price}</p>
 
               <div className="flex justify-between">
                 <label
@@ -137,8 +254,39 @@ const ItemInfo = ({ product = {} }) => {
               <span>Secure payment</span>
             </p>
           </div>
+
+          {/* Factors for Child Development Section */}
+          <div className="my-5">
+            <h2 className="mb-4 text-xl font-semibold text-gray-800">
+              Factors for Child Development
+            </h2>
+            <div className="flex justify-start space-x-6">
+              {factorsDev.length > 0 &&
+                factorsDev.map((factor) => {
+                  return factor ? (
+                    <div
+                      key={factor.name}
+                      className="min-w-[110px] max-w-[110px] text-center"
+                    >
+                      <img
+                        src={factor.imageUrl}
+                        alt={factor.name}
+                        className={`mx-auto mb-2 ${uiStyle.Child_Image}`}
+                      />
+                      <p className="text-gray-600">{factor.name}</p>
+                    </div>
+                  ) : null;
+                })}
+            </div>
+          </div>
         </div>
       </div>
+
+      <section className="mt-6 rounded-lg bg-white p-6 shadow-md">
+        <h2 className="mb-4 text-xl font-semibold">Tags</h2>
+        {/* Pass the tags array as a prop to the TagGrid component */}
+        <TagGrid tags={tags} />
+      </section>
 
       {/* Review Section */}
       <div className="bg-white p-8">
@@ -151,7 +299,7 @@ const ItemInfo = ({ product = {} }) => {
               .map((_, index) => (
                 <span
                   key={index}
-                  className={`text-2xl text-yellow-500 ${
+                  className={`text-2xl ${
                     index < rating ? "text-yellow-500" : "text-gray-300"
                   }`}
                 >
@@ -174,7 +322,7 @@ const ItemInfo = ({ product = {} }) => {
                   .map((_, starIndex) => (
                     <span
                       key={starIndex}
-                      className={`text-yellow-500 ${
+                      className={` ${
                         starIndex < review.rating
                           ? "text-yellow-500"
                           : "text-gray-300"
@@ -231,6 +379,15 @@ const ProductItem = () => {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return <ItemInfo product={product} />;
+};
+
+// PropTypes validation
+TagGrid.propTypes = {
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired, // Validate that each tag has a 'name' field
+    }),
+  ).isRequired, // tags should be an array of objects with 'name' as a required string
 };
 
 // PropTypes definition for ItemInfo
