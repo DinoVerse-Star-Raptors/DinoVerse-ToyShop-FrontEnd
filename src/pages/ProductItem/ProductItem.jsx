@@ -17,7 +17,29 @@ const ItemInfo = ({ product = {} }) => {
         {/* Page Title */}
         <h2 className="mt-4 text-2xl font-bold">{product?.ageGroup}</h2>
         {/* Breadcrumb Navigation - Path */}
-        <p>{product?.handle}</p>
+        <p>
+          <a href="/exam-home" className="text-blue-500 hover:underline">
+            Home
+          </a>{" "}
+          /{" "}
+          <a href="/exam-shop/age" className="text-blue-500 hover:underline">
+            Age
+          </a>{" "}
+          /{" "}
+          <a
+            href={`/exam-shop/age/${product?.ageGroupTagHandle}`}
+            className="text-blue-500 hover:underline"
+          >
+            {product?.ageGroup}
+          </a>{" "}
+          /{" "}
+          <a
+            href={`/products/${product?.handle}`}
+            className="text-blue-500 hover:underline"
+          >
+            {product?.name}
+          </a>{" "}
+        </p>
       </div>
 
       <div className="container mx-auto grid grid-cols-2 gap-10">
