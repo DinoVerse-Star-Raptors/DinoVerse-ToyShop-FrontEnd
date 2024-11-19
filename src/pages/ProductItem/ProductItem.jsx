@@ -4,9 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import uiStyle from "./ProductItem.module.css";
 
 const TagGrid = ({ tags = [] }) => {
+  const uniqueTags = [...new Set(tags)];
   return (
     <div className="flex flex-wrap gap-3">
-      {tags.map((tag, index) => (
+      {uniqueTags.map((tag, index) => (
         <span
           key={index} // Unique key for each element in list
           className="rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-800 transition-colors hover:bg-blue-200"
