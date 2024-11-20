@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ItemCard from "./ItemCard"; // Assuming you have a separate file for ProductCard
+import axios from "axios";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -9,18 +10,12 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           "https://dinothink.vercel.app/api/products",
         );
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-
-        const data = await response.json();
-
-        // Assuming the response is an array of products
-        setProducts(data);
+        // Assuming the response contains an array of products
+        setProducts(response.data);
       } catch (error) {
         setError("Error loading products");
         console.error(error);
@@ -30,7 +25,7 @@ const ProductList = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, []); // Empty dependency array ensures it only runs once after the initial render
 
   return (
     <div>

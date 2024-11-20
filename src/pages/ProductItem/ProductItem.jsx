@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import uiStyle from "./ProductItem.module.css";
+import axios from "axios";
 
 const TagGrid = ({ tags = [] }) => {
   const uniqueTags = [...new Set(tags)];
@@ -363,10 +364,10 @@ const ProductItem = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://dinothink.vercel.app/api/products/${itemId}`,
         );
-        const productData = await response.json();
+        const productData = response.data;
 
         // Check if the product exists and set the state
         if (productData) {
