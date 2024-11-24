@@ -7,48 +7,66 @@ export default function SimpleFooter() {
       <div className="w-full bg-gray-700 px-6 py-4 md:flex md:items-center md:justify-between">
         <span className="text-sm text-white sm:text-center">
           © 2024{" "}
-          <Link to="#" className="hover:underline">
-            Dino Verse Team.{" "}
-          </Link>
+          <Link to={`${window.location.origin}`} className="hover:underline">
+            Dino Verse Team.
+          </Link>{" "}
           All Rights Reserved.
         </span>
 
         <ul className="mt-3 hidden flex-wrap items-center text-sm font-medium text-white sm:mt-0 lg:flex">
           <li>
-            <Link to="exam-home" className="me-4 hover:underline md:me-6">
+            <Link
+              to={`${window.location.origin}/exam-home`}
+              className="me-4 hover:underline md:me-6"
+            >
               Exam Home
             </Link>
           </li>
           <li>
-            <Link to="list" className="me-4 hover:underline md:me-6">
+            <Link
+              to={`${window.location.origin}/list`}
+              className="me-4 hover:underline md:me-6"
+            >
               list
             </Link>
           </li>
           <li>
             <Link
-              to="item/7679504941227"
+              to={`${window.location.origin}/item/7679504941227`}
               className="me-4 hover:underline md:me-6"
             >
               item
             </Link>
           </li>
           <li>
-            <Link to="#" className="me-4 hover:underline md:me-6">
+            <Link
+              to={`${window.location.origin}/about`}
+              className="me-4 hover:underline md:me-6"
+            >
               About
             </Link>
           </li>
-          <li>
-            <Link to="#" className="me-4 hover:underline md:me-6">
+          {/* <li>
+            <Link
+              to={`${window.location.origin}`}
+              className="me-4 hover:underline md:me-6"
+            >
               Privacy Policy
             </Link>
           </li>
           <li>
-            <Link to="#" className="me-4 hover:underline md:me-6">
+            <Link
+              to={`${window.location.origin}`}
+              className="me-4 hover:underline md:me-6"
+            >
               Licensing
             </Link>
-          </li>
+          </li> */}
           <li>
-            <Link to="#" className="hover:underline">
+            <Link
+              to={`${window.location.origin}/contact`}
+              className="hover:underline"
+            >
               Contact
             </Link>
           </li>

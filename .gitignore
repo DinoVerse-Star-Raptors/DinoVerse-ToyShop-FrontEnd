@@ -48,8 +48,5 @@ dist-ssr
 *.sw?
 
 # My Custom
-<<<<<<< HEAD
 .temp
-=======
-.temp
->>>>>>> TeamMerge
+.env
