@@ -16,7 +16,6 @@ import ProductItem from "./pages/ProductItem";
 import ProductList from "./pages/ProductList";
 import Cart from "./pages/Cart";
 import ExamHome from "./pages/ExamHome";
-import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
 
 const router = createBrowserRouter([
   {
@@ -76,10 +75,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root &&
   root.render(
     <React.StrictMode>
-      {/* Wrap your entire app with AuthProvider */}
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
+      <RouterProvider router={router} />
     </React.StrictMode>,
   );
 

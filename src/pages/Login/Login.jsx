@@ -6,28 +6,31 @@ import uiStyle from "./Login.module.css";
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 import Cookies from "js-cookie"; // Import js-cookie
 import { useNavigate } from "react-router-dom"; // Import react-router-dom for redirection
+import { useAuth } from "../../context/AuthContext"; // Import the Auth context
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("johndoe1");
+  const [password, setPassword] = useState("P@ssword1");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { login } = useAuth(); // Get login and checkAuthStatus from context
 
   const navigate = useNavigate(); // For programmatic redirection
 
   // Check if the user is already logged in (i.e., if the token exists)
-  const checkToken = () => {
-    const token = Cookies.get("auth_token"); // Get the token from cookies
-    if (token) {
-      // If token exists, redirect to the dashboard
-      navigate("/dashboard");
-    }
-  };
-
   useEffect(() => {
-    checkToken(); // Check token on component mount
-  }, []);
+    // Use the checkAuthStatus from context to check for the token
+    const checkToken = () => {
+      const token = Cookies.get("auth_token"); // Get the token from cookies
+      if (token) {
+        // If token exists, redirect to the dashboard
+        navigate("/user/dashboard");
+      }
+    };
+
+    checkToken(); // Run the check on component mount
+  }, [navigate]); // Ensure that `navigate` is included as a dependency for useEffect
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -42,24 +45,29 @@ function Login() {
 
       // Handle successful login
       if (response.status === 200) {
-        console.log("Login successful", response.data);
+        console.log("Login successful");
+
+        const { token, userId, username, fullname, email } = response.data;
+
+        // Call the login function from the AuthContext
+        login({ userId, username, fullname, email }, token);
 
         // Store the token in a cookie with an expiration time (e.g., 1 day)
-        Cookies.set("auth_token", response.data.token, { expires: 1 });
+        // Cookies.set("auth_token", token, { expires: 1 });
 
-        // Optionally store user details in local storage or context
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            userId: response.data.userId,
-            username: response.data.username,
-            fullname: response.data.fullname,
-            email: response.data.email,
-          }),
-        );
+        // // Optionally store user details in local storage or context
+        // localStorage.setItem(
+        //   "user",
+        //   JSON.stringify({
+        //     userId: response.data.userId,
+        //     username: response.data.username,
+        //     fullname: response.data.fullname,
+        //     email: response.data.email,
+        //   }),
+        // );
 
         // Redirect to dashboard after successful login
-        navigate("/dashboard");
+        navigate("/user/dashboard");
       }
     } catch (error) {
       setErrorMessage("Invalid username or password. Please try again.");
