@@ -19,13 +19,14 @@ import ExamHome from "./pages/ExamHome";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
 import Dashboard from "./pages/User/Dashboard"; // Protected page
 import ProtectedRoute from "./utils/ProtectedRoute";
+import UserPanel from "./pages/User/UserPanel";
 
 const router = createBrowserRouter([
-  {
-    path: "/user/dashboard",
-    element: <ProtectedRoute element={<Dashboard />} />, // Protecting this route
-    // element: <Dashboard />,
-  },
+  // {
+  //   path: "/user/dashboard",
+  //   element: <ProtectedRoute element={<Dashboard />} />, // Protecting this route
+  //   // element: <Dashboard />,
+  // },
   {
     path: "/register",
     element: <Register />,
@@ -40,7 +41,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        // path: "/",
+        index: true,
         element: <Home />,
       },
       {
@@ -76,6 +78,24 @@ const router = createBrowserRouter([
         element: <ExamHome />,
       },
     ],
+  },
+  {
+    path: "/user",
+    element: <ProtectedRoute element={<UserPanel />} />,
+    children: [
+      {
+        index: true, // This makes the Dashboard the default route
+        element: <Dashboard />, // Default route under /user
+      },
+      {
+        path: "dashboard", // Specific path for dashboard
+        element: <Dashboard />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 
