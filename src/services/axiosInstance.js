@@ -9,10 +9,10 @@ const API_URL = "https://dinothink.vercel.app";
 // Create an Axios instance with the base URL and other configurations
 const axiosInstance = axios.create({
   baseURL: API_URL,
-  withCredentials: true, // Send cookies (e.g., JWT token) with requests
-  headers: {
-    "Content-Type": "application/json",
-  },
+  // withCredentials: true, // Send cookies (e.g., JWT token) with requests
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
 });
 
 // Optional: you can add interceptors for handling requests or responses globally

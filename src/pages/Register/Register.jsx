@@ -5,6 +5,8 @@ import SimpleFooter from "../../components/layout/SimpleFooter";
 import uiStyle from "./Register.module.css";
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 import defaultImage from "./assets/logo192.png";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+
 // import dotenv from "dotenv";
 // import process from "process";
 // dotenv.config();
@@ -29,6 +31,8 @@ function Register() {
   const [error, setError] = useState("");
   const [fileInputKey, setFileInputKey] = useState(Date.now()); // Key to reset input
   const fileInput = useRef(null); // Reference to file input element
+
+  const navigate = useNavigate();
 
   // Handle close error alert
   const handleCloseError = () => {
@@ -142,7 +146,7 @@ function Register() {
     // }
     // Append the file from the file input
     if (fileInput.current && fileInput.current.files[0]) {
-      console.log(fileInput);
+      // console.log(fileInput);
       formDataToSend.append("profilePicture", fileInput.current.files[0]);
     } else if (imagePreview) {
       // Convert the image data URL to a Blob (if necessary for API compatibility)
@@ -177,9 +181,10 @@ function Register() {
       console.log(response);
       setIsLoading(false);
 
-      if (response.status === 200) {
+      if (response.status === 200 || response.status === 201) {
         // Success
         alert("Registration successful");
+        navigate("/login"); // Redirect to the /user/ page
       } else {
         // Handle errors
         setError(response.data.message || "An error occurred");
