@@ -18,13 +18,12 @@ import Cart from "./pages/Cart";
 import ExamHome from "./pages/ExamHome";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
 import Dashboard from "./pages/User/Dashboard"; // Protected page
-import ProtectedRoute from "./utils/ProtectedRoute";
+// import ProtectedRoute from "./utils/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/user/dashboard",
-    element: <ProtectedRoute element={<Dashboard />} />, // Protecting this route
-    // element: <Dashboard />,
+    element: <Dashboard />,
   },
   {
     path: "/register",
