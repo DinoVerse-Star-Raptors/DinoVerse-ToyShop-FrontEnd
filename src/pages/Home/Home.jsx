@@ -1,9 +1,9 @@
 import React from "react";
 import uiStyle from "./Home.module.css";
 import Recommended from "../../components/layout/Recommended";
-import HomeCategories from "../../components/layout/HomeCategories";
-import HomeShopbyage from "../../components/layout/HomeShopbyage";
-import HomeHero from "../../components/layout/HomeHero";
+import HomeCategories from "../../pages/Home/HomeCategories";
+import HomeShopbyage from "../../pages/Home/HomeShopbyage";
+import HomeHero from "../../pages/Home/HomeHero";
 
 const Home = () => {
   return (

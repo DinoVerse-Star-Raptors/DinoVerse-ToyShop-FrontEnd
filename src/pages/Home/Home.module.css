@@ -1,7 +1,7 @@
 @tailwind components;
 
 @layer components {
-  .home {
+  /* .home {
     text-align: center;
     padding: 0px;
     background-color: #f5f5f5;
@@ -41,5 +41,48 @@
 
   .cta-button:hover {
     background-color: #ff6347;
+  } */
+
+  .HomeHero {
+    display: flex;
+    background-image: url("./assets/Homebanner.png");
+    height: 40rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;
+    position: relative;
+    border-radius: 6px;
+  
+  }
+  
+  .HomeHeroText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+    margin: 48px;
+    
+    
+  }
+  
+  .HomeHeroText h1 {
+    font-weight: bolder;
+    font-size: 5rem;
+  }
+  
+  .HomeHeroText h3 {
+    font-weight: bolder;
+    font-size: 1.3rem;
+  }
+  
+  .HomeHeroText a {
+    font-weight: bolder;
+    font-size: 1.5rem;
+    background-color: rgb(255, 198, 41);
+    border-radius: 16px;
+    block-size: 40px;
+    text-align: center;
+    width: 12rem;
   }
 }

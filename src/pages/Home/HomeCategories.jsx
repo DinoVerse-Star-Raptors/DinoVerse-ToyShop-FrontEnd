@@ -1,11 +1,11 @@
 import React from 'react'
-import Creative from './assets/images/IconCategories/iconCreative.png'
-import Emotion from './assets/images/IconCategories/iconEmotion.png'
-import FineMotor from './assets/images/IconCategories/iconFineMotor.png'
-import GrossMotor from './assets/images/IconCategories/iconMotor.png'
-import Language from './assets/images/IconCategories/iconCommunication.png'
-import Musical from './assets/images/IconCategories/iconMusical.png'
-import Social from './assets/images/IconCategories/iconSocial.png'
+import Creative from './assets/IconCategories/iconCreative.png'
+import Emotion from './assets/IconCategories/iconEmotion.png'
+import FineMotor from './assets/IconCategories/iconFineMotor.png'
+import GrossMotor from './assets/IconCategories/iconMotor.png'
+import Language from './assets/IconCategories/iconCommunication.png'
+import Musical from './assets/IconCategories/iconMusical.png'
+import Social from './assets/IconCategories/iconSocial.png'
 
 function HomeCategories() {
   return (

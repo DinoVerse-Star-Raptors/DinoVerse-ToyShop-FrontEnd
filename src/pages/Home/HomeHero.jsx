@@ -1,5 +1,5 @@
 import React from 'react'
-import uiStyle from "./Layout.module.css";
+import uiStyle from "./Home.module.css";
 
 function HomeHero() {
   return (

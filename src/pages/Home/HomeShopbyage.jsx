@@ -1,11 +1,11 @@
 import React from 'react'
-import ShopByAge from './assets/images/Shopbyagepic.jpg'
-import ZeroToSix from './assets/images/0-6M-circle.png'
-import SixMonths from './assets/images/6M-circle.png'
-import TwelveMonths from './assets/images/12M-circle.png'
-import EighteenMonths from './assets/images/18M-circle.png'
-import TwoYears from './assets/images/2yrs-circle.png'
-import FiveYears from './assets/images/5yrs-circle.png'
+import ShopByAge from './assets/Shopbyagepic.jpg'
+import ZeroToSix from './assets/0-6M-circle.png'
+import SixMonths from './assets/6M-circle.png'
+import TwelveMonths from './assets/12M-circle.png'
+import EighteenMonths from './assets/18M-circle.png'
+import TwoYears from './assets/2yrs-circle.png'
+import FiveYears from './assets/5yrs-circle.png'
 
 function HomeShopbyage() {
   return (

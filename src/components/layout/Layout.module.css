@@ -38,7 +38,7 @@
 
   /* HomePage */
 
-  .HomeHero {
+  /* .HomeHero {
     display: flex;
     background-image: url("./assets/images/Homebanner.png");
     height: 40rem;
@@ -79,5 +79,5 @@
     block-size: 40px;
     text-align: center;
     width: 12rem;
-  }
+  } */
 }
