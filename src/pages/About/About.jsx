@@ -7,7 +7,7 @@ import EighteenMonths from "./assets/18M-circle.png"
 import TwoYears from "./assets/2yrs-circle.png"
 import FiveYears from "./assets/5yrs-circle.png"
 import { Link } from "react-router-dom";
-import aboutbanner from "./assets/aboutbanner.jpg"
+import aboutbanner from "./assets/aboutbanner.png"
 import AboutStyle from "./About.module.css"
 import Footer from "../../components/layout/SimpleFooter"
 
