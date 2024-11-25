@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
+// import { Eye, EyeOff, User } from "lucide-react";
+// import { Eye, User } from "lucide-react";
 import { Eye, EyeOff, Upload, X, User, AlertCircle } from "lucide-react";
 import SimpleNavbar from "../../components/layout/SimpleNavbar";
 import SimpleFooter from "../../components/layout/SimpleFooter";
 import uiStyle from "./Register.module.css";
-// import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
+import { useState, useEffect } from "react";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import defaultImage from "./assets/logo192.png";
-// import dotenv from "dotenv";
-// import process from "process";
-// dotenv.config();
 
 function Register() {
   // State management for form inputs and validation
@@ -16,7 +17,6 @@ function Register() {
     fullName: "",
     password: "",
     confirmPassword: "",
-    username: "",
   });
 
   // State for password visibility toggles
@@ -38,19 +38,16 @@ function Register() {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check file size constraints
-      if (file.size > 1 * 1024 * 1024) {
-        setError("Image size should be less than 1MB");
-        return;
-      }
-
-      if (file.size < 50 * 1024) {
-        setError("Image size should be at least 50KB");
+      if (file.size > 5 * 1024 * 1024) {
+        // 5MB limit
+        setError("Image size should be less than 5MB");
+        //toast.error("Image size should be less than 5MB");
         return;
       }
 
       if (!file.type.startsWith("image/")) {
         setError("Please upload an image file");
+        //toast.error(error);
         return;
       }
 
@@ -59,7 +56,7 @@ function Register() {
         setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
-      setError(""); // Clear any previous error messages
+      setError("");
     }
   };
 
@@ -68,6 +65,12 @@ function Register() {
     setFileInputKey(Date.now());
     setImagePreview(null);
   };
+  // cloudinary.v2.uploader
+  //   .upload("Chai.jpg", {
+  //     asset_folder: "dinoimage/profiles",
+  //     resource_type: "image",
+  //   })
+  //   .then(console.log);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -82,6 +85,7 @@ function Register() {
   const validateForm = () => {
     if (!imagePreview) {
       setError("Please upload a profile image");
+      //toast.error(error);
       return false;
     }
 
@@ -89,93 +93,34 @@ function Register() {
       !formData.email ||
       !formData.fullName ||
       !formData.password ||
-      !formData.confirmPassword ||
-      !formData.username
+      !formData.confirmPassword
     ) {
       setError("Please fill in all fields");
+      //toast.error(error);
       return false;
     }
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
+      //toast.error(error);
       return false;
     }
 
     if (formData.password.length < 8) {
       setError("Password must be at least 8 characters long");
+      //toast.error(error);
       return false;
     }
 
+    // Basic zip code validation (US format)
+    // const zipRegex = /^\d{5}(-\d{4})?$/;
+    // if (!zipRegex.test(formData.zipCode)) {
+    //   setError("Please enter a valid ZIP code");
+    //   return false;
+    // }
+
     setIsLoading(true);
     return true;
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    // console.log(process.env.REACT_APP_API_URL);
-    // Create FormData for file upload
-    const formDataToSend = new FormData();
-    formDataToSend.append("email", formData.email);
-    formDataToSend.append("fullname", formData.fullName); // Adjusted to match backend field
-    formDataToSend.append("password", formData.password);
-    formDataToSend.append("username", formData.username);
-
-    // If an image is uploaded, append it, otherwise, use a default image
-    if (imagePreview) {
-      // Convert the image data URL to a Blob (if necessary for API compatibility)
-      const byteString = atob(imagePreview.split(",")[1]);
-      const ab = new ArrayBuffer(byteString.length);
-      const ia = new Uint8Array(ab);
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-      const file = new Blob([ab], { type: "image/jpeg" }); // Use the correct MIME type for the image
-      formDataToSend.append("profilePicture", file, "profile.jpg");
-    } else {
-      // Use a default image if none uploaded
-      formDataToSend.append("profilePicture", defaultImage);
-    }
-
-    try {
-      // Make API call with relative path
-      // const response = await axiosInstance.post(
-      //   "/api/user/register", // Relative API endpoint
-      //   formDataToSend,
-      //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data", // Make sure this is set if you're uploading files
-      //     },
-      //   },
-      // );
-
-      const response = await fetch(
-        "https://dinothink.vercel.app/api/user/register",
-        {
-          method: "POST",
-          body: formDataToSend, // Send the form data as the request body
-          // Do not manually set 'Content-Type' header when sending FormData
-          headers: {
-            "Content-Type": "multipart/form-data", // Make sure this is set if you're uploading files
-          },
-        },
-      );
-
-      console.log(response);
-      setIsLoading(false);
-
-      if (response.status === 200) {
-        // Success
-        alert("Registration successful");
-      } else {
-        // Handle errors
-        setError(response.data.message || "An error occurred");
-      }
-    } catch (error) {
-      setIsLoading(false);
-      setError("Network error, please try again.");
-    }
   };
 
   return (
@@ -213,7 +158,7 @@ function Register() {
               )}
               <form
                 className="w-full py-[24px]"
-                onSubmit={handleSubmit}
+                onSubmit={validateForm}
                 method="POST"
                 action="/register"
               >
@@ -271,7 +216,7 @@ function Register() {
                           />
                         </label>
                         <p className="mt-2 text-xs text-gray-500">
-                          PNG, JPG up to 1MB
+                          PNG, JPG up to 5MB
                         </p>
                       </div>
                     </div>

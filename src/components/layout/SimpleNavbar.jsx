@@ -5,13 +5,13 @@ function SimpleNavbar() {
   return (
     <header>
       <nav
-        className={`bg-white shadow-md relative z-50 w-[100%] ${utilStyles.nav}`}
+        className={`relative z-50 w-[100%] bg-white shadow-md ${utilStyles.nav}`}
       >
-        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between">
             <div className="flex-shrink-0">
               <a className="flex items-center" href="/">
-                <span className="text-black w-[107px] font-roboto font-medium text-[24px] opacity-100 text-left">
+                <span className="font-roboto w-[107px] text-left text-[24px] font-medium text-black opacity-100">
                   Dinoverse
                 </span>
               </a>
@@ -19,14 +19,14 @@ function SimpleNavbar() {
             <div className="flex items-center">
               <div className="flex items-center space-x-4">
                 <a
-                  className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition duration-150 ease-in-out"
-                  href="/login/"
+                  className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition duration-150 ease-in-out hover:text-gray-900"
+                  href="/login"
                 >
                   Log In
                 </a>
                 <a
-                  className="bg-gradient-to-r from-indigo-500 to-blue-500 rounded-2xl text-white hover:bg-indigo-700 px-3 py-2 text-sm font-medium transition duration-150 ease-in-out"
-                  href="/register/"
+                  className="rounded-2xl bg-gradient-to-r from-indigo-500 to-blue-500 px-3 py-2 text-sm font-medium text-white transition duration-150 ease-in-out hover:bg-indigo-700"
+                  href="/register"
                 >
                   Register
                 </a>
