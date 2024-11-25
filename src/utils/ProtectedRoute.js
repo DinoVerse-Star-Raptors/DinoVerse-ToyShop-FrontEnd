@@ -5,12 +5,14 @@ import PropTypes from "prop-types"; // Import PropTypes
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
-
+  console.log("ProtectedRoute", user);
   if (!user) {
     // If no user is authenticated, redirect to login page
     return <Navigate to="/login" />;
   }
-
+  // if (user) {
+  //   return <>If user is authenticated, render the children (protected route)</>;
+  // }
   // If user is authenticated, render the children (protected route)
   return children;
 };

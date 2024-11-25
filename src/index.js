@@ -22,11 +22,10 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import UserPanel from "./pages/User/UserPanel";
 
 const router = createBrowserRouter([
-  // {
-  //   path: "/user/dashboard",
-  //   element: <ProtectedRoute element={<Dashboard />} />, // Protecting this route
-  //   // element: <Dashboard />,
-  // },
+  {
+    path: "/test",
+    element: <UserPanel />,
+  },
   {
     path: "/register",
     element: <Register />,
@@ -81,7 +80,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/user",
-    element: <ProtectedRoute element={<UserPanel />} />,
+    // element: <ProtectedRoute element={<UserPanel />} />,
+    element: (
+      <ProtectedRoute>
+        <UserPanel />
+      </ProtectedRoute>
+    ),
     children: [
       {
         index: true, // This makes the Dashboard the default route
@@ -90,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "dashboard", // Specific path for dashboard
         element: <Dashboard />,
+      },
+      {
+        path: "profile", // Profile route
+        element: <>profile</>,
       },
     ],
   },
