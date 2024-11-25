@@ -3,7 +3,7 @@ import { Eye, EyeOff, Upload, X, User, AlertCircle } from "lucide-react";
 import SimpleNavbar from "../../components/layout/SimpleNavbar";
 import SimpleFooter from "../../components/layout/SimpleFooter";
 import uiStyle from "./Register.module.css";
-// import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
+import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 import defaultImage from "./assets/logo192.png";
 // import dotenv from "dotenv";
 // import process from "process";
@@ -161,27 +161,18 @@ function Register() {
 
     try {
       // Make API call with relative path
-      // const response = await axiosInstance.post(
-      //   "/api/user/register", // Relative API endpoint
-      //   formDataToSend,
+      const response = await axiosInstance.post(
+        "/api/user/register", // Relative API endpoint
+        formDataToSend,
+      );
+
+      // const response = await fetch(
+      //   "https://dinothink.vercel.app/api/user/register",
       //   {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data", // Make sure this is set if you're uploading files
-      //     },
+      //     method: "POST",
+      //     body: formDataToSend, // Send the form data as the request body
       //   },
       // );
-
-      const response = await fetch(
-        "https://dinothink.vercel.app/api/user/register",
-        {
-          method: "POST",
-          body: formDataToSend, // Send the form data as the request body
-          // Do not manually set 'Content-Type' header when sending FormData
-          headers: {
-            "Content-Type": "multipart/form-data", // Make sure this is set if you're uploading files
-          },
-        },
-      );
 
       console.log(response);
       setIsLoading(false);
