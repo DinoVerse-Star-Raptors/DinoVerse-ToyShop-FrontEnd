@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Eye, EyeOff, Upload, X, User, AlertCircle } from "lucide-react";
 import SimpleNavbar from "../../components/layout/SimpleNavbar";
 import SimpleFooter from "../../components/layout/SimpleFooter";
@@ -28,6 +28,7 @@ function Register() {
   const [imagePreview, setImagePreview] = useState(null);
   const [error, setError] = useState("");
   const [fileInputKey, setFileInputKey] = useState(Date.now()); // Key to reset input
+  const fileInput = useRef(null); // Reference to file input element
 
   // Handle close error alert
   const handleCloseError = () => {
@@ -67,6 +68,7 @@ function Register() {
   const removeImage = () => {
     setFileInputKey(Date.now());
     setImagePreview(null);
+    if (fileInput.current) fileInput.current.value = ""; // Reset file input value
   };
 
   // Handle form input changes
@@ -121,9 +123,28 @@ function Register() {
     formDataToSend.append("fullname", formData.fullName); // Adjusted to match backend field
     formDataToSend.append("password", formData.password);
     formDataToSend.append("username", formData.username);
+    // formDataToSend.append("profilePicture", fileInput.files[0]);
 
     // If an image is uploaded, append it, otherwise, use a default image
-    if (imagePreview) {
+    // if (imagePreview) {
+    //   // Convert the image data URL to a Blob (if necessary for API compatibility)
+    //   const byteString = atob(imagePreview.split(",")[1]);
+    //   const ab = new ArrayBuffer(byteString.length);
+    //   const ia = new Uint8Array(ab);
+    //   for (let i = 0; i < byteString.length; i++) {
+    //     ia[i] = byteString.charCodeAt(i);
+    //   }
+    //   const file = new Blob([ab], { type: "image/jpeg" }); // Use the correct MIME type for the image
+    //   formDataToSend.append("profilePicture", file, "profile.jpg");
+    // } else {
+    //   // Use a default image if none uploaded
+    //   formDataToSend.append("profilePicture", defaultImage);
+    // }
+    // Append the file from the file input
+    if (fileInput.current && fileInput.current.files[0]) {
+      console.log(fileInput);
+      formDataToSend.append("profilePicture", fileInput.current.files[0]);
+    } else if (imagePreview) {
       // Convert the image data URL to a Blob (if necessary for API compatibility)
       const byteString = atob(imagePreview.split(",")[1]);
       const ab = new ArrayBuffer(byteString.length);
@@ -134,7 +155,7 @@ function Register() {
       const file = new Blob([ab], { type: "image/jpeg" }); // Use the correct MIME type for the image
       formDataToSend.append("profilePicture", file, "profile.jpg");
     } else {
-      // Use a default image if none uploaded
+      // Use a default image if no file uploaded
       formDataToSend.append("profilePicture", defaultImage);
     }
 
@@ -268,6 +289,7 @@ function Register() {
                             className="sr-only"
                             accept="image/*"
                             onChange={handleImageUpload}
+                            ref={fileInput} // Reference to the input
                           />
                         </label>
                         <p className="mt-2 text-xs text-gray-500">
