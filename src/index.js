@@ -17,8 +17,13 @@ import ProductList from "./pages/ProductList";
 import Cart from "./pages/Cart";
 import ExamHome from "./pages/ExamHome";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
+import Dashboard from "./pages/User/Dashboard"; // Protected page
 
 const router = createBrowserRouter([
+  {
+    path: "/user/dashboard",
+    element: <Dashboard />,
+  },
   {
     path: "/register",
     element: <Register />,
