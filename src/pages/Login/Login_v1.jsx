@@ -1,74 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Eye } from "lucide-react";
 import SimpleNavbar from "../../components/layout/SimpleNavbar";
 import SimpleFooter from "../../components/layout/SimpleFooter";
 import uiStyle from "./Login.module.css";
-import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
-import Cookies from "js-cookie"; // Import js-cookie
-import { useNavigate } from "react-router-dom"; // Import react-router-dom for redirection
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const navigate = useNavigate(); // For programmatic redirection
-
-  // Check if the user is already logged in (i.e., if the token exists)
-  const checkToken = () => {
-    const token = Cookies.get("auth_token"); // Get the token from cookies
-    if (token) {
-      // If token exists, redirect to the dashboard
-      navigate("/dashboard");
-    }
-  };
-
-  useEffect(() => {
-    checkToken(); // Check token on component mount
-  }, []);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setErrorMessage(""); // Clear any previous error messages
-
-    try {
-      const response = await axiosInstance.post("/api/user/login", {
-        username,
-        password,
-      });
-
-      // Handle successful login
-      if (response.status === 200) {
-        console.log("Login successful", response.data);
-
-        // Store the token in a cookie with an expiration time (e.g., 1 day)
-        Cookies.set("auth_token", response.data.token, { expires: 1 });
-
-        // Optionally store user details in local storage or context
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            userId: response.data.userId,
-            username: response.data.username,
-            fullname: response.data.fullname,
-            email: response.data.email,
-          }),
-        );
-
-        // Redirect to dashboard after successful login
-        navigate("/dashboard");
-      }
-    } catch (error) {
-      setErrorMessage("Invalid username or password. Please try again.");
-      console.error("Login error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <>
       <SimpleNavbar />
@@ -85,7 +21,7 @@ function Login() {
             </div>
 
             <div className="flex-col items-center justify-start text-center">
-              <form className="w-full py-[24px]" onSubmit={handleLogin}>
+              <form className="w-full py-[24px]">
                 <div>
                   <div>
                     <label
@@ -103,8 +39,6 @@ function Login() {
                       minLength="5"
                       autoComplete="off"
                       placeholder="Enter username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                     />
                   </div>
@@ -120,21 +54,26 @@ function Login() {
                       <input
                         id="password"
                         name="password"
-                        type={showPassword ? "text" : "password"}
+                        // type={false ? "text" : "password"}
+                        type="text"
                         required
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                        title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters"
                         maxLength="255"
-                        minLength="1"
+                        minLength="8"
                         autoComplete="off"
                         placeholder="Enter password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
                         className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                       />
                       <button
                         type="button"
                         className="absolute inset-y-0 right-0 flex items-center bg-transparent pr-3 hover:border-transparent"
-                        onClick={() => setShowPassword(!showPassword)}
                       >
+                        {/* {0 ? (
+                          <EyeOff className="h-4 w-4 text-gray-400" />
+                        ) : (
+                          <Eye className="h-4 w-4 text-gray-400" />
+                        )} */}
                         <Eye className="h-4 w-4 text-gray-400" />
                       </button>
                     </div>
@@ -142,19 +81,12 @@ function Login() {
 
                   <div className="my-6 flex justify-center">
                     <button
-                      type={loading ? "button" : "submit"}
-                      className="flex w-full max-w-[200px] justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                      disabled={loading}
+                      type="submit"
+                      className="flex w-full max-w-[100px] justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >
-                      {loading ? "Logging in..." : "Login"}
+                      Login
                     </button>
                   </div>
-
-                  {errorMessage && (
-                    <div className="mt-2 text-sm text-red-500">
-                      {errorMessage}
-                    </div>
-                  )}
                 </div>
               </form>
             </div>
