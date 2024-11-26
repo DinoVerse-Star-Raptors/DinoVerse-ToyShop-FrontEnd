@@ -44,19 +44,16 @@ function Register() {
       // Check file size constraints
       if (file.size > 1 * 1024 * 1024) {
         setError("Image size should be less than 1MB");
-        toast.error("Image size should be less than 1MB");
         return;
       }
 
       if (file.size < 50 * 1024) {
         setError("Image size should be at least 50KB");
-        toast.error("Image size should be at least 50KB");
         return;
       }
 
       if (!file.type.startsWith("image/")) {
         setError("Please upload an image file");
-        toast.error("Please upload an image file");
         return;
       }
 
@@ -89,7 +86,6 @@ function Register() {
   const validateForm = () => {
     if (!imagePreview) {
       setError("Please upload a profile image");
-      toast.error("Please upload a profile image");
       return false;
     }
 
@@ -101,19 +97,16 @@ function Register() {
       !formData.username
     ) {
       setError("Please fill in all fields");
-      toast.error("Please fill in all fields");
       return false;
     }
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
-      toast.error("Passwords do not match");
       return false;
     }
 
     if (formData.password.length < 8) {
       setError("Password must be at least 8 characters long");
-      toast.error("Password must be at least 8 characters long");
       return false;
     }
 
@@ -420,7 +413,6 @@ function Register() {
 
                   <div className="my-6 flex justify-center">
                     <button
-                      disabled={isLoading}
                       type={isLoading ? "button" : "submit"}
                       className="flex w-full max-w-[100px] justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >

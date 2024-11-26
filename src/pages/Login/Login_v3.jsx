@@ -7,24 +7,27 @@ import axiosInstance from "../../services/axiosInstance"; // Import axiosInstanc
 import Cookies from "js-cookie"; // Import js-cookie
 import { useNavigate } from "react-router-dom"; // Import react-router-dom for redirection
 import { useAuth } from "../../context/AuthContext"; // Import the Auth context
-import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [username, setUsername] = useState("johndoe1");
   const [password, setPassword] = useState("P@ssword1");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const { login } = useAuth(); // Get login and checkAuthStatus from context
 
-  const { login } = useAuth(); // Get login function from context
   const navigate = useNavigate(); // For programmatic redirection
 
   // Check if the user is already logged in (i.e., if the token exists)
   useEffect(() => {
+    // Use the checkAuthStatus from context to check for the token
     const checkToken = () => {
       const token = Cookies.get("auth_token"); // Get the token from cookies
       if (token) {
-        navigate("/user/dashboard"); // Redirect to dashboard if token exists
+        // If token exists, redirect to the dashboard
+        navigate("/user/dashboard");
       }
     };
 
@@ -34,9 +37,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    // Clear any previous notifications before attempting login
-    toast.dismiss();
+    setErrorMessage(""); // Clear any previous error messages
 
     try {
       const response = await axiosInstance.post("/api/user/login", {
@@ -46,32 +47,32 @@ function Login() {
 
       // Handle successful login
       if (response.status === 200) {
+        console.log("Login successful");
+
         const { token, userId, username, fullname, email } = response.data;
 
         // Call the login function from the AuthContext
         login({ userId, username, fullname, email }, token);
 
         // Store the token in a cookie with an expiration time (e.g., 1 day)
-        Cookies.set("auth_token", token, { expires: 1 });
+        // Cookies.set("auth_token", token, { expires: 1 });
 
-        // Display a success notification
-        // toast.success("Login successful! Redirecting...");
-        toast.success("Login successful! Redirecting...", {
-          position: "top-center",
-          autoClose: 3000, // Automatically close after 3 seconds
-          hideProgressBar: true, // Hide the progress bar
-        });
+        // // Optionally store user details in local storage or context
+        // localStorage.setItem(
+        //   "user",
+        //   JSON.stringify({
+        //     userId: response.data.userId,
+        //     username: response.data.username,
+        //     fullname: response.data.fullname,
+        //     email: response.data.email,
+        //   }),
+        // );
 
-        // Redirect to the dashboard after successful login
-        // navigate("/user/dashboard");
-        // Use setTimeout to delay the redirection after the toast message is displayed
-        setTimeout(() => {
-          navigate("/user/dashboard"); // Redirect to the dashboard after the delay
-        }, 3000); // Delay of 3000ms (3 seconds) to match the toast autoClose time
+        // Redirect to dashboard after successful login
+        navigate("/user/dashboard");
       }
     } catch (error) {
-      // Display error notification
-      toast.error("Invalid username or password. Please try again.");
+      setErrorMessage("Invalid username or password. Please try again.");
       console.error("Login error:", error);
     } finally {
       setLoading(false);
@@ -89,7 +90,7 @@ function Login() {
                 Let’s get you started
               </h1>
               <p className="font-roboto p-[32px] text-center text-[16px] font-normal text-black">
-                Enter the details to get going
+                Enter the detail to get going
               </p>
             </div>
 
@@ -158,6 +159,12 @@ function Login() {
                       {loading ? "Logging in..." : "Login"}
                     </button>
                   </div>
+
+                  {errorMessage && (
+                    <div className="mt-2 text-sm text-red-500">
+                      {errorMessage}
+                    </div>
+                  )}
                 </div>
               </form>
             </div>
@@ -165,9 +172,6 @@ function Login() {
         </section>
       </main>
       <SimpleFooter />
-
-      {/* ToastContainer to display notifications */}
-      <ToastContainer />
     </>
   );
 }

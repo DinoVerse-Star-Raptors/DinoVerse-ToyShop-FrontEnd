@@ -6,8 +6,10 @@ import uiStyle from "./Register.module.css";
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 import defaultImage from "./assets/logo192.png";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
-import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+
+// import dotenv from "dotenv";
+// import process from "process";
+// dotenv.config();
 
 function Register() {
   // State management for form inputs and validation
@@ -44,19 +46,16 @@ function Register() {
       // Check file size constraints
       if (file.size > 1 * 1024 * 1024) {
         setError("Image size should be less than 1MB");
-        toast.error("Image size should be less than 1MB");
         return;
       }
 
       if (file.size < 50 * 1024) {
         setError("Image size should be at least 50KB");
-        toast.error("Image size should be at least 50KB");
         return;
       }
 
       if (!file.type.startsWith("image/")) {
         setError("Please upload an image file");
-        toast.error("Please upload an image file");
         return;
       }
 
@@ -89,7 +88,6 @@ function Register() {
   const validateForm = () => {
     if (!imagePreview) {
       setError("Please upload a profile image");
-      toast.error("Please upload a profile image");
       return false;
     }
 
@@ -101,19 +99,16 @@ function Register() {
       !formData.username
     ) {
       setError("Please fill in all fields");
-      toast.error("Please fill in all fields");
       return false;
     }
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
-      toast.error("Passwords do not match");
       return false;
     }
 
     if (formData.password.length < 8) {
       setError("Password must be at least 8 characters long");
-      toast.error("Password must be at least 8 characters long");
       return false;
     }
 
@@ -125,16 +120,33 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
+    // console.log(process.env.REACT_APP_API_URL);
     // Create FormData for file upload
     const formDataToSend = new FormData();
     formDataToSend.append("email", formData.email);
     formDataToSend.append("fullname", formData.fullName); // Adjusted to match backend field
     formDataToSend.append("password", formData.password);
     formDataToSend.append("username", formData.username);
+    // formDataToSend.append("profilePicture", fileInput.files[0]);
 
+    // If an image is uploaded, append it, otherwise, use a default image
+    // if (imagePreview) {
+    //   // Convert the image data URL to a Blob (if necessary for API compatibility)
+    //   const byteString = atob(imagePreview.split(",")[1]);
+    //   const ab = new ArrayBuffer(byteString.length);
+    //   const ia = new Uint8Array(ab);
+    //   for (let i = 0; i < byteString.length; i++) {
+    //     ia[i] = byteString.charCodeAt(i);
+    //   }
+    //   const file = new Blob([ab], { type: "image/jpeg" }); // Use the correct MIME type for the image
+    //   formDataToSend.append("profilePicture", file, "profile.jpg");
+    // } else {
+    //   // Use a default image if none uploaded
+    //   formDataToSend.append("profilePicture", defaultImage);
+    // }
     // Append the file from the file input
     if (fileInput.current && fileInput.current.files[0]) {
+      // console.log(fileInput);
       formDataToSend.append("profilePicture", fileInput.current.files[0]);
     } else if (imagePreview) {
       // Convert the image data URL to a Blob (if necessary for API compatibility)
@@ -158,22 +170,28 @@ function Register() {
         formDataToSend,
       );
 
+      // const response = await fetch(
+      //   "https://dinothink.vercel.app/api/user/register",
+      //   {
+      //     method: "POST",
+      //     body: formDataToSend, // Send the form data as the request body
+      //   },
+      // );
+
       console.log(response);
       setIsLoading(false);
 
       if (response.status === 200 || response.status === 201) {
         // Success
-        toast.success("Registration successful! Please log in.");
-        navigate("/login"); // Redirect to the /login page
+        alert("Registration successful");
+        navigate("/login"); // Redirect to the /user/ page
       } else {
         // Handle errors
-        toast.error(
-          response.data.message || "An error occurred during registration.",
-        );
+        setError(response.data.message || "An error occurred");
       }
     } catch (error) {
       setIsLoading(false);
-      toast.error("Network error, please try again.");
+      setError("Network error, please try again.");
     }
   };
 
@@ -190,13 +208,13 @@ function Register() {
                 Let’s get you started
               </h1>
               <p className="font-roboto p-[32px] text-center text-[16px] font-normal text-black">
-                Enter the details to get going
+                Enter the detail to get going
               </p>
             </div>
 
             <div className="flex-col items-center justify-start text-center">
               {/* Error message display */}
-              {!error && error && (
+              {error && (
                 <div className="mb-6 flex items-center justify-between rounded-lg bg-red-500 p-4 text-white">
                   <div className="flex items-center">
                     <AlertCircle className="mr-2 h-4 w-4" />
@@ -210,18 +228,19 @@ function Register() {
                   </button>
                 </div>
               )}
-
               <form
                 className="w-full py-[24px]"
                 onSubmit={handleSubmit}
                 method="POST"
-                action="/"
-                autoComplete="off"
+                action="/register"
               >
                 <div>
                   <div className="mt-1 flex items-center justify-center">
                     <div className="">
                       <div className="flex justify-center">
+                        {/* <div className="flex h-32 max-h-[105px] w-32 max-w-[105px] items-center justify-center rounded-full bg-gray-100 ring-4 ring-gray-50">
+                        <User className="h-16 w-16 text-gray-300" />
+                      </div> */}
                         {imagePreview ? (
                           <div className="relative inline-block">
                             <img
@@ -274,6 +293,26 @@ function Register() {
                         </p>
                       </div>
                     </div>
+
+                    {/* <div className="mt-1 flex grow flex-col justify-start">
+                      <label
+                        htmlFor="username"
+                        className="block text-left text-sm font-medium text-gray-700"
+                      >
+                        Username
+                      </label>
+                      <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        required
+                        maxLength="255"
+                        minLength="5"
+                        autoComplete="off"
+                        placeholder="mark"
+                        className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                      />
+                    </div> */}
                   </div>
 
                   <div className="mt-6">
@@ -316,6 +355,7 @@ function Register() {
                       placeholder="you@example.com"
                       value={formData.email}
                       onChange={handleChange}
+                      // pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
                     />
                   </div>
@@ -378,7 +418,6 @@ function Register() {
                       </button>
                     </div>
                   </div>
-
                   <div className="mt-6">
                     <label
                       htmlFor="confirmPassword"
@@ -417,10 +456,8 @@ function Register() {
                       </button>
                     </div>
                   </div>
-
                   <div className="my-6 flex justify-center">
                     <button
-                      disabled={isLoading}
                       type={isLoading ? "button" : "submit"}
                       className="flex w-full max-w-[100px] justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                     >
@@ -428,6 +465,7 @@ function Register() {
                     </button>
                   </div>
                 </div>
+                {/* <ToastContainer /> */}
               </form>
             </div>
           </div>
@@ -436,9 +474,6 @@ function Register() {
       <footer>
         <SimpleFooter />
       </footer>
-
-      {/* Toast Container */}
-      <ToastContainer />
     </>
   );
 }
