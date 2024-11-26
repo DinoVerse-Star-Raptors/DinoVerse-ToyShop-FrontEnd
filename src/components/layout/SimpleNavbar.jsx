@@ -8,7 +8,7 @@ function SimpleNavbar() {
         className={`relative z-50 w-[100%] bg-white shadow-md ${utilStyles.nav}`}
       >
         <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between">
+          <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-[16px]">
             <div className="flex-shrink-0">
               <a className="flex items-center" href="/">
                 <span className="font-roboto w-[107px] text-left text-[24px] font-medium text-black opacity-100">

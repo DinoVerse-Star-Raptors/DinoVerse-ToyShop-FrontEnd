@@ -20,6 +20,7 @@ import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
 import Dashboard from "./pages/User/Dashboard"; // Protected page
 import ProtectedRoute from "./utils/ProtectedRoute";
 import UserPanel from "./pages/User/UserPanel";
+import Logout from "./pages/User/Logout";
 
 const router = createBrowserRouter([
   {
@@ -80,7 +81,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/user",
-    // element: <ProtectedRoute element={<UserPanel />} />,
+    errorElement: <ErrorPage />,
     element: (
       <ProtectedRoute>
         <UserPanel />
@@ -99,11 +100,19 @@ const router = createBrowserRouter([
         path: "profile", // Profile route
         element: <>profile</>,
       },
+      {
+        path: "settings",
+        element: <>settings</>,
+      },
+      {
+        path: "orders",
+        element: <>orders</>,
+      },
+      {
+        path: "logout",
+        element: <Logout />,
+      },
     ],
-  },
-  {
-    path: "*",
-    element: <ErrorPage />,
   },
 ]);
 

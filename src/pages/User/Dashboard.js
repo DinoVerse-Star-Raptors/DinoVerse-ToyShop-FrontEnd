@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; // Auth context for accessing user data
 
 function Dashboard() {
-  const { user, logout } = useAuth(); // Access user data and logout function from context
+  // const { user, logout } = useAuth(); // Access user data and logout function from context
+  const { user } = useAuth(); // Access user data and logout function from context
   const navigate = useNavigate(); // Use navigate for redirection
 
   const [isLoading, setIsLoading] = useState(true); // Loading state to handle user data fetch
@@ -16,10 +17,10 @@ function Dashboard() {
     }
   }, [user, navigate]); // Run this effect when `user` changes
 
-  const handleLogout = () => {
-    logout(); // Call logout from AuthContext to clear user data
-    navigate("/login"); // Redirect to login page after logging out
-  };
+  // const handleLogout = () => {
+  //   logout(); // Call logout from AuthContext to clear user data
+  //   navigate("/login"); // Redirect to login page after logging out
+  // };
 
   if (isLoading) {
     return <div>Loading...</div>; // Show loading state while checking user data
@@ -27,8 +28,8 @@ function Dashboard() {
 
   return (
     <>
-      <section className="flex justify-center py-[64px]">
-        <div className="w-full max-w-[768px]">
+      <section className="flex justify-center py-[16px]">
+        <div className="w-full">
           <div className="flex-col items-center justify-start text-center">
             <h1 className="font-roboto text-[32px] font-normal text-black">
               Welcome back, {user.fullname}
@@ -38,14 +39,14 @@ function Dashboard() {
             </p>
           </div>
 
-          <div className="flex-col items-center justify-start text-center">
+          {/* <div className="hidden flex-col items-center justify-start text-center">
             <button
               onClick={handleLogout}
               className="w-full max-w-[200px] justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             >
               Logout
             </button>
-          </div>
+          </div> */}
 
           <div className="mt-8">
             <h2 className="font-roboto text-[24px] text-gray-800">
