@@ -60,7 +60,7 @@ const UserPanel = () => {
           <h2 className="mb-2 text-2xl font-bold text-gray-800">User Panel</h2>
           {/* Display the username dynamically */}
           <p className="text-lg text-gray-600">
-            Hi {user?.username || "Guest"}
+            Hi, {user?.username || "Guest"}
           </p>{" "}
           {/* Check if user is available, else display "Guest" */}
           <nav>
