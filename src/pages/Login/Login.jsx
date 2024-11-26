@@ -55,23 +55,24 @@ function Login() {
         Cookies.set("auth_token", token, { expires: 1 });
 
         // Display a success notification
-        // toast.success("Login successful! Redirecting...");
         toast.success("Login successful! Redirecting...", {
-          position: "top-center",
-          autoClose: 3000, // Automatically close after 3 seconds
+          position: "top-center", // Toast position
+          autoClose: 5000, // Automatically close after 3 seconds
           hideProgressBar: true, // Hide the progress bar
         });
 
         // Redirect to the dashboard after successful login
-        // navigate("/user/dashboard");
-        // Use setTimeout to delay the redirection after the toast message is displayed
         setTimeout(() => {
           navigate("/user/dashboard"); // Redirect to the dashboard after the delay
         }, 3000); // Delay of 3000ms (3 seconds) to match the toast autoClose time
       }
     } catch (error) {
-      // Display error notification
-      toast.error("Invalid username or password. Please try again.");
+      // Display error notification with "top-center" position
+      toast.error("Invalid username or password. Please try again.", {
+        position: "top-center", // Set position to top-center
+        autoClose: 5000, // Automatically close after 3 seconds
+        hideProgressBar: true, // Hide the progress bar
+      });
       console.error("Login error:", error);
     } finally {
       setLoading(false);
