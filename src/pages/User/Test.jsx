@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import Cookies from "js-cookie";
+import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const TestProtect = () => {
   const [message, setMessage] = useState("");
@@ -16,11 +17,13 @@ const TestProtect = () => {
     }
 
     try {
-      const response = await axios.get("/api/user/testprotect", {
+      const response = await axiosInstance.get("/api/user/testprotect", {
         headers: {
           Authorization: `Bearer ${token}`, // Pass token as Bearer token
         },
       });
+
+      console.log(response);
 
       // If successful, display the message and user data
       setMessage(response.data.message);
