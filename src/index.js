@@ -21,12 +21,9 @@ import Dashboard from "./pages/User/Dashboard"; // Protected page
 import ProtectedRoute from "./utils/ProtectedRoute";
 import UserPanel from "./pages/User/UserPanel";
 import Logout from "./pages/User/Logout";
+import Test from "./pages/User/Test";
 
 const router = createBrowserRouter([
-  {
-    path: "/test",
-    element: <UserPanel />,
-  },
   {
     path: "/register",
     element: <Register />,
@@ -111,6 +108,10 @@ const router = createBrowserRouter([
       {
         path: "logout",
         element: <Logout />,
+      },
+      {
+        path: "test",
+        element: <Test />,
       },
     ],
   },

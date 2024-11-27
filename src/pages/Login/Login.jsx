@@ -31,6 +31,38 @@ function Login() {
     checkToken(); // Run the check on component mount
   }, [navigate]); // Ensure that `navigate` is included as a dependency for useEffect
 
+  // Check if the user is already logged in (i.e., if the token exists)
+  // useEffect(() => {
+  //   const checkToken = async () => {
+  //     const token = Cookies.get("auth_token"); // Get the token from cookies
+  //     if (token) {
+  //       try {
+  //         // Send a request to check if the token is valid
+  //         const response = await axiosInstance.post(
+  //           "/api/auth",
+  //           {},
+  //           {
+  //             headers: {
+  //               Authorization: `Bearer ${token}`,
+  //             },
+  //           },
+  //         );
+
+  //         // If the response is successful, redirect to the dashboard
+  //         if (response.status === 200) {
+  //           navigate("/user/dashboard"); // Redirect to dashboard
+  //         }
+  //       } catch (error) {
+  //         // If the token is invalid or an error occurs, remove the token and redirect to login
+  //         Cookies.remove("auth_token");
+  //         navigate("/login");
+  //       }
+  //     }
+  //   };
+
+  //   checkToken(); // Run the check on component mount
+  // }, [navigate]); // Ensure that `navigate` is included as a dependency for useEffect
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -67,6 +99,7 @@ function Login() {
         }, 3000); // Delay of 3000ms (3 seconds) to match the toast autoClose time
       }
     } catch (error) {
+      setLoading(false);
       // Display error notification with "top-center" position
       toast.error("Invalid username or password. Please try again.", {
         position: "top-center", // Set position to top-center
@@ -75,7 +108,8 @@ function Login() {
       });
       console.error("Login error:", error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
+      console.log("handle done");
     }
   };
 

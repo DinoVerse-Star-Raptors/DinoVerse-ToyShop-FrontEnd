@@ -35,7 +35,7 @@ function SimpleNavbar() {
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition duration-150 ease-in-out hover:text-gray-900"
                       to="/user/logout"
                     >
-                      Log Out
+                      Logout
                     </Link>
                   </>
                 ) : (
@@ -44,7 +44,7 @@ function SimpleNavbar() {
                       className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 transition duration-150 ease-in-out hover:text-gray-900"
                       to="/login"
                     >
-                      Log In
+                      Login
                     </Link>
                     <Link
                       className="rounded-2xl bg-gradient-to-r from-indigo-500 to-blue-500 px-3 py-2 text-sm font-medium text-white transition duration-150 ease-in-out hover:bg-indigo-700"

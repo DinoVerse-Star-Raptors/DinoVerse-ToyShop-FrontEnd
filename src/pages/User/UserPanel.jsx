@@ -23,6 +23,11 @@ const UserPanel = () => {
 
   const menuItems = [
     {
+      to: "test",
+      icon: <Home className="mr-3 h-5 w-5" />,
+      label: "test",
+    },
+    {
       to: "dashboard",
       icon: <Home className="mr-3 h-5 w-5" />,
       label: "Dashboard",
