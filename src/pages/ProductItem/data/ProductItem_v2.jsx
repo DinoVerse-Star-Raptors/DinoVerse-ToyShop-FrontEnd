@@ -2,22 +2,13 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import uiStyle from "./ProductItem.module.css";
-import { useAuth } from "../../context/AuthContext"; // Assuming you are using this context
+// import { useAuth } from "../../context/AuthContext"; // Assuming you are using this context
 import axios from "axios";
 import { reviews } from "./data/reviews"; // Import reviews from the separate file
 import TagGrid from "./TagGrid"; // Import TagGrid from the separate file
 import factorsDevFn from "./data/factorsDev.js"; // Import the factorsDev function
 
 const ItemInfo = ({ product = {} }) => {
-  const { addToCart } = useAuth(); // Use the context to access addToCart
-  const [quantity, setQuantity] = useState(1);
-
-  const handleAddToCart = () => {
-    if (product) {
-      // alert(quantity);
-      addToCart(product, quantity); // Add product to cart with selected quantity
-    }
-  };
   if (!product) return <></>;
 
   const rating = product?.rating?.rate || 0;
@@ -121,8 +112,6 @@ const ItemInfo = ({ product = {} }) => {
                 </label>
                 <input
                   defaultValue={1}
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
                   id="quantity"
                   type="number"
                   className="w-[80px] rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-pink-300"
@@ -133,10 +122,7 @@ const ItemInfo = ({ product = {} }) => {
             </div>
 
             <div className="flex justify-between gap-x-4 py-3">
-              <button
-                onClick={handleAddToCart}
-                className="w-full rounded-full bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700"
-              >
+              <button className="w-full rounded-full bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700">
                 Add to Cart
               </button>
               <button className="flex w-full items-center justify-center rounded-full bg-indigo-600 py-3 font-semibold text-white hover:bg-indigo-700">
