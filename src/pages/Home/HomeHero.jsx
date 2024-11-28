@@ -10,6 +10,7 @@ function HomeHero() {
           <a href="#">Get Your Toy</a>
         </div>
         <div></div>
+        
       </section>
   )
 }

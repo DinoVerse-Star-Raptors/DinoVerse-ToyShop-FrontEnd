@@ -11,35 +11,35 @@ function HomeCategories() {
   return (
     <section className="container mx-auto my-8 ">
         <nav className="text-4xl font-bold mb-4 text-center">Categories</nav>
-        <div className="grid grid-cols-1 sm:grid-cols-7 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-7 ">
             {/* <!-- Empty category boxes for now --> */}
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white rounded-md">
               <img src={Creative} alt="creative" />
-              <h3>Creative</h3>
+              <h3 className='text-center'>Creative</h3>
             </div>
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white rounded-md">
               <img src={Emotion} alt="Emotion" />
-              <h3>Emotion</h3>
+              <h3 className='text-center'>Emotion</h3>
             </div>
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white rounded-md">
               <img src={FineMotor} alt="Finemotor" />
-              <h3>Fine Motor</h3>
+              <h3 className='text-center'>Fine Motor</h3>
             </div>
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white rounded-md">
               <img src={GrossMotor} alt="Grossmotor" />
-              <h3>Gross Motor</h3>
+              <h3 className='text-center'>Gross Motor</h3>
             </div>
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white rounded-md">
               <img src={Language} alt="Language" />
-              <h3>Language</h3>
+              <h3 className='text-center'>Language</h3>
             </div>
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white  rounded-md">
               <img src={Musical} alt="Musical" />
-              <h3>Musical</h3>
+              <h3 className='text-center'>Musical</h3>
             </div>
-            <div className="bg-white p-8 rounded-md">
+            <div className="bg-white  rounded-md">
               <img src={Social} alt="Social" />
-              <h3>Social</h3>
+              <h3 className='text-center'>Social</h3>
             </div>
         </div>
     </section>

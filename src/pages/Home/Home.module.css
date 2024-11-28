@@ -45,6 +45,7 @@
 
   .HomeHero {
     display: flex;
+    flex-direction: row;
     background-image: url("./assets/Homebanner.png");
     height: 40rem;
     background-position: center;
@@ -52,7 +53,7 @@
     background-size: auto;
     position: relative;
     border-radius: 6px;
-  
+    
   }
   
   .HomeHeroText {
