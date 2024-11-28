@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Cookies from "js-cookie";
-import axios from "axios"; // Import axios to make API calls
 import axiosInstance from "../services/axiosInstance"; // Import axiosInstance
 
 // Create the context for authentication and cart
@@ -41,10 +40,47 @@ export const AuthProvider = ({ children }) => {
       const response = await axiosInstance.get("/api/cart", {
         headers: { Authorization: `Bearer ${Cookies.get("auth_token")}` },
       });
-      setCart(response.data.items || []); // Set the cart data
+
+      // Check if the response status code is 200 (OK)
+      if (response.status === 200) {
+        setCart(response.data.items || []); // Set the cart data
+      } else {
+        // Handle unexpected status codes
+        console.error(`Unexpected response status: ${response.status}`);
+      }
     } catch (error) {
-      console.error("Error fetching cart:", error);
+      // Handle specific HTTP error codes
+      if (error.response) {
+        // Server responded with a status code outside the 2xx range
+        switch (error.response.status) {
+          case 400:
+            console.error("Bad Request - Invalid cart data");
+            break;
+          case 401:
+            console.error("Unauthorized - Please log in again");
+            break;
+          case 404:
+            console.error("Cart not found");
+            break;
+          case 500:
+            console.error("Server error - Please try again later");
+            break;
+          default:
+            console.error(`Unexpected error: ${error.response.status}`);
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received from the server");
+      } else {
+        // Something went wrong setting up the request
+        console.error("Error setting up the request:", error.message);
+      }
     }
+  };
+
+  // Get the current cart state
+  const getCart = () => {
+    return cart; // Simply return the cart state
   };
 
   // Login function to store user data and token in cookies and localStorage
@@ -64,12 +100,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Add item to the cart via API
-  const addToCart = async (item) => {
+  const addToCart = async (item = {}, qty = 0) => {
+    console.log(item._id, qty);
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "/api/cart/add",
-        { productId: item.id, quantity: 1 },
-        { headers: { Authorization: `Bearer ${Cookies.get("auth_token")}` } },
+        { productId: item._id, quantity: qty },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("auth_token")}`,
+            "Content-Type": "application/json",
+          },
+        },
       );
       setCart(response.data.items); // Update cart with the new data from the API
     } catch (error) {
@@ -80,8 +122,11 @@ export const AuthProvider = ({ children }) => {
   // Remove item from the cart via API
   const removeFromCart = async (itemId) => {
     try {
-      const response = await axios.delete("/api/cart/remove", {
-        headers: { Authorization: `Bearer ${Cookies.get("auth_token")}` },
+      const response = await axiosInstance.delete("/api/cart/remove", {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("auth_token")}`,
+          "Content-Type": "application/json",
+        },
         data: { productId: itemId },
       });
       setCart(response.data.items); // Update cart with the new data from the API
@@ -93,7 +138,7 @@ export const AuthProvider = ({ children }) => {
   // Clear the cart via API
   const clearCart = async () => {
     try {
-      const response = await axios.delete("/api/cart/clear", {
+      const response = await axiosInstance.delete("/api/cart/clear", {
         headers: { Authorization: `Bearer ${Cookies.get("auth_token")}` },
       });
       setCart(response.data.items); // Clear cart with data from the API
@@ -112,6 +157,7 @@ export const AuthProvider = ({ children }) => {
         addToCart,
         removeFromCart,
         clearCart,
+        getCart, // Add getCart to the context value
       }}
     >
       {children}

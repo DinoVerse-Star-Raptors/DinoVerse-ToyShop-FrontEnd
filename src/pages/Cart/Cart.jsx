@@ -1,32 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext"; // Assuming you are using this context
 import ProductImage from "./assets/product-image.png"; // Assuming this image exists
-import Cookies from "js-cookie";
-import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
+// import Cookies from "js-cookie";
+// import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const Cart = () => {
-  const { removeFromCart, addToCart, clearCart, user } = useAuth();
+  const { removeFromCart, addToCart, clearCart, user, getCart } = useAuth(); // Get getCart from context
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // Fetch user's cart data from the server
+  // Fetch cart data from context when the user is logged in
   useEffect(() => {
     if (user) {
-      const fetchCart = async () => {
-        try {
-          const response = await axiosInstance.get("/api/cart", {
-            headers: {
-              Authorization: `Bearer ${Cookies.get("auth_token")}`, // Assuming you're using JWT token stored in Cookies
-            },
-          });
-          setCart(response.data);
-        } catch (error) {
-          console.error("Failed to fetch cart:", error);
-        }
-      };
-      fetchCart();
+      const fetchedCart = getCart(); // Get the current cart from context
+      setCart(fetchedCart); // Set the cart from context to local state
     }
-  }, [user]);
+  }, [user, getCart]); // Re-run when user or getCart changes
 
   // Calculate the total price based on cart items
   useEffect(() => {
@@ -60,7 +49,7 @@ const Cart = () => {
   };
 
   // Shipping Fee (unchanged)
-  const shippingFee = 29;
+  const shippingFee = 20;
 
   // Final total with shipping
   const finalTotal = totalPrice + shippingFee;
@@ -68,7 +57,7 @@ const Cart = () => {
   // If the cart is empty, show an empty cart message
   if (cart.length === 0) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-[200px] items-center justify-center">
         <p className="text-xl">Your cart is empty.</p>
       </div>
     );
