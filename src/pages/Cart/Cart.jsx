@@ -1,68 +1,78 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext"; // Assuming you are using this context
-// import uiStyle from "./Cart.module.css";
 import ProductImage from "./assets/product-image.png"; // Assuming this image exists
+import Cookies from "js-cookie";
+import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const Cart = () => {
-  const { removeFromCart, addToCart, clearCart } = useAuth();
+  const { removeFromCart, addToCart, clearCart, user } = useAuth();
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // Read cart data from localStorage when the component mounts
+  // Fetch user's cart data from the server
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
-    setCart(storedCart);
-  }, []);
-
-  // Save cart data to localStorage whenever cart changes
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    if (user) {
+      const fetchCart = async () => {
+        try {
+          const response = await axiosInstance.get("/api/cart", {
+            headers: {
+              Authorization: `Bearer ${Cookies.get("auth_token")}`, // Assuming you're using JWT token stored in Cookies
+            },
+          });
+          setCart(response.data);
+        } catch (error) {
+          console.error("Failed to fetch cart:", error);
+        }
+      };
+      fetchCart();
+    }
+  }, [user]);
 
   // Calculate the total price based on cart items
   useEffect(() => {
-    const calculateTotal = () => {
-      const subtotal = cart.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0,
-      );
-      setTotalPrice(subtotal);
-    };
-
-    calculateTotal();
-  }, [cart]); // Recalculate total whenever cart changes
+    const subtotal = cart.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0,
+    );
+    setTotalPrice(subtotal);
+  }, [cart]);
 
   // Handle item quantity change
-  const handleQuantityChange = (item, increment) => {
-    const updatedItem = {
-      ...item,
-      quantity: item.quantity + (increment ? 1 : -1),
-    };
-    if (updatedItem.quantity <= 0) {
-      removeFromCart(item.id); // Remove item if quantity is 0 or less
+  const handleQuantityChange = async (item, increment) => {
+    const updatedQuantity = item.quantity + (increment ? 1 : -1);
+    if (updatedQuantity <= 0) {
+      await removeFromCart(item.id); // Remove item if quantity is 0 or less
     } else {
-      addToCart(updatedItem); // Update item quantity
+      await addToCart({ ...item, quantity: updatedQuantity }); // Update item quantity
     }
   };
 
   // Handle remove item action
-  const handleRemoveItem = (itemId) => {
-    const updatedCart = cart.filter((item) => item.id !== itemId);
-    setCart(updatedCart);
+  const handleRemoveItem = async (itemId) => {
+    await removeFromCart(itemId);
+    setCart(cart.filter((item) => item.id !== itemId)); // Update cart state
   };
 
   // Handle clear cart action
-  const handleClearCart = () => {
-    setCart([]);
-    clearCart(); // Call the clearCart from AuthContext to clear cart in the global state
+  const handleClearCart = async () => {
+    await clearCart(); // Clear cart on the server
+    setCart([]); // Clear local cart state
   };
 
-  // Calculate Discount and Shipping Fee
-  const discount = 50; // Example fixed discount
-  const shippingFee = 29; // Example fixed shipping fee
+  // Shipping Fee (unchanged)
+  const shippingFee = 29;
 
-  // Calculate total based on cart and fees
-  const finalTotal = totalPrice - discount + shippingFee;
+  // Final total with shipping
+  const finalTotal = totalPrice + shippingFee;
+
+  // If the cart is empty, show an empty cart message
+  if (cart.length === 0) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-xl">Your cart is empty.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-screen-xl px-6 py-8">
@@ -72,58 +82,50 @@ const Cart = () => {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Left Section - Cart Items */}
         <div className="col-span-2">
-          {cart.length === 0 ? (
-            <div className="text-center text-lg text-gray-500">
-              Your cart is empty.
-            </div>
-          ) : (
-            cart.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center justify-between border-b border-gray-300 py-6"
-              >
-                <img
-                  src={ProductImage}
-                  alt={item.name}
-                  className="h-20 w-20 object-cover"
-                />
-                <div className="mx-4 flex-1">
-                  <h2 className="text-xl font-semibold">{item.name}</h2>
-                  <p className="mb-2 text-sm text-gray-600">
-                    {item.description}
-                  </p>
-                  <div className="flex items-center gap-4">
-                    <p className="text-gray-700">Qty:</p>
-                    <button
-                      className="rounded-md border border-gray-300 bg-gray-100 px-3 py-1"
-                      onClick={() => handleQuantityChange(item, false)}
-                      disabled={item.quantity <= 1}
-                    >
-                      -
-                    </button>
-                    <span className="font-semibold">{item.quantity}</span>
-                    <button
-                      className="rounded-md border border-gray-300 bg-gray-100 px-3 py-1"
-                      onClick={() => handleQuantityChange(item, true)}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-                <div className="flex flex-col items-end">
-                  <span className="text-lg font-semibold text-pink-600">
-                    ฿{item.price * item.quantity}
-                  </span>
+          {cart.map((item) => (
+            <div
+              key={item.id}
+              className="flex items-center justify-between border-b border-gray-300 py-6"
+            >
+              <img
+                src={ProductImage}
+                alt={item.name}
+                className="h-20 w-20 object-cover"
+              />
+              <div className="mx-4 flex-1">
+                <h2 className="text-xl font-semibold">{item.name}</h2>
+                <p className="mb-2 text-sm text-gray-600">{item.description}</p>
+                <div className="flex items-center gap-4">
+                  <p className="text-gray-700">Qty:</p>
                   <button
-                    className="mt-2 text-sm text-red-500"
-                    onClick={() => handleRemoveItem(item.id)}
+                    className="rounded-md border border-gray-300 bg-gray-100 px-3 py-1"
+                    onClick={() => handleQuantityChange(item, false)}
+                    disabled={item.quantity <= 1}
                   >
-                    Remove
+                    -
+                  </button>
+                  <span className="font-semibold">{item.quantity}</span>
+                  <button
+                    className="rounded-md border border-gray-300 bg-gray-100 px-3 py-1"
+                    onClick={() => handleQuantityChange(item, true)}
+                  >
+                    +
                   </button>
                 </div>
               </div>
-            ))
-          )}
+              <div className="flex flex-col items-end">
+                <span className="text-lg font-semibold text-pink-600">
+                  ฿{item.price * item.quantity}
+                </span>
+                <button
+                  className="mt-2 text-sm text-red-500"
+                  onClick={() => handleRemoveItem(item.id)}
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Right Section - Order Summary */}
@@ -134,12 +136,6 @@ const Cart = () => {
           <div className="flex justify-between py-2">
             <span className="font-medium">Subtotal</span>
             <span>฿{totalPrice}</span>
-          </div>
-
-          {/* Discount */}
-          <div className="flex justify-between py-2">
-            <span className="font-medium">Discount</span>
-            <span>-฿{discount}</span>
           </div>
 
           {/* Shipping Fee */}

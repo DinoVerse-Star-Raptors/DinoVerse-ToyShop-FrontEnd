@@ -53,6 +53,11 @@ const UserPanel = () => {
       label: "Logout",
       // onClick: handleLogout, // Add logout functionality to the "Logout" menu item
     },
+    {
+      to: "test",
+      icon: <Home className="mr-3 h-5 w-5" />,
+      label: "test",
+    },
   ];
 
   return (
