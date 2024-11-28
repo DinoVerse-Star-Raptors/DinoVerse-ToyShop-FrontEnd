@@ -59,6 +59,7 @@ export const AuthProvider = ({ children }) => {
       } else {
         updatedCart.push({ ...item, quantity: 1 });
       }
+      console.log(updatedCart);
       localStorage.setItem("cart", JSON.stringify(updatedCart)); // Optionally save to localStorage
       return updatedCart;
     });

@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import uiStyle from "./ProductItem.module.css";
 import { useAuth } from "../../context/AuthContext"; // Assuming you are using this context
-// import axios from "axios";
+import axios from "axios";
 import { reviews } from "./data/reviews"; // Import reviews from the separate file
 import TagGrid from "./TagGrid"; // Import TagGrid from the separate file
 import factorsDevFn from "./data/factorsDev.js"; // Import the factorsDev function
-import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const ItemInfo = ({ product = {} }) => {
-  const { addToCart } = useAuth(); // Use the context to access addToCart
+  // const { addToCart } = useAuth(); // Use the context to access addToCart
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
@@ -26,17 +25,6 @@ const ItemInfo = ({ product = {} }) => {
 
   const tags = product?.tags || [];
   const factorsDev = factorsDevFn(tags) || [];
-
-  if (!product) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p style={{ color: "red", fontSize: "18px", fontWeight: "bold" }}>
-          Product data is missing or invalid. Please try again later.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="ml-14">
@@ -264,72 +252,55 @@ const ItemInfo = ({ product = {} }) => {
 };
 
 const ProductItem = () => {
+  // const { itemId } = useParams();
+  // const [product, setProduct] = useState(null);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const [error, setError] = useState(null);
   const { itemId } = useParams();
+  // const { addToCart } = useAuth(); // Use the context to access addToCart
   const [product, setProduct] = useState(null);
+  // const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
-      setIsLoading(true); // Ensure loading is set at the start of the API call
       try {
-        // Attempt to fetch the product data
-        const response = await axiosInstance.get(`/api/products/${itemId}`);
+        const response = await axios.get(
+          `https://dinothink.vercel.app/api/products/${itemId}`,
+        );
+        const productData = response.data;
 
-        if (response && response.data) {
-          // Set product if data is returned
-          setProduct(response.data);
+        // Check if the product exists and set the state
+        if (productData) {
+          setProduct(productData);
         } else {
-          // If no product data found, set an error message
           setError("Product not found.");
         }
       } catch (error) {
-        // Log the error to the console for debugging
-        console.error("Error fetching product:", error);
-
-        // If the error is due to a network issue, handle accordingly
-        if (error.response) {
-          // Response received but with an error (e.g., 404, 500)
-          setError(`Error fetching product: ${error.response.statusText}`);
-        } else if (error.request) {
-          // No response received (network issues)
-          setError("Network error. Please check your internet connection.");
-        } else {
-          // Any other errors
-          setError("Error loading product. Please try again later.");
-        }
+        setError("Error loading product.");
       } finally {
-        // Ensure the loading state is turned off after the API call completes
         setIsLoading(false);
       }
     };
 
-    // Call the fetchProduct function
-    // fetchProduct();
-    fetchProduct()
-      .then(() => {})
-      .catch(() => {}); // Handle promise rejection (optional)
-  }, [itemId]); // Re-run when itemId changes
+    fetchProduct();
+  }, [itemId]);
 
-  if (isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-xl">Loading...</p>
-      </div>
-    );
-  }
-  if (error) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p style={{ color: "red", fontSize: "18px", fontWeight: "bold" }}>
-          {error}
-        </p>
-      </div>
-    );
-  }
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return <ItemInfo product={product} />;
 };
+
+// PropTypes validation
+// TagGrid.propTypes = {
+//   tags: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       name: PropTypes.string.isRequired, // Validate that each tag has a 'name' field
+//     }),
+//   ).isRequired, // tags should be an array of objects with 'name' as a required string
+// };
 
 // PropTypes definition for ItemInfo
 ItemInfo.propTypes = {

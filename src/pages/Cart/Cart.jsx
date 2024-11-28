@@ -1,80 +1,173 @@
-import React from "react";
-import uiStyle from "./Cart.module.css";
-// import reactLogo from "./assets/logo192.png";
-// import { Link } from "react-router-dom";
-import ProductImage from "./assets/product-image.png";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext"; // Assuming you are using this context
+// import uiStyle from "./Cart.module.css";
+import ProductImage from "./assets/product-image.png"; // Assuming this image exists
 
 const Cart = () => {
+  const { removeFromCart, addToCart, clearCart } = useAuth();
+  const [cart, setCart] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  // Read cart data from localStorage when the component mounts
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(storedCart);
+  }, []);
+
+  // Save cart data to localStorage whenever cart changes
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  // Calculate the total price based on cart items
+  useEffect(() => {
+    const calculateTotal = () => {
+      const subtotal = cart.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0,
+      );
+      setTotalPrice(subtotal);
+    };
+
+    calculateTotal();
+  }, [cart]); // Recalculate total whenever cart changes
+
+  // Handle item quantity change
+  const handleQuantityChange = (item, increment) => {
+    const updatedItem = {
+      ...item,
+      quantity: item.quantity + (increment ? 1 : -1),
+    };
+    if (updatedItem.quantity <= 0) {
+      removeFromCart(item.id); // Remove item if quantity is 0 or less
+    } else {
+      addToCart(updatedItem); // Update item quantity
+    }
+  };
+
+  // Handle remove item action
+  const handleRemoveItem = (itemId) => {
+    const updatedCart = cart.filter((item) => item.id !== itemId);
+    setCart(updatedCart);
+  };
+
+  // Handle clear cart action
+  const handleClearCart = () => {
+    setCart([]);
+    clearCart(); // Call the clearCart from AuthContext to clear cart in the global state
+  };
+
+  // Calculate Discount and Shipping Fee
+  const discount = 50; // Example fixed discount
+  const shippingFee = 29; // Example fixed shipping fee
+
+  // Calculate total based on cart and fees
+  const finalTotal = totalPrice - discount + shippingFee;
+
   return (
-    <>
-      {/* main section */}
-      <div className="flex justify-center gap-8 mx-14">
+    <div className="mx-auto max-w-screen-xl px-6 py-8">
+      <h1 className="mb-8 text-center text-3xl font-bold">Your Cart</h1>
 
-          {/* Left Section - Product items in Cart */}
-          <div className="w-3/4">
-          <h1 className="text-2xl font-bold py-8">Cart</h1>
-
-              {/* item no.1 */}
-              <div className="flex">
-                  {/* item image */}
-                  <img 
+      {/* Cart Container */}
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        {/* Left Section - Cart Items */}
+        <div className="col-span-2">
+          {cart.length === 0 ? (
+            <div className="text-center text-lg text-gray-500">
+              Your cart is empty.
+            </div>
+          ) : (
+            cart.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between border-b border-gray-300 py-6"
+              >
+                <img
                   src={ProductImage}
-                  alt="" 
-                  className={uiStyle.Product_Image}/>
-
-                  {/* item details */}
-                  <div className="mx-4 text-pretty">
-
-                      {/* Title - Price */}
-                      <div className="flex justify-between pb-3">
-                          <h2 className="text-xl font-bold">Baby Toy Ring Tower</h2>
-                          <h2 className="text-xl font-bold text-pink-600">฿500</h2>
-                      </div>
-                      
-                      {/* Detail - Qty */}
-                      <p className="pb-3">A classic stacking toy featuring colorful rings of different sizes. It helps develop fine motor skills, hand-eye coordination, and problem-solving abilities.</p>
-                      <div className="flex">
-                          <p>Qty:</p>
-                          <button className="bg-white border border-gray-100">-</button>
-                          <span>1</span>
-                          <button className="bg-white border border-gray-100">+</button>
-                      </div>
+                  alt={item.name}
+                  className="h-20 w-20 object-cover"
+                />
+                <div className="mx-4 flex-1">
+                  <h2 className="text-xl font-semibold">{item.name}</h2>
+                  <p className="mb-2 text-sm text-gray-600">
+                    {item.description}
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <p className="text-gray-700">Qty:</p>
+                    <button
+                      className="rounded-md border border-gray-300 bg-gray-100 px-3 py-1"
+                      onClick={() => handleQuantityChange(item, false)}
+                      disabled={item.quantity <= 1}
+                    >
+                      -
+                    </button>
+                    <span className="font-semibold">{item.quantity}</span>
+                    <button
+                      className="rounded-md border border-gray-300 bg-gray-100 px-3 py-1"
+                      onClick={() => handleQuantityChange(item, true)}
+                    >
+                      +
+                    </button>
                   </div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className="text-lg font-semibold text-pink-600">
+                    ฿{item.price * item.quantity}
+                  </span>
+                  <button
+                    className="mt-2 text-sm text-red-500"
+                    onClick={() => handleRemoveItem(item.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
+            ))
+          )}
+        </div>
+
+        {/* Right Section - Order Summary */}
+        <div className="rounded-lg bg-gray-50 p-6 shadow-lg">
+          <h2 className="mb-4 text-xl font-semibold">Order Summary</h2>
+
+          {/* Subtotal */}
+          <div className="flex justify-between py-2">
+            <span className="font-medium">Subtotal</span>
+            <span>฿{totalPrice}</span>
           </div>
 
-          {/* Right Section - Order Summary */}
-          <div className="w-1/4">
-          <h1 className="text-2xl font-bold py-8">Order Summary</h1>
-
-              {/* Order Summary Details */}
-              <div>
-                  <div className="flex justify-between">
-                      <h2>Subtotal</h2>
-                      <h2>฿1000</h2>
-                  </div>
-                  <div className="flex justify-between">
-                      <h2>Discount</h2>
-                      <h2>-฿50</h2>
-                  </div>
-                  <div className="flex justify-between">
-                      <h2>Shipping Fee</h2>
-                      <h2>฿29</h2>
-                  </div>
-              </div>
-
-              {/* Order Summary Total */}
-              <div className="flex justify-between my-6">
-                  <h2>Total</h2>
-                  <h2 className="font-bold">฿921</h2>
-              </div>
-
-              {/* CheckOut Button */}
-              <button className="bg-white border w-full">CHECKOUT</button>
+          {/* Discount */}
+          <div className="flex justify-between py-2">
+            <span className="font-medium">Discount</span>
+            <span>-฿{discount}</span>
           </div>
 
+          {/* Shipping Fee */}
+          <div className="flex justify-between py-2">
+            <span className="font-medium">Shipping Fee</span>
+            <span>฿{shippingFee}</span>
+          </div>
+
+          {/* Total */}
+          <div className="my-6 flex justify-between border-t border-gray-300 pt-4 text-lg font-semibold">
+            <span>Total</span>
+            <span>฿{finalTotal}</span>
+          </div>
+
+          {/* Buttons */}
+          <button className="mb-4 w-full rounded-md bg-pink-600 py-3 font-semibold text-white transition-colors hover:bg-pink-700">
+            Checkout
+          </button>
+
+          <button
+            className="w-full rounded-md bg-red-500 py-3 font-semibold text-white transition-colors hover:bg-red-600"
+            onClick={handleClearCart}
+          >
+            Clear Cart
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

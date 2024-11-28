@@ -27,10 +27,27 @@ const ProductList = () => {
     fetchProducts();
   }, []); // Empty dependency array ensures it only runs once after the initial render
 
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p className="text-xl">Loading...</p>
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <p style={{ color: "red", fontSize: "18px", fontWeight: "bold" }}>
+          {error}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
-      {isLoading && <p>Loading products...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {/* {isLoading && <p>Loading products...</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>} */}
       {!isLoading && products.length > 0 && (
         <div>
           <h1 className="py-6 text-center text-3xl font-bold">Our Products</h1>
