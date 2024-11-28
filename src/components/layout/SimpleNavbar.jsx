@@ -16,7 +16,7 @@ function SimpleNavbar() {
             <div className="flex-shrink-0">
               <Link className="flex items-center" to="/">
                 <span className="font-roboto w-[107px] text-left text-[24px] font-medium text-black opacity-100">
-                  Dinoverse
+                  DinoVerse
                 </span>
               </Link>
             </div>

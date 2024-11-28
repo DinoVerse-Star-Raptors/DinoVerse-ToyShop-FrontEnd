@@ -2,15 +2,14 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Cookies from "js-cookie";
 
-// Create the context for authentication and cart
+// Create the context for authentication
 const AuthContext = createContext();
 
-// AuthProvider component that manages both user and cart state
+// Auth provider component that wraps the rest of the app
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState([]);
 
-  // Check if the user is logged in by checking the token from cookies or localStorage
+  // Check if user is logged in by checking the token from cookies or localStorage
   useEffect(() => {
     const checkAuthStatus = () => {
       const token = Cookies.get("auth_token");
@@ -44,53 +43,10 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     Cookies.remove("auth_token");
     localStorage.removeItem("user");
-    setCart([]); // Clear cart when logging out
-  };
-
-  // Add item to cart
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      const updatedCart = [...prevCart];
-      const itemIndex = updatedCart.findIndex(
-        (cartItem) => cartItem.id === item.id,
-      );
-      if (itemIndex >= 0) {
-        updatedCart[itemIndex].quantity += 1;
-      } else {
-        updatedCart.push({ ...item, quantity: 1 });
-      }
-      localStorage.setItem("cart", JSON.stringify(updatedCart)); // Optionally save to localStorage
-      return updatedCart;
-    });
-  };
-
-  // Remove item from cart
-  const removeFromCart = (itemId) => {
-    setCart((prevCart) => {
-      const updatedCart = prevCart.filter((item) => item.id !== itemId);
-      localStorage.setItem("cart", JSON.stringify(updatedCart)); // Optionally save to localStorage
-      return updatedCart;
-    });
-  };
-
-  // Clear cart
-  const clearCart = () => {
-    setCart([]);
-    localStorage.removeItem("cart"); // Clear cart from localStorage
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        cart,
-        login,
-        logout,
-        addToCart,
-        removeFromCart,
-        clearCart,
-      }}
-    >
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -101,5 +57,5 @@ AuthProvider.propTypes = {
   children: PropTypes.node.isRequired, // Ensures that children is required and is a valid React node
 };
 
-// Custom hook to use the Auth context (with cart management)
+// Custom hook to use the Auth context
 export const useAuth = () => useContext(AuthContext);

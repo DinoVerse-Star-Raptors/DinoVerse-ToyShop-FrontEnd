@@ -2,20 +2,138 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import uiStyle from "./ProductItem.module.css";
-// import { useAuth } from "../../context/AuthContext"; // Assuming you are using this context
 import axios from "axios";
-import { reviews } from "./data/reviews"; // Import reviews from the separate file
-import TagGrid from "./TagGrid"; // Import TagGrid from the separate file
-import factorsDevFn from "./data/factorsDev.js"; // Import the factorsDev function
+
+const TagGrid = ({ tags = [] }) => {
+  const uniqueTags = [...new Set(tags)];
+  return (
+    <div className="flex flex-wrap gap-3">
+      {uniqueTags.map((tag, index) => (
+        <span
+          key={index} // Unique key for each element in list
+          className="rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-800 transition-colors hover:bg-blue-200"
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+};
 
 const ItemInfo = ({ product = {} }) => {
   if (!product) return <></>;
 
+  // const reviews = product.reviews || [];
+  const reviews = [
+    {
+      createdAt: "03/10/2023",
+      reviewer: "Erica",
+      rating: Math.floor(Math.random() * 5) + 1,
+      date: "03/10/2023",
+      title: "Happy",
+      comment:
+        "My son enjoys playing with the train, but I have to say, the tracks don’t always stay connected when he pushes the train around too quickly. It can be a bit frustrating. It’s a good toy, but it might be better suited for gentle play or older kids.",
+    },
+    {
+      createdAt: "03/10/2023",
+      reviewer: "Raelyn",
+      rating: Math.floor(Math.random() * 5) + 1,
+      date: "04/09/2023",
+      title: "Wonderful Gift Idea",
+      comment:
+        "Bought this as a birthday gift for my nephew, and he loves it! The train set is bright and engaging, and it came in nice packaging, so it felt very special. It’s also safe, with rounded edges on the tracks and no small parts, which I appreciate. Great purchase!",
+    },
+  ];
   const rating = product?.rating?.rate || 0;
   const recommended = product.recommended ? "Recommend" : null;
+  const fullImageUrl = `${window.location.origin}/assets/`;
+  const factorsImage = [
+    {
+      name: "Auditory",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Auditory.png"}`,
+    },
+    {
+      name: "Cause & Effect",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-CauseEffect.png"}`,
+    },
+    {
+      name: "Concentration",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Concentration.png"}`,
+    },
+    {
+      name: "Coordination",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Coordination.png"}`,
+    },
+    {
+      name: "Creativity",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Creative.png"}`,
+    },
+    {
+      name: "Creative",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Creative.png"}`,
+    },
+    {
+      name: "Emotion",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Emotion.png"}`,
+    },
+    {
+      name: "Fine Motor",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-FineMotor.png"}`,
+    },
+    {
+      name: "Gross Motor",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-GrossMotor.png"}`,
+    },
+    {
+      name: "Imagination",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Imagination.png"}`,
+    },
+    {
+      name: "Language",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-LanguageCommunication.png"}`,
+    },
+    {
+      name: "Musical",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-Musical.png"}`,
+    },
+    {
+      name: "Social",
+      icon: `${fullImageUrl}${"icon-ChildDevelopment-text_Social.png"}`,
+    },
+  ];
+
+  // Define the categories you're interested in
+  const categoriesOfInterest = [
+    "Fine Motor",
+    "Gross Motor",
+    "Musical",
+    "Social",
+    "Creative",
+    "Language",
+    "Emotion",
+  ];
 
   const tags = product?.tags || [];
-  const factorsDev = factorsDevFn(tags) || [];
+  // Filter factors based on the tags (categoriesOfInterest)
+  const factorsDev = (product?.tags || [])
+    .filter((factor) => categoriesOfInterest.includes(factor)) // Filter tags by categories of interest
+    .map((factor) => {
+      // Try to find the factor in the factorsImage array
+      const factorObj = factorsImage.find((item) => item.name === factor);
+
+      // Return either the factor object or a default image URL
+      return factorObj
+        ? { name: factorObj.name, imageUrl: factorObj.icon }
+        : {
+            name: factor, // Use the factor name as a fallback
+            imageUrl:
+              "https://cdn.shopify.com/s/files/1/0608/9618/2503/files/Icon_ChildDev-08_FineMotor.2d219be.svg?v=1638866543",
+          };
+    })
+    .filter(Boolean);
+
+  console.log(tags);
+
   return (
     <>
       <div className="ml-14">
@@ -238,14 +356,8 @@ const ItemInfo = ({ product = {} }) => {
 };
 
 const ProductItem = () => {
-  // const { itemId } = useParams();
-  // const [product, setProduct] = useState(null);
-  // const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(null);
   const { itemId } = useParams();
-  // const { addToCart } = useAuth(); // Use the context to access addToCart
   const [product, setProduct] = useState(null);
-  // const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
