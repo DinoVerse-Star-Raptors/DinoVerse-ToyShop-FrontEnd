@@ -38,9 +38,14 @@ const UserPanel = () => {
       label: "Profile",
     },
     {
-      to: "settings",
+      to: "password",
       icon: <Settings className="mr-3 h-5 w-5" />,
-      label: "Settings",
+      label: "Password",
+    },
+    {
+      to: "adddress",
+      icon: <ShoppingCart className="mr-3 h-5 w-5" />,
+      label: "Adddress",
     },
     {
       to: "orders",
@@ -53,11 +58,11 @@ const UserPanel = () => {
       label: "Logout",
       // onClick: handleLogout, // Add logout functionality to the "Logout" menu item
     },
-    {
-      to: "test",
-      icon: <Home className="mr-3 h-5 w-5" />,
-      label: "test",
-    },
+    // {
+    //   to: "test",
+    //   icon: <Home className="mr-3 h-5 w-5" />,
+    //   label: "test",
+    // },
   ];
 
   return (

@@ -21,7 +21,11 @@ import Dashboard from "./pages/User/Dashboard"; // Protected page
 import ProtectedRoute from "./utils/ProtectedRoute";
 import UserPanel from "./pages/User/UserPanel";
 import Logout from "./pages/User/Logout";
-import Test from "./pages/User/Test";
+import Profile from "./pages/User/Profile";
+import Adddress from "./pages/User/Adddress";
+import Password from "./pages/User/Password";
+import Orders from "./pages/User/Orders";
+// import Test from "./pages/User/Test";
 
 const router = createBrowserRouter([
   {
@@ -95,24 +99,28 @@ const router = createBrowserRouter([
       },
       {
         path: "profile", // Profile route
-        element: <>profile</>,
+        element: <Profile />,
       },
       {
-        path: "settings",
-        element: <>settings</>,
+        path: "password",
+        element: <Password />,
+      },
+      {
+        path: "adddress",
+        element: <Adddress />,
       },
       {
         path: "orders",
-        element: <>orders</>,
+        element: <Orders />,
       },
       {
         path: "logout",
         element: <Logout />,
       },
-      {
-        path: "test",
-        element: <Test />,
-      },
+      // {
+      //   path: "test",
+      //   element: <Test />,
+      // },
     ],
   },
 ]);

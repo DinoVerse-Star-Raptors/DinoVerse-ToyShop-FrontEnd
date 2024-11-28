@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; // Auth context for accessing user data
 
-function Profile() {
+function Adddress() {
+  // const { user, logout } = useAuth(); // Access user data and logout function from context
   const { user } = useAuth(); // Access user data and logout function from context
   const navigate = useNavigate(); // Use navigate for redirection
 
@@ -26,7 +27,7 @@ function Profile() {
         <div className="w-full">
           <div className="flex-col items-center justify-start text-center">
             <h1 className="font-roboto text-[32px] font-normal text-black">
-              Profile, {user.fullname}
+              Adddress, {user.fullname}
             </h1>
           </div>
         </div>
@@ -35,4 +36,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Adddress;
