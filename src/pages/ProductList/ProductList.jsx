@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ItemCard from "./ItemCard"; // Assuming you have a separate file for ProductCard
-// import axios from "axios";
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const ProductList = () => {
