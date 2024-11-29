@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ItemCard from "./ItemCard"; // Assuming you have a separate file for ProductCard
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -10,9 +11,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          "https://dinothink.vercel.app/api/products",
-        );
+        const response = await axiosInstance.get("/api/products");
 
         // Assuming the response contains an array of products
         setProducts(response.data);
