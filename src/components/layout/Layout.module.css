@@ -24,14 +24,14 @@
   }
 
   .search_section {
-    @apply hidden md:flex relative m-[20px] my-0;
+    @apply relative m-[20px] my-0 hidden md:flex;
     @apply lg:m-[80px] lg:my-0 lg:ml-[20px];
     width: calc(100%);
     max-width: calc(100% - 290px);
   }
 
   .nav_right {
-    @apply w-full flex items-center space-x-4 justify-end;
+    @apply flex w-full items-center justify-end space-x-4;
     max-width: calc(100% - 600px);
     @apply md:max-w-screen-sm lg:max-w-screen-md;
   }
@@ -41,13 +41,13 @@
   .HomeHero {
     display: flex;
     background-image: url("./assets/images/Homebanner.png");
-    height: 40rem;
+    height: calc(100vh - 60px);
+    min-height: 500px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
     position: relative;
     border-radius: 6px;
-
   }
 
   .HomeHeroText {
@@ -55,29 +55,33 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 16px;
-    margin: 48px;
-    
-    
+    /* gap: 16px; */
+    width: 50%;
+    padding: 48px;
   }
 
   .HomeHeroText h1 {
-    font-weight: bolder;
-    font-size: 5rem;
+    font-weight: bold;
+    font-size: 4rem;
+    margin: 0;
+    padding: 0;
   }
 
   .HomeHeroText h3 {
-    font-weight: bolder;
-    font-size: 1.3rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 0;
   }
 
   .HomeHeroText a {
-    font-weight: bolder;
+    font-weight: bold;
     font-size: 1.5rem;
     background-color: rgb(255, 198, 41);
-    border-radius: 16px;
-    block-size: 40px;
+    border-radius: 26px;
     text-align: center;
-    width: 12rem;
+    padding: 0.5rem 2rem;
   }
 }
