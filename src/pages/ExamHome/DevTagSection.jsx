@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"; // Import axios
+// import axios from "axios"; // Import axios
 import DevCard from "./DevCard"; // Import AgeCard component
+import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const DevTagSection = () => {
   const [devTags, setDevTags] = useState([]); // State to store age tags
@@ -11,9 +12,7 @@ const DevTagSection = () => {
   useEffect(() => {
     const fetchAgeTags = async () => {
       try {
-        const response = await axios.get(
-          "https://dinothink.vercel.app/api/dev-tags",
-        );
+        const response = await axiosInstance.get("api/dev-tags");
         setDevTags(response.data); // Set the fetched data into state
       } catch (error) {
         setError(error.message); // Set error message in case of failure
