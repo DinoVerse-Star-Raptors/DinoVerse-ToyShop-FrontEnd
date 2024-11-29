@@ -37,7 +37,7 @@ const ItemCard = ({ product }) => {
           {name}
         </Link>
         <div className="mb-2 text-yellow-500">
-          Rating: {rating.rate} / 5 ({rating.count} reviews)
+          Rating: {rating.rate.toFixed(1)} / 5 ({rating.count} reviews)
         </div>
         <div className="mb-2 text-lg font-bold text-gray-900">${price}</div>
         {stockStatus === 1 ? (

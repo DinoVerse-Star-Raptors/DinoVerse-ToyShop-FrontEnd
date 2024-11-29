@@ -226,7 +226,7 @@ const ItemInfo = ({ product = {} }) => {
               ))}
           </div>
           <span className="ml-2 font-semibold text-gray-700">
-            {rating} out of 5 | {reviews.length} reviews
+            {rating.toFixed(1)} out of 5 | {reviews.length} reviews
           </span>
         </div>
 
