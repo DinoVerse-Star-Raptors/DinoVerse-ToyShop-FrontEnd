@@ -11,7 +11,7 @@ export const Shop = () => {
     <div className="flex">
       {/* <Fillter />
       <Products /> */}
-      Products
+      Products101
     </div>
   );
 };
