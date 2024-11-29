@@ -6,7 +6,8 @@ function HomeHero() {
     <section className={`${uiStyle.HomeHero}`}>
       <div className={`${uiStyle.HomeHeroText}`}>
         <h1>
-          Play, Learn <br />
+          Play, Learn
+          <br />
           Enjoy & Repeat
         </h1>
         <h3>
@@ -15,7 +16,6 @@ function HomeHero() {
         </h3>
         <a href="shop">Get Your Toy</a>
       </div>
-      <div></div>
     </section>
   );
 }

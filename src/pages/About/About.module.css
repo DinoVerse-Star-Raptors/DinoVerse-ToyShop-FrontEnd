@@ -1,38 +1,32 @@
-.About {
-    /* display: flex;
-    background-image: url("./assets/aboutbanner.jpg");
-    height: 300px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto;
-    position: relative;
-    border-radius: 6px; */
-}
+@tailwind components;
 
-.About img {
-    
-}
+@layer components {
+  .about {
+    padding: 0;
+  }
 
-section  {
-   margin: 48px;
-   gap: 12px;
-   display: flex;
-   flex-direction: column;
-}
+  .about img {
+    padding: 0;
+  }
 
- .text h1{
+  section {
+    padding: 0;
+  }
+
+  .text h1 {
     font-weight: bolder;
     font-size: 3rem;
     text-align: center;
-}
+  }
 
-.text h2{
+  .text h2 {
     font-weight: bold;
     font-size: 1.5rem;
-}
+  }
 
- .text ul{
+  .text ul {
     display: flex;
     flex-direction: column;
     gap: 12px;
+  }
 }
