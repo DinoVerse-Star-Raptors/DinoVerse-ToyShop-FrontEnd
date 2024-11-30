@@ -30,7 +30,7 @@ function ProductCard({ product, borderColor, bgColors }) {
 
   return (
     <div
-      className={`overflow-hidden ${borderClass} transform transition-transform duration-300 hover:translate-y-[-12px]`}
+      className={`overflow-hidden ${borderClass} transform transition-transform duration-300 hover:translate-y-[-10px]`}
     >
       <div className="flex items-center justify-center bg-blue-50 p-0">
         {/* Changed to bg-blue-50 */}
