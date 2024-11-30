@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
 
 function ProductCard({ product, borderColor, bgColors }) {
   // Function to render the star rating
@@ -10,10 +9,11 @@ function ProductCard({ product, borderColor, bgColors }) {
       <svg
         key={i}
         xmlns="http://www.w3.org/2000/svg"
-        fill={i < stars ? "currentColor" : "none"}
+        // fill={i < stars ? "currentColor" : "none"}
+        fill={i < stars ? "currentColor" : "currentColor"}
         viewBox="0 0 24 24"
         stroke="currentColor"
-        className={`h-5 w-5 p-[2px] ${i < stars ? "text-yellow-600" : "text-gray-200"}`}
+        className={`h-4 w-4 ${i < stars ? "text-yellow-600" : "text-white"}`}
       >
         <path
           strokeLinecap="round"
@@ -29,33 +29,20 @@ function ProductCard({ product, borderColor, bgColors }) {
   const borderClass = `border-2 ${borderColor}`;
 
   return (
-    <div
-      className={`overflow-hidden ${borderClass} transform transition-transform duration-300 hover:translate-y-[-12px]`}
-    >
+    <div className={`overflow-hidden ${borderClass}`}>
       <div className="flex items-center justify-center bg-blue-50 p-0">
         {/* Changed to bg-blue-50 */}
-        <Link to={`/item/${product?.productId}`}>
-          {/* Wrap with Link */}
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="h-full w-full object-contain"
-          />
-        </Link>
+        <img
+          src={product.imageUrl}
+          alt={product.name}
+          className="h-full w-full object-contain"
+        />
       </div>
 
-      <div
-        className={`p-4 ${bgColors} ${borderClass} border-b-0 border-l-0 border-r-0`}
-      >
+      <div className={`p-4 ${bgColors}`}>
         {/* Changed to bg-blue-50 */}
         <h3 className="mb-2 text-left text-lg font-semibold text-gray-800">
-          <Link
-            to={`/item/${product?.productId}`}
-            className="block overflow-hidden text-ellipsis whitespace-nowrap"
-          >
-            {/* Apply text clamp to product name */}
-            {product.name}
-          </Link>
+          {product.name}
         </h3>
         <div className="mb-2 flex items-center justify-between">
           <span className="text-xl font-bold text-gray-900">
@@ -77,8 +64,7 @@ function ProductCard({ product, borderColor, bgColors }) {
 // PropTypes remain the same as in the original component
 ProductCard.propTypes = {
   product: PropTypes.shape({
-    _id: PropTypes.string.isRequired, // Ensure this is the product ID
-    productId: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
     imageUrl: PropTypes.string.isRequired,
@@ -90,10 +76,10 @@ ProductCard.propTypes = {
     stock: PropTypes.bool.isRequired,
   }).isRequired,
   borderColor: PropTypes.oneOf([
-    "border-blue-400",
-    "border-amber-400",
-    "border-green-400",
-    "border-pink-400",
+    "border-blue-500",
+    "border-amber-500",
+    "border-green-500",
+    "border-pink-500",
   ]).isRequired, // Ensure the prop only takes these values
   bgColors: PropTypes.oneOf([
     "bg-indigo-200",

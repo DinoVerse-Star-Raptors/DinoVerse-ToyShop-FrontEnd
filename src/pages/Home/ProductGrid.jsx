@@ -25,14 +25,34 @@ function ProductGrid() {
     fetchProducts(); // Call the function to fetch products
   }, []);
 
+  // Array to assign different border colors
+  const borderColors = [
+    "border-blue-400", // Card 1 border color
+    "border-amber-400", // Card 2 border color
+    "border-green-400", // Card 3 border color
+    "border-pink-400", // Card 4 border color
+  ];
+
+  const bgColors = [
+    "bg-blue-200", // Card 1 border color
+    "bg-amber-200", // Card 2 border color
+    "bg-green-200", // Card 3 border color
+    "bg-pink-200", // Card 4 border color
+  ];
+
   return (
-    <div className="bg-white py-8">
+    <div className="pb-8 pt-4">
       {loading ? (
         <div className="text-center text-gray-500">Loading...</div>
       ) : (
-        <div className="grid grid-cols-2 gap-x-8 md:grid-cols-4">
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
+        <div className="grid grid-cols-1 gap-x-8 md:grid-cols-4">
+          {products.map((product, index) => (
+            <ProductCard
+              key={product._id}
+              product={product}
+              bgColors={bgColors[index]}
+              borderColor={borderColors[index]} // Dynamically assign the border color based on index
+            />
           ))}
         </div>
       )}
