@@ -8,46 +8,23 @@ function ProductGrid() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState("rating"); // Sorting option state
-  // const [tags, setTags] = useState(["all"]); // Tags filter state
+  const [tags, setTags] = useState(["all"]); // Tags filter state
 
+  // Format tag by replacing hyphens with spaces, capitalizing the first letter, and handling "&"
   const formatTag = (tag) => {
-    // Exclude "0-6M"
-    if (tag === "0-6m") {
-      return "0-6M"; // Returning null will exclude this tag when filtering
-    }
-
     // Check for the special case "language-and-communications" and replace it with "language"
     if (tag === "language-and-communications") {
       return "Language";
     }
 
-    // Regex to match age ranges like "1-2M", "18M+", "6M+", "2Yrs+" etc.
-    const ageRegex = /^(\d{1,2})(m|yrs)\+?$/;
-
-    // Check if the tag matches the age pattern
-    const match = tag.match(ageRegex);
-    if (match) {
-      const number = match[1]; // The number (e.g., 18, 6, 2)
-      const unit = match[2]; // The unit (M or Yrs)
-
-      // Capitalize the first character of the unit and keep the rest in lowercase
-      const formattedUnit =
-        unit.charAt(0).toUpperCase() + unit.slice(1).toLowerCase();
-
-      // Format the tag to "18M+" or "2Yrs+" style
-      return `${number}${formattedUnit}+`;
-    }
-
-    // Format other tags by replacing hyphens with spaces, capitalizing the first letter of each word
     return tag
       .replace(/-and-/g, " & ") // Replace "-and-" with " & "
       .replace(/-/g, " ") // Replace hyphens with spaces
       .replace(/\b\w/g, (char) => char.toUpperCase()); // Capitalize first letter of each word
   };
 
-  // Fetch products and apply filters and sorting
+  // Fetch tags from the URL query string
   useEffect(() => {
-    // Fetch tags from the URL query string
     const getTagsFromUrl = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const tagsParam = urlParams.get("tag");
@@ -59,8 +36,11 @@ function ProductGrid() {
     };
 
     const fetchedTags = getTagsFromUrl().map((itm) => formatTag(itm)); // Extract tags
-    // setTags(fetchedTags); // Set tags state from URL
+    setTags(fetchedTags); // Set tags state from URL
+  }, []); // Runs once when the component mounts
 
+  // Fetch products and apply filters and sorting
+  useEffect(() => {
     const fetchProducts = async () => {
       try {
         const sortProducts = (products) => {
@@ -78,26 +58,24 @@ function ProductGrid() {
         };
 
         // Show loading toast notification
-        toast.info("Loading products...", { autoClose: false });
+        // toast.info("Loading products...", { autoClose: false });
 
         const response = await axiosInstance.get("/api/products"); // Fetch products
         let filteredProducts = response.data.filter((product) => product); // Filter out null or undefined products
 
         // Apply tag filtering
-        if (fetchedTags.length > 0) {
-          console.log(fetchedTags);
-          filteredProducts = filteredProducts.filter(
-            (product) => product.tags.some((tag) => fetchedTags.includes(tag)),
-            // fetchedTags.every((tag) => product.tags.includes(tag)),
+        if (tags.length > 0) {
+          filteredProducts = filteredProducts.filter((product) =>
+            product.tags.some((tag) => tags.includes(tag)),
           );
         }
 
         // Sort the filtered products
         const sortedProducts = sortProducts(filteredProducts);
-        console.log(sortedProducts);
+
         setProducts(sortedProducts); // Update products state with sorted products
         setLoading(false); // Set loading to false when data is fetched
-
+        console.log(filteredProducts);
         // Dismiss loading toast notification
         toast.dismiss();
       } catch (error) {
@@ -111,7 +89,7 @@ function ProductGrid() {
     };
 
     fetchProducts(); // Call the function to fetch products
-  }, [sortBy]); // Re-fetch products when tags or sortBy changes
+  }, [sortBy, tags]); // Re-fetch products when tags or sortBy changes
 
   // Handle sorting option change
   const handleSortChange = (sortOption) => {
