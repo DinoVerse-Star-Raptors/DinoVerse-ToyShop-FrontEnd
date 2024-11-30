@@ -1,21 +1,19 @@
 import React from "react";
-import ProductGrid from "./ProductGrid"; // Import ProductGrid component
 import uiStyle from "./Home.module.css"; // Import CSS Module for Home styles
 import HomeHero from "../../components/layout/HomeHero";
+import HomeRecommend from "./HomeRecommend";
+import HomeDev from "./HomeDev";
+import HomeBanner from "./HomeBanner";
+import HomeAge from "./HomeAge";
 
 const Home = () => {
   return (
     <div className={uiStyle.home}>
       <HomeHero />
-      <section className="p-8 pt-10">
-        {/* Title for ProductGrid */}
-        <h2 className="mb-8 text-center text-5xl font-bold text-gray-700">
-          Recommended
-        </h2>
-
-        {/* Product Grid */}
-        <ProductGrid />
-      </section>
+      <HomeRecommend />
+      <HomeDev />
+      <HomeBanner />
+      <HomeAge />
     </div>
   );
 };

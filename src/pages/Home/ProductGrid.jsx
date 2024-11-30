@@ -41,7 +41,7 @@ function ProductGrid() {
   ];
 
   return (
-    <div className="pb-8 pt-4">
+    <div className="pt-4">
       {loading ? (
         <div className="text-center text-gray-500">Loading...</div>
       ) : (
