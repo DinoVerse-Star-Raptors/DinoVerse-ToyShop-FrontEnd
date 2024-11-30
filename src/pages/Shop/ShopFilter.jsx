@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
+import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const ShopFilter = () => {
   const [category, setCategory] = useState([]); // To store selected categories
@@ -10,13 +11,11 @@ const ShopFilter = () => {
   const navigate = useNavigate(); // Hook to programmatically navigate
 
   useEffect(() => {
-    // Fetch Age Tags from API
+    // Fetch Age Tags from API using axiosInstance
     const fetchAgeTags = async () => {
       try {
-        const response = await fetch(
-          "https://dinothink.vercel.app/api/age-tags",
-        );
-        const data = await response.json();
+        const response = await axiosInstance.get("/api/age-tags");
+        const data = response.data;
         // Sort by tagNumber in ascending order
         const sortedAgeTags = data.sort((a, b) => a.tagNumber - b.tagNumber);
         setAgeTags(sortedAgeTags); // Assuming the API returns an array of age tags
@@ -25,13 +24,11 @@ const ShopFilter = () => {
       }
     };
 
-    // Fetch Development Tags from API
+    // Fetch Development Tags from API using axiosInstance
     const fetchDevTags = async () => {
       try {
-        const response = await fetch(
-          "https://dinothink.vercel.app/api/dev-tags",
-        );
-        const data = await response.json();
+        const response = await axiosInstance.get("/api/dev-tags");
+        const data = response.data;
         // Sort by tagNumber in ascending order
         const sortedDevTags = data.sort((a, b) => a.tagNumber - b.tagNumber);
         setDevTags(sortedDevTags); // Assuming the API returns an array of development tags
