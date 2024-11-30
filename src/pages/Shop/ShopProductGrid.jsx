@@ -8,7 +8,6 @@ function ProductGrid() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState("rating"); // Sorting option state
-  // const [tags, setTags] = useState(["all"]); // Tags filter state
 
   const formatTag = (tag) => {
     // Exclude "0-6M"
@@ -47,7 +46,6 @@ function ProductGrid() {
 
   // Fetch products and apply filters and sorting
   useEffect(() => {
-    // Fetch tags from the URL query string
     const getTagsFromUrl = () => {
       const urlParams = new URLSearchParams(window.location.search);
       const tagsParam = urlParams.get("tag");
@@ -59,12 +57,10 @@ function ProductGrid() {
     };
 
     const fetchedTags = getTagsFromUrl().map((itm) => formatTag(itm)); // Extract tags
-    // setTags(fetchedTags); // Set tags state from URL
 
     const fetchProducts = async () => {
       try {
         const sortProducts = (products) => {
-          // Sort products based on the selected criteria
           if (sortBy === "rating") {
             return products.sort((a, b) => b.rating.rate - a.rating.rate);
           }
@@ -74,51 +70,41 @@ function ProductGrid() {
           if (sortBy === "priceHighToLow") {
             return products.sort((a, b) => b.price - a.price);
           }
-          return products; // Default case (no sorting)
+          return products;
         };
 
-        // Show loading toast notification
         toast.info("Loading products...", { autoClose: false });
 
-        const response = await axiosInstance.get("/api/products"); // Fetch products
-        let filteredProducts = response.data.filter((product) => product); // Filter out null or undefined products
+        const response = await axiosInstance.get("/api/products");
+        let filteredProducts = response.data.filter((product) => product);
 
-        // Apply tag filtering
         if (fetchedTags.length > 0) {
-          console.log(fetchedTags);
-          filteredProducts = filteredProducts.filter(
-            (product) => product.tags.some((tag) => fetchedTags.includes(tag)),
-            // fetchedTags.every((tag) => product.tags.includes(tag)),
+          filteredProducts = filteredProducts.filter((product) =>
+            product.tags.some((tag) => fetchedTags.includes(tag)),
           );
         }
 
-        // Sort the filtered products
         const sortedProducts = sortProducts(filteredProducts);
-        console.log(sortedProducts);
-        setProducts(sortedProducts); // Update products state with sorted products
-        setLoading(false); // Set loading to false when data is fetched
+        setProducts(sortedProducts);
+        setLoading(false);
 
-        // Dismiss loading toast notification
         toast.dismiss();
       } catch (error) {
-        console.error("Error fetching products:", error); // Log any errors
-        setLoading(false); // Stop loading in case of error
-        // Show error toast notification
+        console.error("Error fetching products:", error);
+        setLoading(false);
         toast.error("Failed to load products. Please try again.", {
           autoClose: 5000,
         });
       }
     };
 
-    fetchProducts(); // Call the function to fetch products
-  }, [sortBy]); // Re-fetch products when tags or sortBy changes
+    fetchProducts();
+  }, [sortBy]);
 
-  // Handle sorting option change
   const handleSortChange = (sortOption) => {
-    setSortBy(sortOption); // Update the sort criteria
+    setSortBy(sortOption);
   };
 
-  // Array to assign different border colors for each product card
   const borderColors = [
     "border-blue-400",
     "border-amber-400",
@@ -126,7 +112,6 @@ function ProductGrid() {
     "border-pink-400",
   ];
 
-  // Background colors for each product card
   const bgColors = [
     "bg-blue-200",
     "bg-amber-200",
@@ -137,25 +122,32 @@ function ProductGrid() {
   return (
     <div className="pt-4">
       {/* Sorting Buttons */}
-      <div className="mb-4 flex space-x-4">
-        <button
-          onClick={() => handleSortChange("rating")}
-          className={`rounded-md px-4 py-2 font-medium ${sortBy === "rating" ? "bg-indigo-500 text-white" : "border bg-white text-indigo-500"}`}
-        >
-          Rating (Highest to Lowest)
-        </button>
-        <button
-          onClick={() => handleSortChange("priceLowToHigh")}
-          className={`rounded-md px-4 py-2 font-medium ${sortBy === "priceLowToHigh" ? "bg-indigo-500 text-white" : "border bg-white text-indigo-500"}`}
-        >
-          Price (Low to High)
-        </button>
-        <button
-          onClick={() => handleSortChange("priceHighToLow")}
-          className={`rounded-md px-4 py-2 font-medium ${sortBy === "priceHighToLow" ? "bg-indigo-500 text-white" : "border bg-white text-indigo-500"}`}
-        >
-          Price (High to Low)
-        </button>
+      <div className="mb-4 flex items-center justify-between space-x-4">
+        <div className="flex space-x-4">
+          <button
+            onClick={() => handleSortChange("rating")}
+            className={`rounded-md px-4 py-2 font-medium ${sortBy === "rating" ? "bg-indigo-500 text-white" : "border bg-white text-indigo-500"}`}
+          >
+            Rating (Highest to Lowest)
+          </button>
+          <button
+            onClick={() => handleSortChange("priceLowToHigh")}
+            className={`rounded-md px-4 py-2 font-medium ${sortBy === "priceLowToHigh" ? "bg-indigo-500 text-white" : "border bg-white text-indigo-500"}`}
+          >
+            Price (Low to High)
+          </button>
+          <button
+            onClick={() => handleSortChange("priceHighToLow")}
+            className={`rounded-md px-4 py-2 font-medium ${sortBy === "priceHighToLow" ? "bg-indigo-500 text-white" : "border bg-white text-indigo-500"}`}
+          >
+            Price (High to Low)
+          </button>
+        </div>
+
+        {/* Display Count - Positioned to the right */}
+        <div className="text-black-600 ml-auto font-medium">
+          {loading ? "Loading..." : `${products.length} products displayed`}
+        </div>
       </div>
 
       {/* Loading or Displaying Products */}

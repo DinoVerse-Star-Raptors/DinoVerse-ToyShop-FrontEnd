@@ -9,7 +9,7 @@ const DevCard = ({ handle, name, imageUrl }) => {
       className="relative mx-auto mb-4 w-full overflow-hidden p-3 hover:translate-y-[-10px] md:max-w-[220px]"
     >
       {/* Link to navigate to the individual development page using the handle */}
-      <Link to={`/shop/${handle}`} rel="noopener noreferrer">
+      <Link to={`/shop?tag=${handle}`} rel="noopener noreferrer">
         {/* Image for the Age Card */}
         <img
           src={imageUrl}
