@@ -17,9 +17,7 @@ function ProductGrid() {
         toast.info("Loading products...", { autoClose: false });
 
         const response = await axiosInstance.get("/api/products"); // Make the GET request to the products endpoint
-        const filteredProducts = response.data.filter(
-          (product) => product.recommended === true,
-        ); // Filter recommended products
+        const filteredProducts = response.data.filter((product) => product); // Filter recommended products
 
         // Sort products based on selected criteria
         const sortedProducts = sortProducts(filteredProducts);
