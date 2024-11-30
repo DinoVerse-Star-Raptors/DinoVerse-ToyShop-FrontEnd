@@ -1,28 +1,22 @@
 import React, { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const ShopFilter = () => {
   const [category, setCategory] = useState([]); // To store selected categories
+  // const [priceRange, setPriceRange] = useState(""); // Price range
   const [ageTags, setAgeTags] = useState([]); // List of age tags
   const [devTags, setDevTags] = useState([]); // List of development tags
 
-  // Function to get URL query parameters (tags)
-  const getTagsFromUrl = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tags = urlParams.get("tag");
-    return tags ? tags.split(",") : [];
-  };
+  // const navigate = useNavigate(); // Hook to programmatically navigate
 
   useEffect(() => {
-    // Set the initial category state based on URL parameters
-    const initialTags = getTagsFromUrl();
-    setCategory(initialTags);
-
     // Fetch Age Tags from API using axiosInstance
     const fetchAgeTags = async () => {
       try {
         const response = await axiosInstance.get("/api/age-tags");
         const data = response.data;
+        // Sort by tagNumber in ascending order
         const sortedAgeTags = data.sort((a, b) => a.tagNumber - b.tagNumber);
         setAgeTags(sortedAgeTags); // Assuming the API returns an array of age tags
       } catch (error) {
@@ -35,6 +29,7 @@ const ShopFilter = () => {
       try {
         const response = await axiosInstance.get("/api/dev-tags");
         const data = response.data;
+        // Sort by tagNumber in ascending order
         const sortedDevTags = data.sort((a, b) => a.tagNumber - b.tagNumber);
         setDevTags(sortedDevTags); // Assuming the API returns an array of development tags
       } catch (error) {
@@ -63,16 +58,10 @@ const ShopFilter = () => {
 
     // Set category as URL search parameters
     if (category.length > 0) url.searchParams.set("tag", category.join(","));
+    // if (priceRange) url.searchParams.set("priceRange", priceRange);
 
     // Force reload by setting window.location.href
     window.location.href = url.toString();
-  };
-
-  // Function to reset filters and redirect to /shop
-  const handleResetFilters = () => {
-    // Reset the category state and navigate to /shop without any filters
-    setCategory([]);
-    window.location.href = "/shop"; // Navigate to the shop page without any query parameters
   };
 
   return (
@@ -130,16 +119,6 @@ const ShopFilter = () => {
           className="w-full rounded-md bg-indigo-500 px-4 py-2 font-semibold text-white"
         >
           Apply Filters
-        </button>
-      </div>
-
-      {/* Reset Filters Button */}
-      <div className="mt-4">
-        <button
-          onClick={handleResetFilters}
-          className="w-full rounded-md bg-red-500 px-4 py-2 font-semibold text-white"
-        >
-          Reset Filters
         </button>
       </div>
     </div>
