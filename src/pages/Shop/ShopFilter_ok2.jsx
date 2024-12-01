@@ -14,35 +14,17 @@ const ShopFilter = () => {
   };
 
   useEffect(() => {
+    // Get the initial tags from the URL
+    const initialTags = getTagsFromUrl();
+    setCategory(initialTags);
+
     // Fetch Age Tags from API using axiosInstance
     const fetchAgeTags = async () => {
       try {
-        let initialTags = getTagsFromUrl();
-
         const response = await axiosInstance.get("/api/age-tags");
         const data = response.data;
         const sortedAgeTags = data.sort((a, b) => a.tagNumber - b.tagNumber);
         setAgeTags(sortedAgeTags); // Assuming the API returns an array of age tags
-
-        // If "age" is included in the initial tags, select all age-related tags and remove "age" from the initialTags
-        if (
-          initialTags &&
-          initialTags.length == 1 &&
-          initialTags[0] === "age"
-        ) {
-          initialTags = sortedAgeTags.map((itm) => itm.handle);
-          const url = new URL(window.location.href);
-
-          // Set category as URL search parameters
-          if (initialTags.length > 0) {
-            url.searchParams.set("tag", initialTags.join(","));
-            // Force reload by setting window.location.href
-            window.location.href = url.toString();
-            return;
-          }
-        }
-
-        setCategory(initialTags);
       } catch (error) {
         console.error("Error fetching age tags:", error);
       }
@@ -62,20 +44,9 @@ const ShopFilter = () => {
 
     fetchAgeTags();
     fetchDevTags();
-
-    // // Set the initial category state based on URL parameters
-    // let initialTags = getTagsFromUrl();
-    // // If "age" is included in the initial tags, select all age-related tags and remove "age" from the initialTags
-    // if (initialTags && initialTags.length == 1 && initialTags[0] === "age") {
-    //   console.log(ageTags);
-    //   initialTags.shift(); // Remove "age" from the initialTags array
-    //   console.log(ageTags);
-    // }
-
-    // setCategory(initialTags);
   }, []);
 
-  // Function to handle category (age range) checkbox change
+  // Handle category (age range) checkbox change
   const handleCategoryChange = (event) => {
     const value = event.target.value;
     setCategory(
@@ -86,25 +57,29 @@ const ShopFilter = () => {
     );
   };
 
-  // Function to reset filters and redirect to /shop
-  const handleResetFilters = () => {
-    // Reset the category state and navigate to /shop without any filters
-    setCategory([]);
-    window.location.href = "/shop"; // Navigate to the shop page without any query parameters
-  };
-
-  // Function to redirect to URL with filters and force a reload
-  const handleRedirect = () => {
-    if (category.length < 1) {
-      handleResetFilters();
-      return;
+  // Select all age tags when 'age' is part of the query
+  useEffect(() => {
+    if (category.includes("age")) {
+      setCategory((prev) => [...prev, ...ageTags.map((tag) => tag.handle)]); // Select all age-related tags
     }
+  }, [category, ageTags]);
+
+  // Redirect with the selected filters
+  const handleRedirect = () => {
     const url = new URL(window.location.href);
 
     // Set category as URL search parameters
     if (category.length > 0) url.searchParams.set("tag", category.join(","));
+
     // Force reload by setting window.location.href
     window.location.href = url.toString();
+  };
+
+  // Reset filters and redirect to /shop
+  const handleResetFilters = () => {
+    // Reset the category state and navigate to /shop without any filters
+    setCategory([]);
+    window.location.href = "/shop"; // Navigate to the shop page without any query parameters
   };
 
   return (
@@ -114,7 +89,7 @@ const ShopFilter = () => {
       {/* Development Filter */}
       <div className="mb-4">
         <label className="mb-2 block text-lg font-medium">Categories</label>
-        <div className="space-y-1">
+        <div className="space-y-2">
           {devTags.map((tag) => (
             <div key={tag._id} className="flex items-center">
               <input
@@ -136,7 +111,7 @@ const ShopFilter = () => {
       {/* Age Filter */}
       <div className="mb-4">
         <label className="mb-2 block text-lg font-medium">Age</label>
-        <div className="space-y-1">
+        <div className="space-y-2">
           {ageTags.map((tag) => (
             <div key={tag._id} className="flex items-center">
               <input

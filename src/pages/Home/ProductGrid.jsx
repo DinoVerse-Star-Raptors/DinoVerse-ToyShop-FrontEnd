@@ -40,6 +40,14 @@ function ProductGrid() {
     "bg-pink-200", // Card 4 border color
   ];
 
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h2 className="mb-8 text-center text-3xl font-bold">Loading...</h2>
+      </div>
+    );
+  }
+
   return (
     <div className="pt-4">
       {loading ? (

@@ -39,9 +39,9 @@ export default function Navbar() {
           <a href="/shop" className="text-black hover:text-gray-900">
             Toys
           </a>
-          <Link to="/shop/age" className="text-black hover:text-gray-900">
+          <a href="/shop?tag=age" className="text-black hover:text-gray-900">
             Age
-          </Link>
+          </a>
           <Link to="/contact" className="text-black hover:text-gray-900">
             Contact
           </Link>

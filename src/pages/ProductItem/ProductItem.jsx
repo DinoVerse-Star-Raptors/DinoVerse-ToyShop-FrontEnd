@@ -44,16 +44,16 @@ const ItemInfo = ({ product = {} }) => {
         <h2 className="mt-4 text-2xl font-bold">{product?.ageGroup}</h2>
         {/* Breadcrumb Navigation - Path */}
         <p>
-          <a href="/exam-home" className="text-blue-500 hover:underline">
+          <a href="/" className="text-blue-500 hover:underline">
             Home
           </a>{" "}
           /{" "}
-          <a href="/exam-shop/age" className="text-blue-500 hover:underline">
+          <a href="/shop?tag=age" className="text-blue-500 hover:underline">
             Age
           </a>{" "}
           /{" "}
           <a
-            href={`/exam-shop/age/${product?.ageGroupTagHandle}`}
+            href={`/shop?tag=${product?.ageGroupTagHandle}`}
             className="text-blue-500 hover:underline"
           >
             {product?.ageGroup}
