@@ -5,6 +5,7 @@ const ShopFilter = () => {
   const [category, setCategory] = useState([]); // To store selected categories
   const [ageTags, setAgeTags] = useState([]); // List of age tags
   const [devTags, setDevTags] = useState([]); // List of development tags
+  const [loading, setLoading] = useState(true); // Loading state
 
   // Function to get URL query parameters (tags)
   const getTagsFromUrl = () => {
@@ -27,7 +28,7 @@ const ShopFilter = () => {
         // If "age" is included in the initial tags, select all age-related tags and remove "age" from the initialTags
         if (
           initialTags &&
-          initialTags.length == 1 &&
+          initialTags.length === 1 &&
           initialTags[0] === "age"
         ) {
           initialTags = sortedAgeTags.map((itm) => itm.handle);
@@ -60,19 +61,14 @@ const ShopFilter = () => {
       }
     };
 
-    fetchAgeTags();
-    fetchDevTags();
+    // Fetch tags and set loading state
+    const fetchTags = async () => {
+      setLoading(true); // Start loading
+      await Promise.all([fetchAgeTags(), fetchDevTags()]);
+      setLoading(false); // Stop loading after both fetches are complete
+    };
 
-    // // Set the initial category state based on URL parameters
-    // let initialTags = getTagsFromUrl();
-    // // If "age" is included in the initial tags, select all age-related tags and remove "age" from the initialTags
-    // if (initialTags && initialTags.length == 1 && initialTags[0] === "age") {
-    //   console.log(ageTags);
-    //   initialTags.shift(); // Remove "age" from the initialTags array
-    //   console.log(ageTags);
-    // }
-
-    // setCategory(initialTags);
+    fetchTags();
   }, []);
 
   // Function to handle category (age range) checkbox change
@@ -106,6 +102,15 @@ const ShopFilter = () => {
     // Force reload by setting window.location.href
     window.location.href = url.toString();
   };
+
+  // If loading, show a loading spinner
+  if (loading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h2 className="mb-8 text-center text-3xl font-bold">Loading...</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-md">
