@@ -34,25 +34,6 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []); // Empty dependency array ensures this runs only once on component mount
 
-  // Update the quantity of an item in the cart via API
-  const updateCartQty = async (itemId, productId, quantity) => {
-    try {
-      const response = await axiosInstance.patch(
-        `/api/cart/update/${itemId}`,
-        { productId, quantity },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("auth_token")}`,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-      setCart(response.data.items); // Update the cart with the new data from the API
-    } catch (error) {
-      console.error("Error updating item quantity:", error);
-    }
-  };
-
   // Fetch the user's cart from the API
   const fetchCart = async () => {
     try {
@@ -62,6 +43,7 @@ export const AuthProvider = ({ children }) => {
 
       // Check if the response status code is 200 (OK)
       if (response.status === 200) {
+        console.log(response.data.items || []);
         setCart(response.data.items || []); // Set the cart data
       } else {
         // Handle unexpected status codes
@@ -120,37 +102,20 @@ export const AuthProvider = ({ children }) => {
 
   // Add item to the cart via API
   const addToCart = async (item = {}, qty = 0) => {
-    // Check if the product already exists in the cart
-    const existingItem = cart.find(
-      (cartItem) => cartItem?.product?.productId === item?.productId,
-    );
-
-    if (existingItem) {
-      // console.log(existingItem);
-      // If item exists, update the quantity in the cart using the updateCartQty function
-      await updateCartQty(
-        existingItem._id,
-        existingItem?.product?._id,
-        Number(existingItem.quantity) + Number(qty),
-      );
-    } else {
-      // If item does not exist, add it to the cart using the API
-      // console.log(item?.productId);
-      try {
-        const response = await axiosInstance.post(
-          "/api/cart/add",
-          { productId: item.productId, quantity: qty },
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get("auth_token")}`,
-              "Content-Type": "application/json",
-            },
+    try {
+      const response = await axiosInstance.post(
+        "/api/cart/add",
+        { productId: item._id, quantity: qty },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("auth_token")}`,
+            "Content-Type": "application/json",
           },
-        );
-        setCart(response.data.items); // Update cart with the new data from the API
-      } catch (error) {
-        console.error("Error adding item to cart:", error);
-      }
+        },
+      );
+      setCart(response.data.items); // Update cart with the new data from the API
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
     }
   };
 
@@ -182,6 +147,25 @@ export const AuthProvider = ({ children }) => {
       setCart(response.data.items); // Clear cart with data from the API
     } catch (error) {
       console.error("Error clearing cart:", error);
+    }
+  };
+
+  // Update the quantity of an item in the cart via API
+  const updateCartQty = async (itemId, productId, quantity) => {
+    try {
+      const response = await axiosInstance.patch(
+        `/api/cart/update/${itemId}`,
+        { productId, quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("auth_token")}`,
+            "Content-Type": "application/json",
+          },
+        },
+      );
+      setCart(response.data.items); // Update the cart with the new data from the API
+    } catch (error) {
+      console.error("Error updating item quantity:", error);
     }
   };
 

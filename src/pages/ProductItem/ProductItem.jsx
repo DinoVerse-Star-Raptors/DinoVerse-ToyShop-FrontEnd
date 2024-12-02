@@ -29,6 +29,7 @@ const ItemInfo = ({ product = {} }) => {
     toast.info("Adding item to cart..."); // Show a loading notification
 
     try {
+      // console.log(product);
       await addToCart(product, quantity); // Call addToCart
       toast.dismiss(); // Dismiss the toast after the process is done
       // toast.success("Item added to cart!"); // Show success notification

@@ -16,15 +16,15 @@ export default function SimpleFooter() {
         <ul className="mt-3 hidden flex-wrap items-center text-sm font-medium text-white sm:mt-0 lg:flex">
           <li>
             <Link
-              to={`${window.location.origin}/item/7679504941227`}
+              to={`${window.location.origin}/about`}
               className="me-4 hover:underline md:me-6"
             >
-              item
+              About
             </Link>
           </li>
           <li>
             <Link
-              to={`${window.location.origin}/about`}
+              to={`${window.location.origin}/contact`}
               className="me-4 hover:underline md:me-6"
             >
               About

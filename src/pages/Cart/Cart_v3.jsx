@@ -11,10 +11,11 @@ import {
 } from "lucide-react";
 
 const Cart = () => {
-  const { removeFromCart, clearCart, user, updateCartQty, getCart } = useAuth();
+  const { removeFromCart, addToCart, clearCart, user, getCart } = useAuth();
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [selectedItems, setSelectedItems] = useState({});
+  // const [selectAll, setSelectAll] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showClearCartModal, setShowClearCartModal] = useState(false);
 
@@ -25,7 +26,6 @@ const Cart = () => {
         try {
           const fetchedCart = await getCart();
           setCart(fetchedCart);
-          console.log(fetchedCart);
           const initialSelection = fetchedCart.reduce(
             (acc, item) => ({
               ...acc,
@@ -89,16 +89,14 @@ const Cart = () => {
   };
 
   const handleQuantityChange = async (item, increment) => {
-    console.log(increment, item);
     const loadingToast = toast.loading("Updating cart...");
     setLoading(true);
     try {
       const updatedQuantity = item?.quantity + (increment ? 1 : -1);
       if (updatedQuantity <= 0) {
-        await removeFromCart(item?._id);
+        await removeFromCart(item?.product?._id);
       } else {
-        // Update the quantity using the updateCartItemQty function
-        await updateCartQty(item?._id, item?.product?._id, updatedQuantity);
+        await addToCart({ ...item, quantity: updatedQuantity });
       }
       toast.update(loadingToast, {
         render: "Cart updated successfully!",
@@ -113,7 +111,7 @@ const Cart = () => {
     }
   };
 
-  const handleRemoveItem = async (itemId) => {
+  const handleRemoveItem = async (productId) => {
     // Show a confirmation dialog before removing the item
     const isConfirmed = window.confirm(
       "Are you sure you want to remove this item from the cart?",
@@ -126,8 +124,8 @@ const Cart = () => {
     const loadingToast = toast.loading("Removing item...");
     setLoading(true);
     try {
-      console.log(itemId);
-      await removeFromCart(itemId);
+      console.log(productId);
+      await removeFromCart(productId);
       // setCart(cart.filter((item) => item?.product?._id !== productId));
       toast.update(loadingToast, {
         render: "Item removed successfully!",
@@ -137,6 +135,44 @@ const Cart = () => {
       });
     } catch (error) {
       toast.error("Failed to remove item");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveItems = async () => {
+    const loadingToast = toast.loading("Removing selected items...");
+    setLoading(true);
+    try {
+      // Filter out the selected items
+      const selectedItemsIds = Object.keys(selectedItems).filter(
+        (productId) => selectedItems[productId],
+      );
+
+      if (selectedItemsIds.length > 0) {
+        // Remove selected items from cart
+        for (const productId of selectedItemsIds) {
+          await removeFromCart(productId);
+        }
+        // Update the cart after removal
+        setCart(cart.filter((item) => !selectedItems[`${item?.product?._id}`]));
+        setSelectedItems({});
+        toast.update(loadingToast, {
+          render: "Selected items removed successfully!",
+          type: "success",
+          autoClose: 2000,
+          isLoading: false,
+        });
+      } else {
+        toast.update(loadingToast, {
+          render: "No items selected for removal.",
+          type: "info",
+          autoClose: 2000,
+          isLoading: false,
+        });
+      }
+    } catch (error) {
+      toast.error("Failed to remove selected items");
     } finally {
       setLoading(false);
     }
@@ -165,6 +201,8 @@ const Cart = () => {
 
   const shippingFee = 20;
   const finalTotal = totalPrice + shippingFee;
+
+  const selectedItemCount = Object.values(selectedItems).filter(Boolean).length;
 
   if (cart.length === 0 && !loading) {
     return (
@@ -206,6 +244,20 @@ const Cart = () => {
             </button>
           }
         </div>
+        {selectedItemCount > 0 && !selectedItemCount && (
+          <div className="flex items-center space-x-4">
+            <span className="text-gray-600">
+              {selectedItemCount} item(s) selected
+            </span>
+            <button
+              onClick={handleRemoveItems}
+              className="flex items-center text-red-500 hover:text-red-700"
+            >
+              <Trash2 className="mr-2" />
+              Remove Selected
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -213,7 +265,7 @@ const Cart = () => {
         <div className="space-y-6 lg:col-span-2">
           {cart.map((item) => (
             <div
-              key={item?._id}
+              key={item?.product?._id}
               className="flex items-center rounded-lg bg-white p-4 shadow-md transition-shadow hover:shadow-lg"
             >
               <input
@@ -267,7 +319,7 @@ const Cart = () => {
                   ฿{(item?.product?.price * item?.quantity).toLocaleString()}
                 </p>
                 <button
-                  onClick={() => handleRemoveItem(item?._id)}
+                  onClick={() => handleRemoveItem(item?.product?._id)}
                   className="flex items-center text-red-500 hover:text-red-700"
                 >
                   <Trash2 className="mr-2" size={16} />
