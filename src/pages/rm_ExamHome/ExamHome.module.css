@@ -1,9 +1,0 @@
-@tailwind components;
-
-@layer components {
-  .exam_home {
-    padding: 0px;
-    max-width: 1440px;
-    width: 100%;
-  }
-}
