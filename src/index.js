@@ -11,11 +11,11 @@ import Shop from "./pages/Shop";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import ProductInfo from "./pages/ProductInfo";
+// import ProductInfo from "./pages/ProductInfo";
+// import ProductList from "./pages/ProductList";
 import ProductItem from "./pages/ProductItem";
-import ProductList from "./pages/ProductList";
 import Cart from "./pages/Cart";
-import ExamHome from "./pages/ExamHome";
+// import ExamHome from "./pages/ExamHome";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
 import Dashboard from "./pages/User/Dashboard"; // Protected page
 import ProtectedRoute from "./utils/ProtectedRoute";
@@ -63,20 +63,8 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "/productinfo",
-        element: <ProductInfo />,
-      },
-      {
         path: "/item/:itemId",
         element: <ProductItem />,
-      },
-      {
-        path: "/list",
-        element: <ProductList />,
-      },
-      {
-        path: "/exam-home",
-        element: <ExamHome />,
       },
     ],
   },

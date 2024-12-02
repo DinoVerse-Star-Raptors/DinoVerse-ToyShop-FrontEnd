@@ -11,7 +11,7 @@ export default function Navbar() {
   const { user, cart } = useAuth(); // Access user and cart from the context
 
   // Get the total number of items in the cart
-  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const cartItemCount = cart.length; //.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <header className="flex max-h-16 justify-center bg-white shadow-sm">

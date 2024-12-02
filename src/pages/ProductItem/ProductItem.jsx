@@ -3,22 +3,43 @@ import PropTypes from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import uiStyle from "./ProductItem.module.css";
 import { useAuth } from "../../context/AuthContext"; // Assuming you are using this context
-// import axios from "axios";
 import { reviews } from "./data/reviews"; // Import reviews from the separate file
 import TagGrid from "./TagGrid"; // Import TagGrid from the separate file
 import factorsDevFn from "./data/factorsDev.js"; // Import the factorsDev function
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
+import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 
 const ItemInfo = ({ product = {} }) => {
   const { addToCart } = useAuth(); // Use the context to access addToCart
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false); // Loading state for add to cart
 
-  const handleAddToCart = () => {
-    if (product) {
-      // alert(quantity);
-      addToCart(product, quantity); // Add product to cart with selected quantity
+  // const handleAddToCart = () => {
+  //   if (product) {
+  //     // alert(quantity);
+  //     addToCart(product, quantity); // Add product to cart with selected quantity
+  //   }
+  // };
+
+  const handleAddToCart = async () => {
+    if (!product || loading) return;
+
+    setLoading(true); // Set loading state to true when starting the process
+    toast.info("Adding item to cart..."); // Show a loading notification
+
+    try {
+      await addToCart(product, quantity); // Call addToCart
+      toast.dismiss(); // Dismiss the toast after the process is done
+      // toast.success("Item added to cart!"); // Show success notification
+    } catch (error) {
+      toast.dismiss(); // Dismiss the toast
+      toast.error("Failed to add item to cart."); // Show error notification if something goes wrong
+    } finally {
+      setLoading(false); // Set loading state to false when the process is done
     }
   };
+
   if (!product) return <></>;
 
   const rating = product?.rating?.rate || 0;
@@ -146,6 +167,7 @@ const ItemInfo = ({ product = {} }) => {
 
             <div className="flex justify-between gap-x-4 py-3">
               <button
+                disabled={loading}
                 onClick={handleAddToCart}
                 className="w-full rounded-full bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700"
               >
@@ -259,6 +281,11 @@ const ItemInfo = ({ product = {} }) => {
           ))}
         </div>
       </div>
+
+      {/* ToastContainer to display notifications */}
+      {/* <ToastContainer />
+       */}
+      <ToastContainer position="top-center" />
     </>
   );
 };

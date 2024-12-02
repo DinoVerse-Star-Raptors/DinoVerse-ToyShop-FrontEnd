@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }) => {
 
   // Add item to the cart via API
   const addToCart = async (item = {}, qty = 0) => {
-    // console.log(item._id, qty);
+    console.log(item._id, qty);
     try {
       const response = await axiosInstance.post(
         "/api/cart/add",
@@ -123,18 +123,13 @@ export const AuthProvider = ({ children }) => {
   // Remove item from the cart via API
   const removeFromCart = async (itemId) => {
     try {
-      if (!itemId) return;
-      const response = await axiosInstance.delete(
-        `/api/cart/remove/${itemId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("auth_token")}`,
-            "Content-Type": "application/json",
-          },
-          // data: { productId: itemId },
+      const response = await axiosInstance.delete("/api/cart/remove", {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("auth_token")}`,
+          "Content-Type": "application/json",
         },
-      );
-      console.log(itemId);
+        data: { productId: itemId },
+      });
       setCart(response.data.items); // Update cart with the new data from the API
     } catch (error) {
       console.error("Error removing item from cart:", error);
