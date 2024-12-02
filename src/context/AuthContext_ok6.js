@@ -34,18 +34,6 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []); // Empty dependency array ensures this runs only once on component mount
 
-  // New function to check if the user is logged in
-  const checkAuth = () => {
-    const token = Cookies.get("auth_token");
-    if (token) {
-      const userData = localStorage.getItem("user");
-      if (userData) {
-        return userData; // User is logged in
-      }
-    }
-    return false; // User is not logged in
-  };
-
   // Update the quantity of an item in the cart via API
   const updateCartQty = async (itemId, productId, quantity) => {
     try {
@@ -209,7 +197,6 @@ export const AuthProvider = ({ children }) => {
         clearCart,
         updateCartQty, // Add updateCartItemQty to the context value
         getCart, // Add getCart to the context value
-        checkAuth,
       }}
     >
       {children}

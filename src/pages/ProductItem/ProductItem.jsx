@@ -11,18 +11,20 @@ import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 
 const ItemInfo = ({ product = {} }) => {
-  const { addToCart } = useAuth(); // Use the context to access addToCart
+  // const { addToCart } = useAuth(); // Use the context to access addToCart
+  const { addToCart, checkAuth } = useAuth(); // Access both addToCart and checkAuth from the context
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false); // Loading state for add to cart
 
-  // const handleAddToCart = () => {
-  //   if (product) {
-  //     // alert(quantity);
-  //     addToCart(product, quantity); // Add product to cart with selected quantity
-  //   }
-  // };
-
   const handleAddToCart = async () => {
+    if (!product || loading) return;
+
+    // Check if the user is authenticated before adding to the cart
+    if (!checkAuth()) {
+      toast.error("Please log in to add items to your cart.");
+      return; // If not authenticated, stop the function execution
+    }
+
     if (!product || loading) return;
 
     setLoading(true); // Set loading state to true when starting the process
@@ -286,7 +288,10 @@ const ItemInfo = ({ product = {} }) => {
       {/* ToastContainer to display notifications */}
       {/* <ToastContainer />
        */}
-      <ToastContainer position="top-center" />
+      <ToastContainer
+        position="top-center"
+        style={{ width: "400px" }} // Set the desired width
+      />
     </>
   );
 };

@@ -9,7 +9,6 @@ import {
   MinusCircle,
   PlusCircle,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Cart = () => {
   const { removeFromCart, clearCart, user, updateCartQty, getCart } = useAuth();
@@ -18,8 +17,6 @@ const Cart = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const [loading, setLoading] = useState(false);
   const [showClearCartModal, setShowClearCartModal] = useState(false);
-
-  const navigate = useNavigate(); // Initialize the navigate function
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -172,26 +169,11 @@ const Cart = () => {
   if (cart.length === 0 && !loading) {
     return (
       <div className="container mx-auto px-4 py-16 text-center">
-        <div className="mb-6 flex justify-center">
-          <ShoppingCart className="h-24 w-24 text-gray-400" />
-        </div>
-        <h2 className="mb-4 text-3xl font-semibold text-gray-800">
-          Your cart is empty
-        </h2>
-        <p className="mb-6 text-lg text-gray-500">
+        <ShoppingCart className="mx-auto mb-6 h-24 w-24 text-gray-400" />
+        <h2 className="text-3xl font-bold text-gray-700">Your cart is empty</h2>
+        <p className="mt-4 text-gray-500">
           Looks like you haven&apos;t added any items to your cart yet.
         </p>
-        {!user && (
-          <div className="mt-4">
-            <h3 className="text-xl font-medium text-red-500">Please Log In</h3>
-            <button
-              className="mt-4 rounded-lg bg-blue-600 px-6 py-2 text-white shadow-md transition-colors hover:bg-blue-700"
-              onClick={() => navigate("/login")} // Redirect to the /login page
-            >
-              Login
-            </button>
-          </div>
-        )}
       </div>
     );
   }

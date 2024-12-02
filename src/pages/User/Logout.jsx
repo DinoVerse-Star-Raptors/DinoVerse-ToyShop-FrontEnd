@@ -26,7 +26,7 @@ const LogOut = () => {
       logout();
 
       setIsLoggingOut(false); // Enable the button again (if needed for next action)
-      navigate("/login"); // Redirect to login page
+      navigate("/"); // Redirect to login page
     }, 3000);
 
     // Cleanup timeout when the component unmounts
