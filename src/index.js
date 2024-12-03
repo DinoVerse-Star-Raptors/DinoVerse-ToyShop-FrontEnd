@@ -15,6 +15,7 @@ import Register from "./pages/Register";
 // import ProductList from "./pages/ProductList";
 import ProductItem from "./pages/ProductItem";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 // import ExamHome from "./pages/ExamHome";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
 import Dashboard from "./pages/User/Dashboard"; // Protected page
@@ -26,7 +27,6 @@ import Adddress from "./pages/User/Adddress";
 import Password from "./pages/User/Password";
 import Orders from "./pages/User/Orders";
 // import Test from "./pages/User/Test";
-
 const router = createBrowserRouter([
   {
     path: "/register",
@@ -51,8 +51,12 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "/Cart",
+        path: "/cart",
         element: <Cart />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
       {
         path: "/shop",

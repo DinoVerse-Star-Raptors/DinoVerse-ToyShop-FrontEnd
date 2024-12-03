@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
 import "react-toastify/dist/ReactToastify.css";
 import {
   Trash2,
@@ -28,7 +29,6 @@ const Cart = () => {
         try {
           const fetchedCart = await getCart();
           setCart(fetchedCart);
-          console.log(fetchedCart);
           const initialSelection = fetchedCart.reduce(
             (acc, item) => ({
               ...acc,
@@ -66,7 +66,6 @@ const Cart = () => {
   };
 
   const handleSelectAllChange = () => {
-    // setSelectAll(true);
     setSelectedItems(
       Object.keys(selectedItems).reduce(
         (acc, key) => ({
@@ -79,7 +78,6 @@ const Cart = () => {
   };
 
   const handleClearSelectAllChange = () => {
-    // setSelectAll(false);
     setSelectedItems(
       Object.keys(selectedItems).reduce(
         (acc, key) => ({
@@ -92,25 +90,35 @@ const Cart = () => {
   };
 
   const handleQuantityChange = async (item, increment) => {
-    console.log(increment, item);
-    const loadingToast = toast.loading("Updating cart...");
+    const loadingToast = toast.loading("Updating cart..."); // Show loading notification
     setLoading(true);
     try {
       const updatedQuantity = item?.quantity + (increment ? 1 : -1);
       if (updatedQuantity <= 0) {
         await removeFromCart(item?._id);
+        toast.update(loadingToast, {
+          render: "Item removed from cart!",
+          type: "success",
+          autoClose: 1000,
+          isLoading: false,
+        });
       } else {
         // Update the quantity using the updateCartItemQty function
         await updateCartQty(item?._id, item?.product?._id, updatedQuantity);
+        toast.update(loadingToast, {
+          render: "Quantity updated successfully!",
+          type: "success",
+          autoClose: 1000,
+          isLoading: false,
+        });
       }
+    } catch (error) {
       toast.update(loadingToast, {
-        render: "Cart updated successfully!",
-        type: "success",
-        autoClose: 2000,
+        render: "Failed to update cart",
+        type: "error",
+        autoClose: 3000,
         isLoading: false,
       });
-    } catch (error) {
-      toast.error("Failed to update cart");
     } finally {
       setLoading(false);
     }
@@ -264,7 +272,7 @@ const Cart = () => {
                   >
                     <MinusCircle />
                   </button>
-                  <span className="text-lg font-semibold">
+                  <span className="flex w-[20px] justify-center text-lg font-semibold">
                     {item?.quantity}
                   </span>
                   <button
@@ -364,6 +372,11 @@ const Cart = () => {
           </div>
         </div>
       )}
+
+      <ToastContainer
+        position="top-center"
+        style={{ width: "400px" }} // Set the desired width
+      />
     </div>
   );
 };
