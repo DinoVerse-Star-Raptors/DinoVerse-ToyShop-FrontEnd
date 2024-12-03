@@ -23,46 +23,19 @@ const Cart = () => {
   const navigate = useNavigate(); // Initialize the navigate function
 
   useEffect(() => {
-    // const fetchCart = async () => {
-    //   if (user) {
-    //     setLoading(true);
-    //     try {
-    //       const fetchedCart = await getCart();
-    //       setCart(fetchedCart);
-    //       const initialSelection = fetchedCart.reduce(
-    //         (acc, item) => ({
-    //           ...acc,
-    //           [item?.product?._id]: false,
-    //         }),
-    //         {},
-    //       );
-    //       setSelectedItems(initialSelection);
-    //     } catch (error) {
-    //       toast.error("Failed to fetch cart");
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   }
-    // };
     const fetchCart = async () => {
       if (user) {
         setLoading(true);
         try {
           const fetchedCart = await getCart();
           setCart(fetchedCart);
-
-          // Initialize selectedItems from localStorage if available, else set from cart
-          const savedSelectedItems = localStorage.getItem("selectedItems");
-          const initialSelection = savedSelectedItems
-            ? JSON.parse(savedSelectedItems) // Use the data from localStorage
-            : fetchedCart.reduce(
-                (acc, item) => ({
-                  ...acc,
-                  [item?.product?._id]: false,
-                }),
-                {},
-              );
-
+          const initialSelection = fetchedCart.reduce(
+            (acc, item) => ({
+              ...acc,
+              [item?.product?._id]: false,
+            }),
+            {},
+          );
           setSelectedItems(initialSelection);
         } catch (error) {
           toast.error("Failed to fetch cart");
@@ -203,8 +176,6 @@ const Cart = () => {
 
   const handleProceedToCheckout = () => {
     const hasSelectedItems = Object.values(selectedItems).includes(true);
-    // Store the selected items in localStorage
-    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
 
     if (!hasSelectedItems) {
       toast.error("Please select at least one item before proceeding.", {
@@ -212,6 +183,9 @@ const Cart = () => {
       });
       return;
     }
+
+    // Store the selected items in localStorage
+    localStorage.setItem("selectedItems", JSON.stringify(selectedItems));
 
     console.log(selectedItems);
 

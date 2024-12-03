@@ -1,48 +1,75 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for programmatic navigation
-
-// Replace this with your actual logo
-import reactLogo from "./assets/logo192.png";
+import { useAuth } from "../../context/AuthContext"; // Assuming you have a context for authentication
+import axios from "axios"; // Import axios for making API calls
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const { user, getCart } = useAuth(); // Destructure user and getCart from the auth context
 
-  const [orderSummary, setOrderSummary] = useState({
-    items: [],
-    shippingFee: 20, // Assuming a fixed shipping fee
-  });
+  const [cart, setCart] = useState([]); // Initialize cart state
+  const shippingFee = 20; // Fixed shipping fee
 
   // Calculate the total price
   const calculateTotal = () => {
-    const subtotal = orderSummary.items.reduce(
-      (acc, item) => acc + item.price * item.quantity,
+    const subtotal = cart.reduce(
+      (acc, item) => acc + Number(item?.product?.price) * Number(item.quantity),
       0,
     );
-    return subtotal + orderSummary.shippingFee;
+    return subtotal + shippingFee;
   };
 
-  // Effect to retrieve the cart items from localStorage when the component mounts
+  // Fetch user's cart when the component mounts and when the user is available
   useEffect(() => {
-    const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-    setOrderSummary((prev) => ({
-      ...prev,
-      items: cartItems,
-    }));
-  }, []);
+    if (user) {
+      const fetchCart = async () => {
+        try {
+          const fetchedCart = await getCart();
+          // setCart(fetchedCart);
+          // Retrieve selected items from localStorage
+          const selectedItems =
+            JSON.parse(localStorage.getItem("selectedItems")) || {};
+          console.log(fetchedCart, selectedItems);
+          // Filter the fetched cart items based on the selectedItems object
+          const filteredCart = fetchedCart.filter(
+            (item) => selectedItems[item?.product?._id] === true, // Only include items marked as true in selectedItems
+          );
 
-  const handleCheckout = () => {
-    // Redirect the user to a payment gateway or confirm the checkout process
-    navigate("/payment");
+          setCart(filteredCart); // Update the state with the filtered cart
+        } catch (error) {
+          console.error("Failed to fetch cart", error);
+        }
+      };
+
+      fetchCart(); // Fetch the cart when the user is available
+    }
+  }, [user, getCart]); // Dependency array includes user and getCart to re-run on changes
+
+  // Handle checkout process
+  const handleCheckout = async () => {
+    try {
+      // Send the cart details to your API (assuming the cart is properly populated)
+      const response = await axios.post("/api/orders", {
+        userId: user.id,
+        items: cart,
+        shippingFee,
+        totalAmount: calculateTotal(),
+      });
+
+      if (response.status === 200) {
+        // On successful order creation, redirect to the payment page
+        navigate("/payment");
+      } else {
+        // Handle API error
+        console.error("Failed to create order");
+      }
+    } catch (error) {
+      console.error("Error during checkout:", error);
+    }
   };
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-gray-50 p-4">
-      <div className="mb-8 flex justify-center">
-        <Link to="/" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="h-16 w-16" alt="React logo" />
-        </Link>
-      </div>
-
       <h1 className="mb-6 text-3xl font-bold text-gray-800">Checkout</h1>
 
       <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
@@ -50,18 +77,18 @@ const Checkout = () => {
           Order Summary
         </h2>
 
-        {/* Map through the cart items stored in localStorage */}
+        {/* Map through the cart items stored in state */}
         <div className="mb-6 space-y-4">
-          {orderSummary.items.length > 0 ? (
-            orderSummary.items.map((item, index) => (
+          {cart.length > 0 ? (
+            cart.map((item, index) => (
               <div
                 key={index}
                 className="flex justify-between text-lg text-gray-600"
               >
                 <span>
-                  {item.name} (x{item.quantity})
+                  {item?.product?.name} (x{item.quantity})
                 </span>
-                <span>${item.price * item.quantity}</span>
+                <span>${item?.product?.price * item.quantity}</span>
               </div>
             ))
           ) : (
@@ -71,7 +98,7 @@ const Checkout = () => {
 
         <div className="mb-4 flex justify-between text-xl font-semibold text-gray-800">
           <span>Shipping</span>
-          <span>${orderSummary.shippingFee}</span>
+          <span>${shippingFee}</span>
         </div>
 
         <div className="mb-6 flex justify-between text-2xl font-bold text-gray-800">
