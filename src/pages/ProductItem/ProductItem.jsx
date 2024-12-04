@@ -211,12 +211,14 @@ const ItemInfo = ({ product = {} }) => {
                       key={factor.name}
                       className="min-w-[110px] max-w-[110px] text-center"
                     >
-                      <img
-                        src={factor.imageUrl}
-                        alt={factor.name}
-                        className={`mx-auto mb-2 ${uiStyle.Child_Image}`}
-                      />
-                      <p className="text-gray-600">{factor.name}</p>
+                      <Link to={`${window.location.origin}/about`}>
+                        <img
+                          src={factor.imageUrl}
+                          alt={factor.name}
+                          className={`mx-auto mb-2 ${uiStyle.Child_Image}`}
+                        />
+                        <p className="text-gray-600">{factor.name}</p>
+                      </Link>
                     </div>
                   ) : null;
                 })}

@@ -42,9 +42,9 @@ export default function Navbar() {
           <a href="/shop?tag=age" className="text-black hover:text-gray-900">
             Age
           </a>
-          <Link to="/contact" className="text-black hover:text-gray-900">
+          <a href="#contactus" className="text-black hover:text-gray-900">
             Contact
-          </Link>
+          </a>
         </div>
 
         <div className="hidden lg:flex lg:grow" />

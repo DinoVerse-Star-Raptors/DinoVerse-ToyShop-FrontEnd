@@ -45,7 +45,7 @@ function ProductCard({ product, borderColor, bgColors }) {
       </div>
 
       <div
-        className={`p-4 ${product?.recommended && bgColors} ${borderClass} border-b-0 border-l-0 border-r-0`}
+        className={`p-4 ${bgColors} ${borderClass} border-b-0 border-l-0 border-r-0`}
       >
         {/* Changed to bg-blue-50 */}
         <h3 className="mb-2 text-left text-lg font-semibold text-gray-800">

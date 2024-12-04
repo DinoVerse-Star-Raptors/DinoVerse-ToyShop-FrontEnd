@@ -23,27 +23,6 @@ const Cart = () => {
   const navigate = useNavigate(); // Initialize the navigate function
 
   useEffect(() => {
-    // const fetchCart = async () => {
-    //   if (user) {
-    //     setLoading(true);
-    //     try {
-    //       const fetchedCart = await getCart();
-    //       setCart(fetchedCart);
-    //       const initialSelection = fetchedCart.reduce(
-    //         (acc, item) => ({
-    //           ...acc,
-    //           [item?.product?._id]: false,
-    //         }),
-    //         {},
-    //       );
-    //       setSelectedItems(initialSelection);
-    //     } catch (error) {
-    //       toast.error("Failed to fetch cart");
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   }
-    // };
     const fetchCart = async () => {
       if (user) {
         setLoading(true);
@@ -53,16 +32,19 @@ const Cart = () => {
 
           // Initialize selectedItems from localStorage if available, else set from cart
           const savedSelectedItems = localStorage.getItem("selectedItems");
-          const initialSelection = savedSelectedItems
-            ? JSON.parse(savedSelectedItems) // Use the data from localStorage
-            : fetchedCart.reduce(
-                (acc, item) => ({
-                  ...acc,
-                  [item?.product?._id]: false,
-                }),
-                {},
-              );
-
+          const savedSelectedItemsParsed = JSON.parse(savedSelectedItems);
+          const initialSelection = fetchedCart.reduce(
+            (acc, item) => ({
+              ...acc,
+              [item?.product?._id]:
+                savedSelectedItemsParsed[item?.product?._id] || false,
+            }),
+            {},
+          );
+          localStorage.setItem(
+            "selectedItems",
+            JSON.stringify(initialSelection),
+          );
           setSelectedItems(initialSelection);
         } catch (error) {
           toast.error("Failed to fetch cart");
@@ -93,6 +75,7 @@ const Cart = () => {
   };
 
   const handleSelectAllChange = () => {
+    console.log(selectedItems);
     setSelectedItems(
       Object.keys(selectedItems).reduce(
         (acc, key) => ({
@@ -164,9 +147,7 @@ const Cart = () => {
     const loadingToast = toast.loading("Removing item...");
     setLoading(true);
     try {
-      console.log(itemId);
       await removeFromCart(itemId);
-      // setCart(cart.filter((item) => item?.product?._id !== productId));
       toast.update(loadingToast, {
         render: "Item removed successfully!",
         type: "success",

@@ -18,28 +18,58 @@ const About = () => {
       <section className="flex flex-col gap-10">
         <div className="m-5 grid grid-cols-1 gap-4 sm:grid-cols-6">
           <div className="flex flex-col items-center justify-center">
-            <img src={ZeroToSix} alt="0-6m" className="" />
-            <h3>0-6M</h3>
+            <a
+              className="flex flex-col items-center justify-center"
+              href="#0-6m"
+            >
+              <img src={ZeroToSix} alt="0-6m" className="" />
+              <h3>0-6M</h3>
+            </a>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <img src={SixMonths} alt="6m" className="" />
-            <h3>6M+</h3>
+            <a
+              className="flex flex-col items-center justify-center"
+              href="#6m-up"
+            >
+              <img src={SixMonths} alt="6m" className="" />
+              <h3>6M+</h3>
+            </a>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <img src={TwelveMonths} alt="12m" className="" />
-            <h3>12M+</h3>
+            <a
+              className="flex flex-col items-center justify-center"
+              href="#12m-up"
+            >
+              <img src={TwelveMonths} alt="12m" className="" />
+              <h3>12M+</h3>
+            </a>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <img src={EighteenMonths} alt="18M" className="" />
-            <h3>18M+</h3>
+            <a
+              className="flex flex-col items-center justify-center"
+              href="#18m-up"
+            >
+              <img src={EighteenMonths} alt="18M" className="" />
+              <h3>18M+</h3>
+            </a>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <img src={TwoYears} alt="2Y" className="rounded-full" />
-            <h3>2Yrs+</h3>
+            <a
+              className="flex flex-col items-center justify-center"
+              href="#2yrs-up"
+            >
+              <img src={TwoYears} alt="2Y" className="rounded-full" />
+              <h3>2Yrs+</h3>
+            </a>
           </div>
           <div className="flex flex-col items-center justify-center">
-            <img src={FiveYears} alt="5Y" className="rounded-full" />
-            <h3>5Yrs+</h3>
+            <a
+              className="flex flex-col items-center justify-center"
+              href="#5yrs-up"
+            >
+              <img src={FiveYears} alt="5Y" className="rounded-full" />
+              <h3>5Yrs+</h3>
+            </a>
           </div>
         </div>
       </section>
@@ -47,7 +77,7 @@ const About = () => {
       <section className={uiStyle.text}>
         <h1>ของเล่นเสริมพัฒนาการตามช่วงวัย</h1>
         <br />
-        <h2>1. เด็กแรกเกิดถึง 6 เดือน</h2>
+        <h2 id="0-6m">1. เด็กแรกเกิดถึง 6 เดือน</h2>
         <ul>
           <li>
             ของเล่นโมบายล์แขวน (Mobiles): กระตุ้นการมองเห็น
@@ -60,7 +90,7 @@ const About = () => {
           </li>
         </ul>
         <br />
-        <h2>6 เดือนขึ้นไป</h2>
+        <h2 id="6m-up">6 เดือนขึ้นไป</h2>
         <ul>
           <li>
             บล็อกซ้อน (Stacking Blocks): ช่วยพัฒนาการเคลื่อนไหวของมือและสายตา
@@ -73,7 +103,7 @@ const About = () => {
           </li>
         </ul>
         <br />
-        <h2>12 เดือนขึ้นไป</h2>
+        <h2 id="12m-up">12 เดือนขึ้นไป</h2>
         <ul>
           <li>
             รถเข็นสำหรับผลักเดิน (Push Toys): ช่วยในการฝึกเดิน
@@ -85,7 +115,7 @@ const About = () => {
           </li>
         </ul>
         <br />
-        <h2>18 เดือนขึ้นไป</h2>
+        <h2 id="18m-up">18 เดือนขึ้นไป</h2>
         <ul>
           <li>
             ดินน้ำมันและแป้งปั้น: ส่งเสริมการใช้กล้ามเนื้อมือเล็ก
@@ -99,7 +129,7 @@ const About = () => {
           </li>
         </ul>
         <br />
-        <h2>2 ปีขึ้นไป</h2>
+        <h2 id="2yrs-up">2 ปีขึ้นไป</h2>
         <ul>
           <li>
             ของเล่นบทบาทสมมติ (Role-Play Toys): เช่น ชุดครัวจำลอง
@@ -114,7 +144,7 @@ const About = () => {
           </li>
         </ul>
         <br />
-        <h2>5 ปีขึ้นไป</h2>
+        <h2 id="5yrs-up">5 ปีขึ้นไป</h2>
         <ul>
           <li>
             เกมบอร์ดง่ายๆ (Simple Board Games): ช่วยฝึกการรอคอย การใช้เหตุผล
