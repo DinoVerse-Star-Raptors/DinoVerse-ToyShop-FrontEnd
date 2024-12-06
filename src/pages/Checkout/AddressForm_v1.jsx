@@ -5,6 +5,7 @@ import axiosInstance from "../../services/axiosInstance"; // Import axiosInstanc
 const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
   // Set initial state to selectedAddress or default values
   const [address, setAddress] = useState({});
+
   const [errors, setErrors] = useState({}); // To store validation errors
   const [isSubmitting, setIsSubmitting] = useState(false); // For showing loading state
 
@@ -108,20 +109,6 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
     } else {
       setErrors(validationErrors); // Show validation errors
     }
-  };
-
-  // Handle form clear action
-  const handleClear = () => {
-    setAddress({
-      address: "",
-      province: "",
-      country: "",
-      zipcode: "",
-      recipientFullName: "",
-      recipientPhone: "",
-      isDefault: false,
-    });
-    setErrors({}); // Clear any errors
   };
 
   return (
@@ -256,23 +243,14 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
           Set as default address
         </label>
       </div>
-      <div className="flex space-x-2">
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-1/2 rounded-lg bg-green-400 py-2 text-white hover:bg-green-700"
-        >
-          {isSubmitting ? "Submitting..." : "Save Address"}
-        </button>
 
-        <button
-          type="button"
-          onClick={handleClear}
-          className="w-1/2 rounded-lg bg-gray-400 py-2 text-white hover:bg-gray-700"
-        >
-          Clear Form
-        </button>
-      </div>
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="mt-4 w-full rounded-lg bg-green-400 py-2 text-white hover:bg-green-700"
+      >
+        {isSubmitting ? "Submitting..." : "Save Address"}
+      </button>
 
       {errors?.network && (
         <p className="mt-2 text-sm text-red-600">{errors?.network}</p>

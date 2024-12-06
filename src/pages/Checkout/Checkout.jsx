@@ -1,5 +1,3 @@
-// Checkout.js
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -21,6 +19,59 @@ const Checkout = () => {
   const [showAddressForm, setShowAddressForm] = useState(true); // Store selected address form visibility
   const [showAddressList, setShowAddressList] = useState(false); // Whether to show AddressList or AddressForm
   const [showDefaultAddress, setShowDefaultAddress] = useState(false); // Whether to show default address
+
+  const mockData = [
+    {
+      _id: "b",
+      address: "456 Oak Rd",
+      province: "Bangkok",
+      country: "Thailand",
+      zipcode: "10110",
+      recipientFullName: "Jane Smith",
+      recipientPhone: "0923456789",
+      isDefault: false,
+    },
+    {
+      _id: "c",
+      address: "789 Pine Ave",
+      province: "Chiang Mai",
+      country: "Thailand",
+      zipcode: "50200",
+      recipientFullName: "Alice Brown",
+      recipientPhone: "0819876543",
+      isDefault: true, // This is the default address
+    },
+    {
+      _id: "d",
+      address: "101 Maple Blvd",
+      province: "Phuket",
+      country: "Thailand",
+      zipcode: "83110",
+      recipientFullName: "Bob White",
+      recipientPhone: "0931234567",
+      isDefault: false,
+    },
+    {
+      _id: "e",
+      address: "202 Birch St",
+      province: "Khon Kaen",
+      country: "Thailand",
+      zipcode: "40000",
+      recipientFullName: "Eve Green",
+      recipientPhone: "0854567890",
+      isDefault: false,
+    },
+    {
+      _id: "f",
+      address: "303 Cedar Ln",
+      province: "Songkhla",
+      country: "Thailand",
+      zipcode: "90000",
+      recipientFullName: "Chris Black",
+      recipientPhone: "0876543210",
+      isDefault: false,
+    },
+  ];
 
   // Calculate the total price
   const calculateTotal = (cart) => {
@@ -94,8 +145,15 @@ const Checkout = () => {
   };
 
   const handleUseDefault = () => {
+    // Look for the default address in the mockData
+    const defaultAddress = mockData.find((address) => address.isDefault);
+
+    if (defaultAddress) {
+      setShippingAddress(defaultAddress); // Set the default address
+    }
+
     setShowDefaultAddress(true);
-    setShowAddressForm(false);
+    setShowAddressForm(true);
     setShowAddressList(false);
   };
 
@@ -139,6 +197,7 @@ const Checkout = () => {
             <AddressList
               onSelectAddress={handleAddAddress}
               selectedAddress={shippingAddress}
+              AddressList={mockData}
             />
           )}
           {showDefaultAddress && !shippingAddress && (

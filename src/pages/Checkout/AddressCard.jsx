@@ -42,7 +42,7 @@ const AddressCard = ({ address, onSelectAddress, selected, mode }) => {
           {address.zipcode}
         </p>
         <p className="text-sm text-gray-600">Phone: {address.recipientPhone}</p>
-        {mode === "selection" && address.isDefault && (
+        {address.isDefault && (
           <span className="text-sm text-green-600">Default Address</span>
         )}
       </div>
