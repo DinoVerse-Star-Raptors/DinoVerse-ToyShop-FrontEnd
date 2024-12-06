@@ -146,6 +146,12 @@ const Checkout = () => {
     }
   };
 
+  const handleShowForm = () => {
+    setShippingAddress({});
+    setShowAddressList(false);
+    setShowAddressForm(true);
+  };
+
   const handleUseDefault = () => {
     const defaultAddress = mockData.find((address) => address.isDefault);
     if (defaultAddress) {
@@ -207,7 +213,7 @@ const Checkout = () => {
     <div className="mx-auto flex min-h-screen w-full flex-col items-center px-4 py-8">
       <h1 className="mb-6 text-3xl font-bold text-gray-800">Checkout</h1>
       <AddressSelection
-        onAddressForm={handleUseDefault}
+        onAddressForm={handleShowForm}
         onUseDefault={handleUseDefault}
         onOtherAddress={handleOtherAddress}
       />
@@ -227,12 +233,6 @@ const Checkout = () => {
               AddressList={mockData}
             />
           )}
-          {/* {!shippingAddress && (
-            <div className="text-center text-gray-500">
-              <p>No address selected.</p>
-            </div>
-          )}
-          {shippingAddress && <AddressCard address={shippingAddress} />} */}
         </div>
 
         {/* Order Summary Section */}
@@ -250,7 +250,7 @@ const Checkout = () => {
                 <span className="text-sm text-red-500">Address Required</span>
               )}
             </div>
-            {shippingAddress ? (
+            {shippingAddress && shippingAddress?.recipientFullName ? (
               <AddressCard address={shippingAddress} />
             ) : (
               <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-3 text-center">
