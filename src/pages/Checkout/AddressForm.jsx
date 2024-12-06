@@ -10,13 +10,22 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
 
   // Sync address state if selectedAddress changes
   useEffect(() => {
+    // setAddress({
+    //   address: selectedAddress?.address || "123 Main St",
+    //   province: selectedAddress?.province || "Si Sa Ket",
+    //   country: selectedAddress?.country || "Thailand",
+    //   zipcode: selectedAddress?.zipcode || "33110",
+    //   recipientFullName: selectedAddress?.recipientFullName || "John Doe",
+    //   recipientPhone: selectedAddress?.recipientPhone || "0812345678",
+    //   isDefault: selectedAddress?.isDefault || false,
+    // });
     setAddress({
-      address: selectedAddress?.address || "123 Main St",
-      province: selectedAddress?.province || "Si Sa Ket",
-      country: selectedAddress?.country || "Thailand",
-      zipcode: selectedAddress?.zipcode || "33110",
-      recipientFullName: selectedAddress?.recipientFullName || "John Doe",
-      recipientPhone: selectedAddress?.recipientPhone || "0812345678",
+      address: selectedAddress?.address || "",
+      province: selectedAddress?.province || "",
+      country: selectedAddress?.country || "",
+      zipcode: selectedAddress?.zipcode || "",
+      recipientFullName: selectedAddress?.recipientFullName || "",
+      recipientPhone: selectedAddress?.recipientPhone || "",
       isDefault: selectedAddress?.isDefault || false,
     });
   }, [selectedAddress]);

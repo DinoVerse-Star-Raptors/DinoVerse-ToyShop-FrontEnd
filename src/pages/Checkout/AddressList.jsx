@@ -12,6 +12,7 @@ const AddressList = ({
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
 
+  // console.log("AddressList", AddressList);
   // Fetch addresses on component mount or selectedAddress change
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -85,14 +86,9 @@ const AddressList = ({
 
 // Prop validation using PropTypes
 AddressList.propTypes = {
-  onSelectAddress: PropTypes.func.isRequired, // Function to handle address selection
-  selectedAddress: PropTypes.object, // Optional selected address object
-  AddressList: PropTypes.array, // Optional list of addresses to use as fallback data
-};
-
-AddressList.defaultProps = {
-  selectedAddress: {}, // Provide default empty object for selectedAddress
-  AddressList: [], // Provide default empty array for AddressList if not provided
+  onSelectAddress: PropTypes.func.isRequired,
+  selectedAddress: PropTypes.object,
+  AddressList: PropTypes.array,
 };
 
 export default AddressList;

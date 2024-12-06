@@ -7,9 +7,6 @@ import AddressSelection from "./AddressSelection";
 import AddressForm from "./AddressForm";
 import AddressList from "./AddressList";
 import AddressCard from "./AddressCard"; // Import the AddressCard component
-import { toast, ToastContainer } from "react-toastify"; // Import Toastify
-
-import "react-toastify/dist/ReactToastify.css"; // Import CSS for Toastify
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -76,6 +73,7 @@ const Checkout = () => {
     },
   ];
 
+  // Calculate the total price
   const calculateTotal = (cart) => {
     const subtotal = cart.reduce(
       (acc, item) => acc + Number(item?.product?.price) * Number(item.quantity),
@@ -99,8 +97,6 @@ const Checkout = () => {
           setCart(filteredCart);
         } catch (error) {
           setError("Failed to load your cart. Please try again.");
-          setError("");
-          toast.error("Failed to load your cart. Please try again."); // Error toast
           console.error("Error fetching cart:", error);
         } finally {
           setLoading(false);
@@ -111,16 +107,16 @@ const Checkout = () => {
     }
   }, [user, getCart, shippingAddress]);
 
+  // Handle checkout process
   const handleCheckout = async () => {
     if (!shippingAddress) {
       setError("Please provide a shipping address.");
-      setError("");
-      toast.error("Please provide a shipping address."); // Show error toast
       return;
     }
 
     try {
       setLoading(true);
+      console.log(user.userId);
       const response = await axios.post("/api/orders", {
         userId: user.userId,
         items: cart,
@@ -130,17 +126,13 @@ const Checkout = () => {
       });
 
       if (response.status === 200) {
-        toast.success("Order successfully created!"); // Success toast
         navigate("/payment");
       } else {
         setError("Order creation failed. Please try again.");
-        setError("");
-        toast.error("Order creation failed. Please try again."); // Error toast
+        console.error("Failed to create order");
       }
     } catch (error) {
       setError("Error during checkout. Please try again.");
-      setError("");
-      toast.error("Error during checkout. Please try again."); // Error toast
       console.error("Error during checkout:", error);
     } finally {
       setLoading(false);
@@ -154,11 +146,11 @@ const Checkout = () => {
   };
 
   const handleUseDefault = () => {
+    // Look for the default address in the mockData
     const defaultAddress = mockData.find((address) => address.isDefault);
 
     if (defaultAddress) {
       setShippingAddress(defaultAddress); // Set the default address
-      toast.info("Using default address."); // Toast for default address
     }
 
     setShowDefaultAddress(false);
@@ -172,6 +164,7 @@ const Checkout = () => {
     setShowAddressList(true);
   };
 
+  // Handle selecting an address from the AddressList
   const handleAddAddress = (address) => {
     setShowAddressList(false);
     setShowDefaultAddress(false);
@@ -179,20 +172,22 @@ const Checkout = () => {
     if (!address?._id) address._id = uuidv4();
     console.log("handleAddAddress", address);
     setShippingAddress(address);
-    toast.success("Address added successfully!"); // Success toast on address added
   };
 
   return (
     <div className="mx-auto flex min-h-screen w-full flex-col items-center px-4 py-8">
       <h1 className="mb-6 text-3xl font-bold text-gray-800">Checkout</h1>
+
       <AddressSelection
         onAddressForm={handleAddressForm}
         onUseDefault={handleUseDefault}
         onOtherAddress={handleOtherAddress}
       />
+
       <div className="flex w-full">
         {/* Address Form Section */}
         <div className="w-[60%] px-6">
+          {/* Render the AddressForm component here */}
           {showAddressForm && (
             <AddressForm
               onSubmit={handleAddAddress}
@@ -252,11 +247,11 @@ const Checkout = () => {
                   key={index}
                   className="flex justify-between text-lg text-gray-600"
                 >
-                  <span className="block w-[75%] truncate">
+                  <span className="block w-[260px] truncate">
                     {item?.product?.name}
                   </span>
                   <span>
-                    {item?.quantity} x ฿{item?.product?.price}
+                    {item?.quantity} x ${item?.product?.price}
                   </span>
                 </div>
               ))
@@ -267,7 +262,7 @@ const Checkout = () => {
           <div className="mt-8 flex justify-between">
             <span className="text-xl font-semibold text-gray-700">Total:</span>
             <span className="text-xl font-semibold text-gray-700">
-              ฿{calculateTotal(cart)}
+              ${calculateTotal(cart)}
             </span>
           </div>
           <div className="mt-6 flex justify-center">
@@ -287,12 +282,6 @@ const Checkout = () => {
           </Link>
         </div>
       </div>
-      <ToastContainer
-        position="top-center"
-        autoClose={1000}
-        style={{ width: "400px" }}
-      />{" "}
-      {/* Add ToastContainer */}
     </div>
   );
 };

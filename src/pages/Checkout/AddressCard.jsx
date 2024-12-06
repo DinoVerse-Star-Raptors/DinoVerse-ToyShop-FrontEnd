@@ -85,7 +85,7 @@ AddressCard.propTypes = {
   }).isRequired,
   onSelectAddress: PropTypes.func,
   selected: PropTypes.bool, // Add the selected prop to indicate if this address is selected
-  mode: PropTypes.oneOf(["selection", "view"]).isRequired, // Add the mode prop with valid values
+  mode: PropTypes.oneOf(["selection", "view"]), // Add the mode prop with valid values
 };
 
 export default AddressCard;
