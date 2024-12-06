@@ -152,9 +152,9 @@ const Checkout = () => {
       setShippingAddress(defaultAddress); // Set the default address
     }
 
-    setShowDefaultAddress(true);
-    setShowAddressForm(true);
+    setShowDefaultAddress(false);
     setShowAddressList(false);
+    setShowAddressForm(true);
   };
 
   const handleOtherAddress = () => {
