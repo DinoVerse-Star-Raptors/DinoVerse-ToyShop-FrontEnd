@@ -1,14 +1,11 @@
 // Checkout.js
-
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 import AddressSelection from "./AddressSelection";
-import AddressForm from "./AddressForm";
-import AddressList from "./AddressList";
-import AddressCard from "./AddressCard"; // Import the AddressCard component
+import AddressForm from "./AddressForm"; // Import the AddressForm component
+import AddressList from "./AddressList"; // Import the AddressForm component
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -16,11 +13,11 @@ const Checkout = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [shippingAddress, setShippingAddress] = useState(null); // Store the selected address
+  const [shippingAddress, setShippingAddress] = useState(null); // Store the address state
   const shippingFee = 20;
-  const [showAddressForm, setShowAddressForm] = useState(true); // Store selected address form visibility
+  const [showAddress, setShowAddress] = useState(false); // Store selected address
+  const [showAddressForm, setShowAddressForm] = useState(true); // Store selected address
   const [showAddressList, setShowAddressList] = useState(false); // Whether to show AddressList or AddressForm
-  const [showDefaultAddress, setShowDefaultAddress] = useState(false); // Whether to show default address
 
   // Calculate the total price
   const calculateTotal = (cart) => {
@@ -54,7 +51,7 @@ const Checkout = () => {
 
       fetchCart();
     }
-  }, [user, getCart, shippingAddress]);
+  }, [user, getCart]);
 
   // Handle checkout process
   const handleCheckout = async () => {
@@ -88,31 +85,31 @@ const Checkout = () => {
   };
 
   const handleAddressForm = () => {
-    setShowAddressForm(true);
+    setShowAddress(false);
     setShowAddressList(false);
-    setShowDefaultAddress(false);
+    setShowAddressForm(true);
+    console.log("handleAddressForm:");
   };
 
   const handleUseDefault = () => {
-    setShowDefaultAddress(true);
+    console.log("Use default address");
     setShowAddressForm(false);
     setShowAddressList(false);
+    setShowAddress(true);
   };
 
   const handleOtherAddress = () => {
-    setShowDefaultAddress(false);
+    setShowAddress(false);
     setShowAddressForm(false);
     setShowAddressList(true);
+    console.log("Select other address");
   };
 
   // Handle selecting an address from the AddressList
   const handleAddAddress = (address) => {
-    setShowAddressList(false);
-    setShowDefaultAddress(false);
-    setShowAddressForm(true);
-    if (!address?._id) address._id = uuidv4();
-    console.log("handleAddAddress", address);
-    setShippingAddress(address);
+    console.log(address);
+    // setShippingAddress(address);
+    setShowAddressList(false); // Close AddressList after selection
   };
 
   return (
@@ -127,28 +124,11 @@ const Checkout = () => {
 
       <div className="flex w-full">
         {/* Address Form Section */}
-        <div className="w-[60%] px-6">
+        <div className="w-[60%] p-6">
           {/* Render the AddressForm component here */}
-          {showAddressForm && (
-            <AddressForm
-              onSubmit={handleAddAddress}
-              selectedAddress={shippingAddress}
-            />
-          )}
-          {showAddressList && (
-            <AddressList
-              onSelectAddress={handleAddAddress}
-              selectedAddress={shippingAddress}
-            />
-          )}
-          {showDefaultAddress && !shippingAddress && (
-            <div className="text-center text-gray-500">
-              <p>No addresses available.</p>
-            </div>
-          )}
-          {showDefaultAddress && shippingAddress && (
-            <AddressCard address={shippingAddress} />
-          )}
+          {showAddressForm && <AddressForm onSubmit={handleAddAddress} />}
+          {showAddressList && <AddressList />}
+          {showAddress && <p>-</p>}
         </div>
 
         {/* Order Summary Section */}
@@ -168,7 +148,45 @@ const Checkout = () => {
               )}
             </div>
             {shippingAddress ? (
-              <AddressCard address={shippingAddress} />
+              <div className="rounded-lg bg-white p-4 shadow-sm">
+                <div className="flex items-start">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="mr-3 h-6 w-6 flex-shrink-0 text-blue-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  <div>
+                    <p className="font-medium text-gray-800">
+                      {shippingAddress.fullName}
+                    </p>
+                    <p className="text-gray-600">
+                      {shippingAddress.streetAddress}
+                    </p>
+                    <p className="text-gray-600">
+                      {shippingAddress.city}, {shippingAddress.state}{" "}
+                      {shippingAddress.zipCode}
+                    </p>
+                    <p className="text-gray-600">
+                      {shippingAddress.phoneNumber}
+                    </p>
+                  </div>
+                </div>
+              </div>
             ) : (
               <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-3 text-center">
                 <p className="text-yellow-700">
@@ -187,39 +205,43 @@ const Checkout = () => {
                   key={index}
                   className="flex justify-between text-lg text-gray-600"
                 >
-                  <span className="block w-[260px] truncate">
+                  <span className="block w-[260px] max-w-[260px] overflow-hidden text-ellipsis whitespace-nowrap">
                     {item?.product?.name}
                   </span>
-                  <span>
-                    {item?.quantity} x ${item?.product?.price}
-                  </span>
+                  <span>(x{item.quantity})</span>
+                  <span>${item?.product?.price * item.quantity}</span>
                 </div>
               ))
             ) : (
-              <p className="text-center text-gray-500">Your cart is empty.</p>
+              <p className="text-center text-gray-500">Your cart is empty</p>
             )}
           </div>
-          <div className="mt-8 flex justify-between">
-            <span className="text-xl font-semibold text-gray-700">Total:</span>
-            <span className="text-xl font-semibold text-gray-700">
-              ${calculateTotal(cart)}
-            </span>
+
+          <div className="mb-4 flex justify-between text-xl font-semibold text-gray-800">
+            <span>Shipping</span>
+            <span>${shippingFee}</span>
           </div>
-          <div className="mt-6 flex justify-center">
+
+          <div className="mb-6 flex justify-between text-2xl font-bold text-gray-800">
+            <span>Total</span>
+            <span>${calculateTotal(cart)}</span>
+          </div>
+
+          <div className="space-y-4">
             <button
               onClick={handleCheckout}
-              className="w-full rounded-lg bg-blue-600 px-6 py-3 text-lg text-white hover:bg-blue-700"
-              disabled={loading || !shippingAddress}
+              className="mb-4 w-full rounded-lg bg-blue-600 py-3 text-lg font-semibold text-white shadow-md transition-colors hover:bg-blue-700 disabled:opacity-50"
+              disabled={loading}
             >
               {loading ? "Processing..." : "Proceed to Payment"}
             </button>
-          </div>
 
-          <Link to="/cart" className="text-blue-600 hover:text-blue-700">
-            <button className="mt-4 w-full rounded-lg border-2 border-blue-600 py-3 font-semibold text-blue-600 transition-colors">
-              Go back to Cart
-            </button>
-          </Link>
+            <Link to="/cart" className="text-blue-600 hover:text-blue-700">
+              <button className="w-full rounded-lg border-2 border-blue-600 py-3 font-semibold text-blue-600 transition-colors">
+                Go back to Cart
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

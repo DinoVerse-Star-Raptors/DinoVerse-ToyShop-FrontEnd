@@ -14,12 +14,12 @@ const AddressSelection = ({ onAddressForm, onUseDefault, onOtherAddress }) => {
         </button>
 
         {/* Button to Use Default Address */}
-        <button
+        {/* <button
           onClick={onUseDefault}
-          className="hidden rounded-lg bg-green-500 px-4 py-2 font-medium text-white transition-colors hover:bg-green-600"
+          className="rounded-lg bg-green-500 px-4 py-2 font-medium text-white transition-colors hover:bg-green-600"
         >
-          Selected Address
-        </button>
+          Use Default Address
+        </button> */}
 
         {/* Button for Other Address */}
         <button
