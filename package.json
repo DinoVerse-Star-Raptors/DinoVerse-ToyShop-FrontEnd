@@ -5,6 +5,8 @@
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@stripe/react-stripe-js": "^3.0.0",
+    "@stripe/stripe-js": "^5.2.0",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",

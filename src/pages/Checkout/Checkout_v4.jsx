@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import AddressSelection from "./AddressSelection";
 import AddressForm from "./AddressForm";
 import AddressList from "./AddressList";
-import AddressCard from "./AddressCard";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import process from "process";
-import axiosInstance from "../../services/axiosInstance";
+import AddressCard from "./AddressCard"; // Import the AddressCard component
+import { toast, ToastContainer } from "react-toastify"; // Import Toastify
 
-// Stripe.js
-import { loadStripe } from "@stripe/stripe-js";
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for Toastify
 
 const Checkout = () => {
   const navigate = useNavigate();
@@ -21,10 +17,11 @@ const Checkout = () => {
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [shippingAddress, setShippingAddress] = useState(null);
+  const [shippingAddress, setShippingAddress] = useState(null); // Store the selected address
   const shippingFee = 20;
-  const [showAddressForm, setShowAddressForm] = useState(true);
-  const [showAddressList, setShowAddressList] = useState(false);
+  const [showAddressForm, setShowAddressForm] = useState(true); // Store selected address form visibility
+  const [showAddressList, setShowAddressList] = useState(false); // Whether to show AddressList or AddressForm
+  const [showDefaultAddress, setShowDefaultAddress] = useState(false); // Whether to show default address
 
   const mockData = [
     {
@@ -45,7 +42,7 @@ const Checkout = () => {
       zipcode: "50200",
       recipientFullName: "Alice Brown",
       recipientPhone: "0819876543",
-      isDefault: true,
+      isDefault: true, // This is the default address
     },
     {
       _id: "d",
@@ -102,7 +99,8 @@ const Checkout = () => {
           setCart(filteredCart);
         } catch (error) {
           setError("Failed to load your cart. Please try again.");
-          toast.error("Failed to load your cart. Please try again.");
+          setError("");
+          toast.error("Failed to load your cart. Please try again."); // Error toast
           console.error("Error fetching cart:", error);
         } finally {
           setLoading(false);
@@ -116,98 +114,79 @@ const Checkout = () => {
   const handleCheckout = async () => {
     if (!shippingAddress) {
       setError("Please provide a shipping address.");
-      toast.error("Please provide a shipping address.");
+      setError("");
+      toast.error("Please provide a shipping address."); // Show error toast
       return;
     }
 
     try {
       setLoading(true);
-      const response = await axiosInstance.post("/api/orders", {
+      const response = await axios.post("/api/orders", {
         userId: user.userId,
         items: cart,
         shippingFee,
         totalAmount: calculateTotal(cart),
-        shippingAddress,
+        shippingAddress, // Include the shipping address in the order
       });
 
       if (response.status === 200) {
-        toast.success("Order successfully created!");
+        toast.success("Order successfully created!"); // Success toast
         navigate("/payment");
       } else {
         setError("Order creation failed. Please try again.");
-        toast.error("Order creation failed. Please try again.");
+        setError("");
+        toast.error("Order creation failed. Please try again."); // Error toast
       }
     } catch (error) {
       setError("Error during checkout. Please try again.");
-      toast.error("Error during checkout. Please try again.");
+      setError("");
+      toast.error("Error during checkout. Please try again."); // Error toast
       console.error("Error during checkout:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleUseDefault = () => {
-    const defaultAddress = mockData.find((address) => address.isDefault);
-    if (defaultAddress) {
-      setShippingAddress(defaultAddress);
-      toast.info("Using default address.");
-    }
+  const handleAddressForm = () => {
     setShowAddressForm(true);
     setShowAddressList(false);
+    setShowDefaultAddress(false);
+  };
+
+  const handleUseDefault = () => {
+    const defaultAddress = mockData.find((address) => address.isDefault);
+
+    if (defaultAddress) {
+      setShippingAddress(defaultAddress); // Set the default address
+      toast.info("Using default address."); // Toast for default address
+    }
+
+    setShowDefaultAddress(false);
+    setShowAddressList(false);
+    setShowAddressForm(true);
   };
 
   const handleOtherAddress = () => {
+    setShowDefaultAddress(false);
     setShowAddressForm(false);
     setShowAddressList(true);
   };
 
   const handleAddAddress = (address) => {
-    setShowAddressForm(true);
     setShowAddressList(false);
+    setShowDefaultAddress(false);
+    setShowAddressForm(true);
     if (!address?._id) address._id = uuidv4();
+    console.log("handleAddAddress", address);
     setShippingAddress(address);
-    toast.success("Address added successfully!");
-  };
-
-  const handleStripePayment = async () => {
-    // Create a PaymentIntent on the backend
-    try {
-      const response = await axiosInstance.post(
-        "/api/stripe/create-payment-intent",
-        {
-          amount: calculateTotal(cart),
-        },
-      );
-
-      const { clientSecret } = response.data;
-
-      // Use the Stripe.js library to confirm the payment
-      const stripe = await stripePromise;
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: document.getElementById("card-element"),
-        },
-      });
-
-      if (result.error) {
-        toast.error(result.error.message);
-      } else {
-        if (result.paymentIntent.status === "succeeded") {
-          toast.success("Payment Successful!");
-          navigate("/payment-success");
-        }
-      }
-    } catch (error) {
-      toast.error("Error processing payment.");
-      console.error("Stripe payment error:", error);
-    }
+    toast.success("Address added successfully!"); // Success toast on address added
   };
 
   return (
     <div className="mx-auto flex min-h-screen w-full flex-col items-center px-4 py-8">
       <h1 className="mb-6 text-3xl font-bold text-gray-800">Checkout</h1>
       <AddressSelection
-        onAddressForm={handleUseDefault}
+        onAddressForm={handleAddressForm}
         onUseDefault={handleUseDefault}
         onOtherAddress={handleOtherAddress}
       />
@@ -227,12 +206,14 @@ const Checkout = () => {
               AddressList={mockData}
             />
           )}
-          {/* {!shippingAddress && (
+          {showDefaultAddress && !shippingAddress && (
             <div className="text-center text-gray-500">
-              <p>No address selected.</p>
+              <p>No addresses available.</p>
             </div>
           )}
-          {shippingAddress && <AddressCard address={shippingAddress} />} */}
+          {showDefaultAddress && shippingAddress && (
+            <AddressCard address={shippingAddress} />
+          )}
         </div>
 
         {/* Order Summary Section */}
@@ -240,7 +221,8 @@ const Checkout = () => {
           <h2 className="mb-4 text-2xl font-semibold text-gray-700">
             Order Summary
           </h2>
-          {error && <div className="mb-4 hidden text-red-500">{error}</div>}
+
+          {error && <div className="mb-4 text-red-500">{error}</div>}
           <div className="mb-6 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-700">
@@ -279,23 +261,27 @@ const Checkout = () => {
                 </div>
               ))
             ) : (
-              <div className="text-center text-gray-500">
-                <p>No items in your cart.</p>
-              </div>
+              <p className="text-center text-gray-500">Your cart is empty.</p>
             )}
           </div>
-
-          {/* Display Shipping Fee */}
-          <div className="mb-6 flex justify-between font-semibold text-gray-700">
-            <span>Shipping Fee:</span>
-            <span>฿{shippingFee}</span>
+          <div className="mt-8 flex justify-between">
+            <span className="text-xl font-semibold text-gray-700">Total:</span>
+            <span className="text-xl font-semibold text-gray-700">
+              ฿{calculateTotal(cart)}
+            </span>
           </div>
+          {/* <div className="mt-6 flex justify-center">
+            <button
+              onClick={handleCheckout}
+              className="w-full rounded-lg bg-blue-600 px-6 py-3 text-lg text-white hover:bg-blue-700"
+              disabled={loading || !shippingAddress}
+            >
+              {loading ? "Processing..." : "Proceed to Payment"}
+            </button>
+          </div> */}
 
-          <div className="mb-6 flex justify-between font-semibold text-gray-700">
-            <span>Total: </span>
-            <span>฿{calculateTotal(cart)}</span>
-          </div>
           <div className="mt-6 flex justify-center space-x-4">
+            {/* COD Button */}
             <button
               onClick={handleCheckout}
               className="w-full rounded-lg bg-green-600 px-6 py-3 text-lg text-white hover:bg-green-700"
@@ -303,14 +289,17 @@ const Checkout = () => {
             >
               {loading ? "Processing..." : "Pay on Delivery (COD)"}
             </button>
+
+            {/* Stripe Button */}
             <button
-              onClick={handleStripePayment}
+              onClick={handleCheckout}
               className="w-full rounded-lg bg-blue-600 px-6 py-3 text-lg text-white hover:bg-blue-700"
               disabled={loading || !shippingAddress}
             >
               {loading ? "Processing..." : "Proceed to Stripe"}
             </button>
           </div>
+
           <Link to="/cart" className="text-blue-600 hover:text-blue-700">
             <button className="mt-4 w-full rounded-lg border-2 border-blue-600 py-3 font-semibold text-blue-600 transition-colors">
               Go back to Cart
@@ -322,7 +311,8 @@ const Checkout = () => {
         position="top-center"
         autoClose={1000}
         style={{ width: "400px" }}
-      />
+      />{" "}
+      {/* Add ToastContainer */}
     </div>
   );
 };

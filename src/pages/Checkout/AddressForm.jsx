@@ -269,7 +269,7 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-1/2 rounded-lg bg-green-400 py-2 text-white hover:bg-green-700"
+          className="w-1/2 rounded-lg bg-teal-300 py-2 text-white hover:bg-teal-700"
         >
           {isSubmitting ? "Submitting..." : "Save Address"}
         </button>
