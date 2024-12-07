@@ -2,50 +2,18 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import SimpleNavbar from "../../components/layout/SimpleNavbar";
 import SimpleFooter from "../../components/layout/SimpleFooter";
-import { Home, User, Settings, ShoppingCart, LogOut } from "lucide-react";
+import { User, ShoppingCart, LogOut } from "lucide-react";
 import { Suspense } from "react";
 import { useAuth } from "../../context/AuthContext"; // Auth context for accessing user data
-// import { useNavigate } from "react-router-dom";
 
 const UserPanel = () => {
-  // Access user data and logout function from context
-  // const { user, logout } = useAuth();
   const { user } = useAuth();
 
-  // Use the navigate hook for redirecting after logout
-  // const navigate = useNavigate();
-
-  // Handle logout functionality
-  // const handleLogout = () => {
-  //   logout(); // Call logout from AuthContext to clear user data
-  //   navigate("/login"); // Redirect to the login page after logging out
-  // };
-
   const menuItems = [
-    // {
-    //   to: "test",
-    //   icon: <Home className="mr-3 h-5 w-5" />,
-    //   label: "test",
-    // },
-    {
-      to: "dashboard",
-      icon: <Home className="mr-3 h-5 w-5" />,
-      label: "Dashboard",
-    },
     {
       to: "profile",
       icon: <User className="mr-3 h-5 w-5" />,
       label: "Profile",
-    },
-    {
-      to: "password",
-      icon: <Settings className="mr-3 h-5 w-5" />,
-      label: "Password",
-    },
-    {
-      to: "adddress",
-      icon: <ShoppingCart className="mr-3 h-5 w-5" />,
-      label: "Adddress",
     },
     {
       to: "orders",
@@ -56,13 +24,7 @@ const UserPanel = () => {
       to: "logout",
       icon: <LogOut className="mr-3 h-5 w-5 text-red-500" />,
       label: "Logout",
-      // onClick: handleLogout, // Add logout functionality to the "Logout" menu item
     },
-    // {
-    //   to: "test",
-    //   icon: <Home className="mr-3 h-5 w-5" />,
-    //   label: "test",
-    // },
   ];
 
   return (
