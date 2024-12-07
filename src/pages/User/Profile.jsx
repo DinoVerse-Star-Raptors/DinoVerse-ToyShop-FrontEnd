@@ -14,6 +14,8 @@ function Profile() {
     phone: "********18",
     gender: "Male",
     dateOfBirth: "30/10/19**",
+    profilePicture:
+      "https://res.cloudinary.com/dvacq67nr/image/upload/v1733225783/dinoimage/profiles/user_kP_bUe6GE6qDYv1_44OE.jpg",
   });
 
   const [isEditing, setIsEditing] = useState({
@@ -22,6 +24,7 @@ function Profile() {
     phone: false,
     gender: false,
     dateOfBirth: false,
+    profilePicture: false,
   });
 
   useEffect(() => {
@@ -40,6 +43,17 @@ function Profile() {
     setProfileData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handlePictureChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setProfileData((prev) => ({ ...prev, profilePicture: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSave = () => {
     console.log("Profile data saved:", profileData);
     // Add functionality to save the updated data to the server or context
@@ -49,6 +63,7 @@ function Profile() {
       phone: false,
       gender: false,
       dateOfBirth: false,
+      profilePicture: false,
     });
   };
 
@@ -64,11 +79,41 @@ function Profile() {
             {/* Sidebar */}
             <div className="w-full border-r border-gray-200 pr-6 md:w-1/3">
               <div className="flex flex-col items-center">
-                <img
-                  src="https://res.cloudinary.com/dvacq67nr/image/upload/v1733225783/dinoimage/profiles/user_kP_bUe6GE6qDYv1_44OE.jpg"
-                  alt="Profile"
-                  className="h-20 w-20 rounded-full"
-                />
+                {isEditing.profilePicture ? (
+                  <>
+                    <img
+                      src={profileData.profilePicture}
+                      alt="Profile"
+                      className="h-20 w-20 rounded-full"
+                    />
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePictureChange}
+                      className="mt-2"
+                    />
+                    <button
+                      onClick={() => handleEditToggle("profilePicture")}
+                      className="mt-2 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-700"
+                    >
+                      Save Picture
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <img
+                      src={profileData.profilePicture}
+                      alt="Profile"
+                      className="h-20 w-20 rounded-full"
+                    />
+                    <button
+                      onClick={() => handleEditToggle("profilePicture")}
+                      className="mt-2 text-sm text-blue-500 underline"
+                    >
+                      Edit Picture
+                    </button>
+                  </>
+                )}
                 <h2 className="font-roboto mt-2 text-lg">{profileData.name}</h2>
               </div>
             </div>
