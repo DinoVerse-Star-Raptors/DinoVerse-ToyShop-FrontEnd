@@ -11,22 +11,16 @@ import Shop from "./pages/Shop";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-// import ProductInfo from "./pages/ProductInfo";
-// import ProductList from "./pages/ProductList";
 import ProductItem from "./pages/ProductItem";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
-// import ExamHome from "./pages/ExamHome";
 import { AuthProvider } from "./context/AuthContext"; // Import the AuthProvider
-import Dashboard from "./pages/User/Dashboard"; // Protected page
 import ProtectedRoute from "./utils/ProtectedRoute";
 import UserPanel from "./pages/User/UserPanel";
 import Logout from "./pages/User/Logout";
 import Profile from "./pages/User/Profile";
-import Adddress from "./pages/User/Adddress";
-import Password from "./pages/User/Password";
 import Orders from "./pages/User/Orders";
-// import Test from "./pages/User/Test";
+
 const router = createBrowserRouter([
   {
     path: "/register",
@@ -82,24 +76,12 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        index: true, // This makes the Dashboard the default route
-        element: <Dashboard />, // Default route under /user
-      },
-      {
-        path: "dashboard", // Specific path for dashboard
-        element: <Dashboard />,
-      },
-      {
-        path: "profile", // Profile route
+        index: true,
         element: <Profile />,
       },
       {
-        path: "password",
-        element: <Password />,
-      },
-      {
-        path: "adddress",
-        element: <Adddress />,
+        path: "profile",
+        element: <Profile />,
       },
       {
         path: "orders",
@@ -109,10 +91,6 @@ const router = createBrowserRouter([
         path: "logout",
         element: <Logout />,
       },
-      // {
-      //   path: "test",
-      //   element: <Test />,
-      // },
     ],
   },
 ]);

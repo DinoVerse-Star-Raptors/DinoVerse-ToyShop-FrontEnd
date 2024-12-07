@@ -24,7 +24,7 @@ function Login() {
     const checkToken = () => {
       const token = Cookies.get("auth_token"); // Get the token from cookies
       if (token) {
-        navigate("/user/dashboard"); // Redirect to dashboard if token exists
+        navigate("/user"); // Redirect to dashboard if token exists
       }
     };
 
