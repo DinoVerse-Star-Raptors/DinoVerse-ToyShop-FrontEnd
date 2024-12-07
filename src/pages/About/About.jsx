@@ -7,6 +7,7 @@ import EighteenMonths from "./assets/18M-circle.png";
 import TwoYears from "./assets/2yrs-circle.png";
 import FiveYears from "./assets/5yrs-circle.png";
 import aboutbanner from "./assets/aboutbanner.png";
+import Footer from "../../components/layout/Footer";
 
 const About = () => {
   return (

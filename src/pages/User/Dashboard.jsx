@@ -33,7 +33,7 @@ function Dashboard() {
           <img
             src="https://res.cloudinary.com/dvacq67nr/image/upload/v1733546456/dinoimage/wmipflmuidexxgrzshsj.jpg"
             alt="Welcome Image"
-            class="w-full rounded-lg"
+            class="hover w-full rounded-lg"
           />
           <div class="absolute inset-0 flex items-center justify-center rounded-lg bg-black bg-opacity-50">
             <h1 class="font-roboto text-2xl font-medium text-white">
