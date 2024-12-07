@@ -7,6 +7,22 @@ function Profile() {
   const navigate = useNavigate(); // Use navigate for redirection
 
   const [isLoading, setIsLoading] = useState(true); // Loading state to handle user data fetch
+  const [profileData, setProfileData] = useState({
+    username: "johndoe1",
+    name: "John Doe",
+    email: "jo*******@example.com",
+    phone: "********18",
+    gender: "Male",
+    dateOfBirth: "30/10/19**",
+  });
+
+  const [isEditing, setIsEditing] = useState({
+    name: false,
+    email: false,
+    phone: false,
+    gender: false,
+    dateOfBirth: false,
+  });
 
   useEffect(() => {
     if (!user) {
@@ -14,7 +30,27 @@ function Profile() {
     } else {
       setIsLoading(false); // Set loading to false when user data is available
     }
-  }, [user, navigate]); // Run this effect when `user` changes
+  }, [user, navigate]);
+
+  const handleEditToggle = (field) => {
+    setIsEditing((prev) => ({ ...prev, [field]: !prev[field] }));
+  };
+
+  const handleChange = (field, value) => {
+    setProfileData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleSave = () => {
+    console.log("Profile data saved:", profileData);
+    // Add functionality to save the updated data to the server or context
+    setIsEditing({
+      name: false,
+      email: false,
+      phone: false,
+      gender: false,
+      dateOfBirth: false,
+    });
+  };
 
   if (isLoading) {
     return <div>Loading...</div>; // Show loading state while checking user data
@@ -33,10 +69,7 @@ function Profile() {
                   alt="Profile"
                   className="h-20 w-20 rounded-full"
                 />
-                <h2 className="font-roboto mt-2 text-lg">John Doe</h2>
-                <button className="text-sm text-blue-500 underline">
-                  Edit
-                </button>
+                <h2 className="font-roboto mt-2 text-lg">{profileData.name}</h2>
               </div>
             </div>
 
@@ -54,70 +87,136 @@ function Profile() {
               <div className="mt-6 space-y-4">
                 <div className="flex flex-col">
                   <label className="text-sm font-medium text-gray-700">
-                    Username
-                  </label>
-                  <p className="text-gray-800">johndoe1</p>
-                </div>
-
-                <div className="flex flex-col">
-                  <label className="text-sm font-medium text-gray-700">
                     Name
                   </label>
-                  <input
-                    type="text"
-                    value="johndoe1"
-                    className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
+                  {isEditing.name ? (
+                    <input
+                      type="text"
+                      value={profileData.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                      className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="text-gray-800">
+                      {profileData.name}{" "}
+                      <button
+                        onClick={() => handleEditToggle("name")}
+                        className="text-blue-500 underline"
+                      >
+                        [Edit]
+                      </button>
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex flex-col">
                   <label className="text-sm font-medium text-gray-700">
                     Email
                   </label>
-                  <p className="text-gray-800">
-                    jo*******@example.com{" "}
-                    <a href="#" className="text-blue-500 underline">
-                      [Change]
-                    </a>
-                  </p>
+                  {isEditing.email ? (
+                    <input
+                      type="text"
+                      value={profileData.email}
+                      onChange={(e) => handleChange("email", e.target.value)}
+                      className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="text-gray-800">
+                      {profileData.email}{" "}
+                      <button
+                        onClick={() => handleEditToggle("email")}
+                        className="text-blue-500 underline"
+                      >
+                        [Edit]
+                      </button>
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex flex-col">
                   <label className="text-sm font-medium text-gray-700">
                     Phone Number
                   </label>
-                  <p className="text-gray-800">
-                    ********18{" "}
-                    <a href="#" className="text-blue-500 underline">
-                      [Change]
-                    </a>
-                  </p>
+                  {isEditing.phone ? (
+                    <input
+                      type="text"
+                      value={profileData.phone}
+                      onChange={(e) => handleChange("phone", e.target.value)}
+                      className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="text-gray-800">
+                      {profileData.phone}{" "}
+                      <button
+                        onClick={() => handleEditToggle("phone")}
+                        className="text-blue-500 underline"
+                      >
+                        [Edit]
+                      </button>
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex flex-col">
                   <label className="text-sm font-medium text-gray-700">
                     Gender
                   </label>
-                  <p className="text-gray-800">Male / Female / Other</p>
+                  {isEditing.gender ? (
+                    <select
+                      value={profileData.gender}
+                      onChange={(e) => handleChange("gender", e.target.value)}
+                      className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  ) : (
+                    <p className="text-gray-800">
+                      {profileData.gender}{" "}
+                      <button
+                        onClick={() => handleEditToggle("gender")}
+                        className="text-blue-500 underline"
+                      >
+                        [Edit]
+                      </button>
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex flex-col">
                   <label className="text-sm font-medium text-gray-700">
                     Date of Birth
                   </label>
-
-                  <p className="text-gray-800">
-                    30/10/19**{" "}
-                    <a href="#" className="text-blue-500 underline">
-                      [Change]
-                    </a>
-                  </p>
+                  {isEditing.dateOfBirth ? (
+                    <input
+                      type="text"
+                      value={profileData.dateOfBirth}
+                      onChange={(e) =>
+                        handleChange("dateOfBirth", e.target.value)
+                      }
+                      className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  ) : (
+                    <p className="text-gray-800">
+                      {profileData.dateOfBirth}{" "}
+                      <button
+                        onClick={() => handleEditToggle("dateOfBirth")}
+                        className="text-blue-500 underline"
+                      >
+                        [Edit]
+                      </button>
+                    </p>
+                  )}
                 </div>
               </div>
 
               {/* Save Button */}
               <div className="mt-8">
-                <button className="rounded-md bg-pink-300 px-6 py-2 text-white hover:bg-pink-600">
+                <button
+                  onClick={handleSave}
+                  className="rounded-md bg-pink-300 px-6 py-2 text-white hover:bg-pink-600"
+                >
                   SAVE
                 </button>
               </div>
