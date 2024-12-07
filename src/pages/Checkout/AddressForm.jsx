@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types"; // Import PropTypes for prop validation
-import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
 const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
-  // Set initial state to selectedAddress or default values
   const [address, setAddress] = useState({});
   const [errors, setErrors] = useState({}); // To store validation errors
   const [isSubmitting, setIsSubmitting] = useState(false); // For showing loading state
 
   // Sync address state if selectedAddress changes
   useEffect(() => {
-    // setAddress({
-    //   address: selectedAddress?.address || "123 Main St",
-    //   province: selectedAddress?.province || "Si Sa Ket",
-    //   country: selectedAddress?.country || "Thailand",
-    //   zipcode: selectedAddress?.zipcode || "33110",
-    //   recipientFullName: selectedAddress?.recipientFullName || "John Doe",
-    //   recipientPhone: selectedAddress?.recipientPhone || "0812345678",
-    //   isDefault: selectedAddress?.isDefault || false,
-    // });
     setAddress({
       address: selectedAddress?.address || "",
       province: selectedAddress?.province || "",
@@ -73,47 +62,16 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
     return newErrors;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const validationErrors = validate();
 
     if (Object.keys(validationErrors).length === 0) {
       // If no errors, submit the form
-      try {
-        setIsSubmitting(true); // Start submitting
-
-        // Make the POST request to validate the address using axios
-        const response = await axiosInstance.post(
-          "/api/validate/address",
-          address,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          },
-        );
-
-        // If the response is successful, pass the address and response data to onSubmit
-        if (response.status === 200) {
-          onSubmit(address); // Pass the address to the parent component
-          setErrors({}); // Reset errors if submission was successful
-        }
-      } catch (error) {
-        // Handle errors (either from the server or network)
-        if (error.response) {
-          setErrors(
-            error.response.data.errors || { network: "Something went wrong" },
-          );
-        } else if (error.request) {
-          setErrors({
-            network: "No response from the server. Please try again later.",
-          });
-        } else {
-          setErrors({ network: "An error occurred while making the request." });
-        }
-      } finally {
-        setIsSubmitting(false); // Stop submitting
-      }
+      setIsSubmitting(true); // Start submitting
+      onSubmit(address); // Pass the address to the parent component
+      setErrors({}); // Reset errors
+      setIsSubmitting(false); // Stop submitting
     } else {
       setErrors(validationErrors); // Show validation errors
     }
@@ -282,10 +240,6 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
           Clear Form
         </button>
       </div>
-
-      {errors?.network && (
-        <p className="mt-2 text-sm text-red-600">{errors?.network}</p>
-      )}
     </form>
   );
 };
