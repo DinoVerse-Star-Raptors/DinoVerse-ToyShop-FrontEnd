@@ -28,7 +28,7 @@ function Dashboard() {
 
   return (
     <>
-      <section className="flex justify-center py-[16px]">
+      <section className="flex flex-col justify-center py-[16px]">
         <div class="relative mx-auto w-full max-w-lg">
           <img
             src="https://res.cloudinary.com/dvacq67nr/image/upload/v1733546456/dinoimage/wmipflmuidexxgrzshsj.jpg"
@@ -51,14 +51,16 @@ function Dashboard() {
             </button>
           </div> */}
 
-        <div className="mt-8">
-          <h2 className="font-roboto text-[24px] text-gray-800">
-            Your Profile
-          </h2>
-          <div className="mt-4">
-            <p className="font-roboto text-sm">Username: {user.username}</p>
-            <p className="font-roboto text-sm">Email: {user.email}</p>
-            <p className="font-roboto text-sm">Full Name: {user.fullname}</p>
+        <div className="flex min-h-screen flex-col items-center justify-center">
+          <div className="mb-[1000px] text-center">
+            <h2 className="font-roboto text-[24px] text-gray-800">
+              Your Profile
+            </h2>
+            <div className="mt-4">
+              <p className="font-roboto text-sm">Username: {user.username}</p>
+              <p className="font-roboto text-sm">Email: {user.email}</p>
+              <p className="font-roboto text-sm">Full Name: {user.fullname}</p>
+            </div>
           </div>
         </div>
       </section>
