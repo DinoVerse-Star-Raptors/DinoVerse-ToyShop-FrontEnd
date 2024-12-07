@@ -123,12 +123,11 @@ const Checkout = () => {
 
     try {
       setLoadingOfCOD(true);
-      const response = await axiosInstance.post("/api/orders", {
+      const response = await axiosInstance.post("/api/order/cod", {
         userId: user.userId,
         items: cart,
-        shippingFee,
-        totalAmount: calculateTotal(cart),
-        shippingAddress,
+        address: shippingAddress,
+        amount: calculateTotal(cart),
       });
 
       if (response.status === 200) {
