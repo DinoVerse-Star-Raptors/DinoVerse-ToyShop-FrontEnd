@@ -15,6 +15,7 @@ function Profile() {
     gender: "Male",
     dateOfBirth: "30/10/19**",
     profilePicture:
+      localStorage.getItem("profilePicture") ||
       "https://res.cloudinary.com/dvacq67nr/image/upload/v1733225783/dinoimage/profiles/user_kP_bUe6GE6qDYv1_44OE.jpg",
   });
 
@@ -33,6 +34,7 @@ function Profile() {
     } else {
       setIsLoading(false); // Set loading to false when user data is available
     }
+    console.log(user);
   }, [user, navigate]);
 
   const handleEditToggle = (field) => {
@@ -48,7 +50,12 @@ function Profile() {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        setProfileData((prev) => ({ ...prev, profilePicture: reader.result }));
+        const updatedProfilePicture = reader.result;
+        setProfileData((prev) => ({
+          ...prev,
+          profilePicture: updatedProfilePicture,
+        }));
+        localStorage.setItem("profilePicture", updatedProfilePicture); // Save to localStorage
       };
       reader.readAsDataURL(file);
     }
@@ -56,7 +63,8 @@ function Profile() {
 
   const handleSave = () => {
     console.log("Profile data saved:", profileData);
-    // Add functionality to save the updated data to the server or context
+    // Add functionality to save the updated data to the backend or context
+    localStorage.setItem("profilePicture", profileData.profilePicture); // Ensure the picture persists
     setIsEditing({
       name: false,
       email: false,
