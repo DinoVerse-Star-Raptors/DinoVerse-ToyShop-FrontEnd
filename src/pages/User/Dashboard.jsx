@@ -29,17 +29,20 @@ function Dashboard() {
   return (
     <>
       <section className="flex justify-center py-[16px]">
-        <div className="w-full">
-          <div className="flex-col items-center justify-start text-center">
-            <h1 className="font-roboto text-[32px] font-normal text-black">
+        <div class="relative mx-auto w-full max-w-lg">
+          <img
+            src="https://res.cloudinary.com/dvacq67nr/image/upload/v1733546456/dinoimage/wmipflmuidexxgrzshsj.jpg"
+            alt="Welcome Image"
+            class="w-full rounded-lg"
+          />
+          <div class="absolute inset-0 flex items-center justify-center rounded-lg bg-black bg-opacity-50">
+            <h1 class="font-roboto text-2xl font-medium text-white">
               Welcome back, {user.fullname}
             </h1>
-            <p className="font-roboto p-[32px] text-center text-[16px] font-normal text-black">
-              You are logged in and ready to explore the dashboard.
-            </p>
           </div>
+        </div>
 
-          {/* <div className="hidden flex-col items-center justify-start text-center">
+        {/* <div className="hidden flex-col items-center justify-start text-center">
             <button
               onClick={handleLogout}
               className="w-full max-w-[200px] justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
@@ -48,15 +51,14 @@ function Dashboard() {
             </button>
           </div> */}
 
-          <div className="mt-8">
-            <h2 className="font-roboto text-[24px] text-gray-800">
-              Your Profile
-            </h2>
-            <div className="mt-4">
-              <p className="font-roboto text-sm">Username: {user.username}</p>
-              <p className="font-roboto text-sm">Email: {user.email}</p>
-              <p className="font-roboto text-sm">Full Name: {user.fullname}</p>
-            </div>
+        <div className="mt-8">
+          <h2 className="font-roboto text-[24px] text-gray-800">
+            Your Profile
+          </h2>
+          <div className="mt-4">
+            <p className="font-roboto text-sm">Username: {user.username}</p>
+            <p className="font-roboto text-sm">Email: {user.email}</p>
+            <p className="font-roboto text-sm">Full Name: {user.fullname}</p>
           </div>
         </div>
       </section>
