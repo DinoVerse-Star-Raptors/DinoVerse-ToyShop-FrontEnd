@@ -29,23 +29,14 @@ function Profile() {
             <div className="w-full border-r border-gray-200 pr-6 md:w-1/3">
               <div className="flex flex-col items-center">
                 <img
-                  src="path/to/your-image.jpg"
+                  src="https://res.cloudinary.com/dvacq67nr/image/upload/v1733225783/dinoimage/profiles/user_kP_bUe6GE6qDYv1_44OE.jpg"
                   alt="Profile"
                   className="h-20 w-20 rounded-full"
                 />
-                <h2 className="font-roboto mt-2 text-lg">chalisamie</h2>
+                <h2 className="font-roboto mt-2 text-lg">John Doe</h2>
                 <button className="text-sm text-blue-500 underline">
                   Edit
                 </button>
-              </div>
-              <div className="mt-8">
-                <h3 className="font-bold text-gray-800">My Account</h3>
-                <ul className="mt-4 space-y-2">
-                  <li className="font-medium text-gray-800">Profile</li>
-                  <li className="text-gray-500">Banks & Cards</li>
-                  <li className="text-gray-500">Address</li>
-                  <li className="text-gray-500">My purchase</li>
-                </ul>
               </div>
             </div>
 
@@ -65,7 +56,7 @@ function Profile() {
                   <label className="text-sm font-medium text-gray-700">
                     Username
                   </label>
-                  <p className="text-gray-800">chalisamie</p>
+                  <p className="text-gray-800">johndoe1</p>
                 </div>
 
                 <div className="flex flex-col">
@@ -74,7 +65,7 @@ function Profile() {
                   </label>
                   <input
                     type="text"
-                    value="mie"
+                    value="johndoe1"
                     className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -84,7 +75,7 @@ function Profile() {
                     Email
                   </label>
                   <p className="text-gray-800">
-                    me*******@gmail.com{" "}
+                    jo*******@example.com{" "}
                     <a href="#" className="text-blue-500 underline">
                       [Change]
                     </a>
@@ -114,6 +105,7 @@ function Profile() {
                   <label className="text-sm font-medium text-gray-700">
                     Date of Birth
                   </label>
+
                   <p className="text-gray-800">
                     30/10/19**{" "}
                     <a href="#" className="text-blue-500 underline">
@@ -125,7 +117,7 @@ function Profile() {
 
               {/* Save Button */}
               <div className="mt-8">
-                <button className="rounded-md bg-pink-500 px-6 py-2 text-white hover:bg-pink-600">
+                <button className="rounded-md bg-pink-300 px-6 py-2 text-white hover:bg-pink-600">
                   SAVE
                 </button>
               </div>
