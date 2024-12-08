@@ -132,7 +132,8 @@ const Checkout = () => {
 
       if (response.status === 200) {
         toast.success("Order successfully created!");
-        navigate("/payment");
+        // navigate("/payment");
+        window.location.href = "/user/orders";
       } else {
         setError("Order creation failed. Please try again.");
         toast.error("Order creation failed. Please try again.");
