@@ -181,12 +181,12 @@ const Checkout = () => {
   const handleStripePayment = async () => {
     // Create a PaymentIntent on the backend
     try {
-      const response = await axiosInstance.post(
-        "/api/stripe/create-payment-intent",
-        {
-          amount: calculateTotal(cart),
-        },
-      );
+      const response = await axiosInstance.post("/api/order/stripe", {
+        userId: user.userId,
+        items: cart,
+        address: shippingAddress,
+        amount: calculateTotal(cart),
+      });
 
       const { clientSecret } = response.data;
 
