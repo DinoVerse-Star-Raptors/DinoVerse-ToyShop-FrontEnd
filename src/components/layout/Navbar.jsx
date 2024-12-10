@@ -23,9 +23,9 @@ export default function Navbar() {
           <img
             src={logo}
             alt="Logo"
-            width={211}
-            height={49}
-            className="max-h-[49px]"
+            width={149}
+            height={33}
+            className="max-h-[33px]"
           />
         </Link>
 
