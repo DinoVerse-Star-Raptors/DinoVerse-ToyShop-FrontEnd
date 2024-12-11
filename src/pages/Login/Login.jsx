@@ -46,10 +46,22 @@ function Login() {
 
       // Handle successful login
       if (response.status === 200) {
-        const { token, userId, username, fullname, email } = response.data;
+        const {
+          token,
+          userId,
+          username,
+          fullname,
+          email,
+          phone,
+          gender,
+          profilePicture,
+        } = response.data;
 
         // Call the login function from the AuthContext
-        login({ userId, username, fullname, email }, token);
+        login(
+          { userId, username, fullname, email, phone, gender, profilePicture },
+          token,
+        );
 
         // Store the token in a cookie with an expiration time (e.g., 1 day)
         Cookies.set("auth_token", token, { expires: 1 });

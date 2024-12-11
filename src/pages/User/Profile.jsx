@@ -8,15 +8,12 @@ function Profile() {
 
   const [isLoading, setIsLoading] = useState(true); // Loading state to handle user data fetch
   const [profileData, setProfileData] = useState({
-    username: "johndoe1",
-    name: "John Doe",
-    email: "jo*******@example.com",
-    phone: "********18",
-    gender: "Male",
-    dateOfBirth: "30/10/19**",
-    profilePicture:
-      localStorage.getItem("profilePicture") ||
-      "https://res.cloudinary.com/dvacq67nr/image/upload/v1733225783/dinoimage/profiles/user_kP_bUe6GE6qDYv1_44OE.jpg",
+    username: user.username,
+    name: user.fullname,
+    email: user.email,
+    phone: user.phone,
+    gender: user.gender,
+    profilePicture: user.profilePicture,
   });
 
   const [isEditing, setIsEditing] = useState({
@@ -24,7 +21,6 @@ function Profile() {
     email: false,
     phone: false,
     gender: false,
-    dateOfBirth: false,
     profilePicture: false,
   });
 
@@ -70,7 +66,6 @@ function Profile() {
       email: false,
       phone: false,
       gender: false,
-      dateOfBirth: false,
       profilePicture: false,
     });
   };
@@ -236,39 +231,13 @@ function Profile() {
                     </p>
                   )}
                 </div>
-
-                <div className="flex flex-col">
-                  <label className="text-sm font-medium text-gray-700">
-                    Date of Birth
-                  </label>
-                  {isEditing.dateOfBirth ? (
-                    <input
-                      type="text"
-                      value={profileData.dateOfBirth}
-                      onChange={(e) =>
-                        handleChange("dateOfBirth", e.target.value)
-                      }
-                      className="rounded-md border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  ) : (
-                    <p className="text-gray-800">
-                      {profileData.dateOfBirth}{" "}
-                      <button
-                        onClick={() => handleEditToggle("dateOfBirth")}
-                        className="text-blue-500 underline"
-                      >
-                        [Edit]
-                      </button>
-                    </p>
-                  )}
-                </div>
               </div>
 
               {/* Save Button */}
               <div className="mt-8">
                 <button
                   onClick={handleSave}
-                  className="rounded-md bg-pink-300 px-6 py-2 text-white hover:bg-pink-600"
+                  className="rounded-md bg-blue-500 px-6 py-2 text-white hover:bg-blue-600"
                 >
                   SAVE
                 </button>
