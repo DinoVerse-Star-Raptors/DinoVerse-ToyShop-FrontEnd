@@ -138,7 +138,7 @@ function Orders() {
                   <ul className="list-inside list-disc">
                     {order.items.map((item, idx) => (
                       <li key={idx} className="text-sm text-gray-600">
-                        {item.product.name} - ${item.product.price} x {item.quantity}
+                        {item.product.name} - ฿{item.product.price} x {item.quantity}
                       </li>
                     ))}
                   </ul>
