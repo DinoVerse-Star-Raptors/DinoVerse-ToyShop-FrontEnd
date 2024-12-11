@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { v4 as uuidv4 } from "uuid";
 import AddressSelection from "./AddressSelection";
@@ -12,11 +13,11 @@ import process from "process";
 import axiosInstance from "../../services/axiosInstance";
 
 // Stripe.js
-import { loadStripe } from "@stripe/stripe-js";
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
+// import { loadStripe } from "@stripe/stripe-js";
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const Checkout = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user, getCart } = useAuth();
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -188,23 +189,11 @@ const Checkout = () => {
         amount: calculateTotal(cart),
       });
 
-      const { clientSecret } = response.data;
-
-      // Use the Stripe.js library to confirm the payment
-      const stripe = await stripePromise;
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: document.getElementById("card-element"),
-        },
-      });
-
-      if (result.error) {
-        toast.error(result.error.message);
+      if (response.data.success) {
+        const { session_url } = response.data;
+        window.location.replace(session_url);
       } else {
-        if (result.paymentIntent.status === "succeeded") {
-          toast.success("Payment Successful!");
-          navigate("/payment-success");
-        }
+        toast.error(response.data.message);
       }
     } catch (error) {
       toast.error("Error processing payment.");
