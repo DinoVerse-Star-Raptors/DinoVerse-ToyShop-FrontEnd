@@ -7,8 +7,9 @@ import EighteenMonths from "./assets/18M-circle.png";
 import TwoYears from "./assets/2yrs-circle.png";
 import FiveYears from "./assets/5yrs-circle.png";
 import aboutbanner from "./assets/aboutbanner.png";
-import Footer from "../../components/layout/Footer";
+// import Footer from "../../components/layout/Footer";
 import FactorForChild from "../../components/layout/FactorsForChild";
+// import ChooseByAge from "../../components/layout/ByAge";
 
 const About = () => {
   return (
@@ -20,10 +21,7 @@ const About = () => {
       <section className="flex flex-col gap-10">
         <div className="m-5 grid grid-cols-1 gap-4 sm:grid-cols-6">
           <div className="flex flex-col items-center justify-center">
-            <a
-              className="flex flex-col items-center justify-center"
-              href="#0-6m"
-            >
+            <a className="flex flex-col items-center justify-center" href="#0-6m">
               <img src={ZeroToSix} alt="0-6m" className="" />
               <h3>0-6M</h3>
             </a>
@@ -159,6 +157,10 @@ const About = () => {
             พัฒนาทักษะด้านการเข้าสังคมและการทำงานร่วมกับผู้อื่น
           </li>
         </ul>
+      </section>
+
+      <section>
+        {/* <ChooseByAge/> */}
       </section>
 
        {/* Factors For Child Development */}
