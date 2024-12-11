@@ -18,13 +18,12 @@ const AddressList = ({
     const fetchAddresses = async () => {
       setError(null); // Reset error state before fetching
       try {
-        const response = await axios.get("/api/address"); // Make the GET request to fetch addresses
-        const sortedAddresses = response.data.sort((a, b) => {
-          return a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1;
-        });
-        setAddresses(sortedAddresses); // Set sorted addresses
-      } catch (error) {
-        // Use mock data if API call fails
+        // const response = await axios.get("/api/address"); // Make the GET request to fetch addresses
+        // const sortedAddresses = response.data.sort((a, b) => {
+        //   return a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1;
+        // });
+        // setAddresses(sortedAddresses); // Set sorted addresses
+        
         const mockData = AddressList?.length ? AddressList : [];
 
         const sortedMockData = mockData.sort((a, b) => {
@@ -32,6 +31,9 @@ const AddressList = ({
         });
 
         setAddresses(sortedMockData); // Set sorted mock data
+      } catch (error) {
+        // Use mock data if API call fails
+        
       } finally {
         setLoading(false); // Stop loading regardless of success/failure
       }
