@@ -7,7 +7,9 @@ import EighteenMonths from "./assets/18M-circle.png";
 import TwoYears from "./assets/2yrs-circle.png";
 import FiveYears from "./assets/5yrs-circle.png";
 import aboutbanner from "./assets/aboutbanner.png";
-import Footer from "../../components/layout/Footer";
+// import Footer from "../../components/layout/Footer";
+import FactorForChild from "../../components/layout/FactorsForChild";
+// import ChooseByAge from "../../components/layout/ByAge";
 
 const About = () => {
   return (
@@ -15,14 +17,11 @@ const About = () => {
       <section className={uiStyle.about}>
         <img src={aboutbanner} alt="aboutbanner" />
       </section>
-
+      <h2 className="mt-10 font-bold text-3xl text-center">Choose Your Child Age</h2>
       <section className="flex flex-col gap-10">
         <div className="m-5 grid grid-cols-1 gap-4 sm:grid-cols-6">
           <div className="flex flex-col items-center justify-center">
-            <a
-              className="flex flex-col items-center justify-center"
-              href="#0-6m"
-            >
+            <a className="flex flex-col items-center justify-center" href="#0-6m">
               <img src={ZeroToSix} alt="0-6m" className="" />
               <h3>0-6M</h3>
             </a>
@@ -76,8 +75,6 @@ const About = () => {
       </section>
       {/* บทความ */}
       <section className={uiStyle.text}>
-        <h1>ของเล่นเสริมพัฒนาการตามช่วงวัย</h1>
-        <br />
         <h2 id="0-6m">1. เด็กแรกเกิดถึง 6 เดือน</h2>
         <ul>
           <li>
@@ -160,63 +157,18 @@ const About = () => {
             พัฒนาทักษะด้านการเข้าสังคมและการทำงานร่วมกับผู้อื่น
           </li>
         </ul>
-        <br />
-        <div className="mb-[100px] gap-5">
-          <h2>
-            ของเล่นเสริมพัฒนาการเด็กแบ่งออกเป็นหลายหมวดหมู่เพื่อสนับสนุนการพัฒนาทักษะต่างๆ
-            ของเด็ก <br />
-            โดยสามารถจัดได้เป็นหมวดหมู่หลักดังนี้:
-          </h2>
-          <br />
-          <p>
-            1. พัฒนาการด้านการเคลื่อนไหว (Motor Skills):
-            เสริมกล้ามเนื้อมัดเล็ก-ใหญ่ ผ่านการจับ บิด ผลัก หรือปีนป่าย
-          </p>
-          <p>
-            2. พัฒนาการด้านจินตนาการ (Imagination):
-            ฝึกคิดสร้างสรรค์และแก้ปัญหาอย่างยืดหยุ่นผ่านบทบาทสมมติ
-          </p>
-          <p>
-            3. พัฒนาทักษะด้านภาษา (Language Skills): ส่งเสริมการพูด การฟัง
-            และการเรียนรู้คำศัพท์ใหม่
-          </p>
-          <p>
-            4. พัฒนาการด้านอารมณ์และสังคม (Emotional & Social Skills):
-            เรียนรู้การแบ่งปัน การรอคอย และการอยู่ร่วมกับผู้อื่น
-          </p>
-          <p>
-            5. พัฒนาทักษะด้านดนตรี (Musical Skills): ฝึกการฟังจังหวะ
-            ความสัมพันธ์ของเสียง และการควบคุมการเคลื่อนไหว
-          </p>
-          <p>
-            6. พัฒนากล้ามเนื้อมัดเล็ก (Fine Motor Skills):
-            พัฒนาความแม่นยำของนิ้วและมือเพื่อกิจกรรมละเอียด
-          </p>
-          <p>
-            7. พัฒนาทักษะการเข้าสังคม (Social Skills): ส่งเสริมการทำงานเป็นทีม
-            การสื่อสาร และการยอมรับความคิดเห็น
-          </p>
-          <p>
-            8. พัฒนาการเข้าใจอารมณ์ (Emotional Understanding):
-            เรียนรู้และแยกแยะอารมณ์ของตนเองและผู้อื่น
-          </p>
-          <p>
-            9. พัฒนาการเรียนรู้เหตุและผล (Cause & Effect):
-            เข้าใจความสัมพันธ์ระหว่างการกระทำและผลลัพธ์
-          </p>
-          <p>
-            10. พัฒนาสมาธิ (Concentration): ฝึกความตั้งใจ ความอดทน
-            และการทำงานจนสำเร็จ
-          </p>
-          <p>
-            11. พัฒนาการประสานงาน (Coordination):
-            เสริมการใช้มือและสายตาร่วมกันอย่างคล่องแคล่ว
-          </p>
-          <p>
-            12. พัฒนาความคิดสร้างสรรค์ (Creative Thinking):
-            กระตุ้นความคิดสร้างเรื่องราวและการแก้ปัญหาอย่างไม่ตายตัว
-          </p>
-        </div>
+      </section>
+
+      <section>
+        {/* <ChooseByAge/> */}
+      </section>
+
+       {/* Factors For Child Development */}
+      <section>
+        <h2 className="mt-10 font-bold text-3xl mx-10">
+          Let’s find out more information about the development of children
+        </h2>
+        <FactorForChild/>
       </section>
     </div>
   );

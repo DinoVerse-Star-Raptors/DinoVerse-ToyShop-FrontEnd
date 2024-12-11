@@ -52,35 +52,37 @@
   .HomeHeroText {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     flex-direction: column;
     /* gap: 16px; */
     width: 50%;
     padding: 48px;
   }
 
+  /*
   .HomeHeroText h1 {
     font-weight: bold;
-    font-size: 4rem;
+    font-size: 5rem;
     margin: 0;
     padding: 0;
   }
+  */
 
+  /*
   .HomeHeroText h3 {
-    font-weight: bold;
     font-size: 1.5rem;
     margin: 0;
-    margin-top: 1.5rem;
+    margin-top: 1rem;
     margin-bottom: 1.5rem;
     padding: 0;
   }
+  */
 
-  .HomeHeroText a {
-    font-weight: bold;
-    font-size: 1.5rem;
+  .HomeHero a {
     background-color: rgb(255, 198, 41);
     border-radius: 26px;
+    width: 200px;
     text-align: center;
-    padding: 0.5rem 2rem;
+    padding: 0.5rem;
   }
 }
