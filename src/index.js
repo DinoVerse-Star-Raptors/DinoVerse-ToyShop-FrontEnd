@@ -20,6 +20,7 @@ import UserPanel from "./pages/User/UserPanel";
 import Logout from "./pages/User/Logout";
 import Profile from "./pages/User/Profile";
 import Orders from "./pages/User/Orders";
+import Verify from "./pages/Verify";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/verify",
+        element: <Verify />,
       },
       {
         path: "/cart",
