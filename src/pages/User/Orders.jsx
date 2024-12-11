@@ -49,7 +49,7 @@ function Orders() {
       try {
           setIsLoading(true);
           const response = await axiosInstance.post("/api/order/myOrder",{userId: user.userId});
-          
+          console.log(response.data)
   
         if (response.data.success) {
           let allOrdersItem = [];
@@ -112,7 +112,7 @@ function Orders() {
                     {currency}
                     {item?.product?.price}
                   </p>
-                  <p>Quantity: {item?.product?.quantity}</p>
+                  <p>Quantity: {item?.quantity}</p>
                   
                 </div>
                 <p className="mt-1">
