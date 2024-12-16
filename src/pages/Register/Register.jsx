@@ -1,11 +1,17 @@
 import React, { useState, useRef } from "react";
+
 import { Eye, EyeOff, Upload, X, User, AlertCircle } from "lucide-react";
+
 import SimpleNavbar from "../../components/layout/SimpleNavbar";
 import SimpleFooter from "../../components/layout/SimpleFooter";
 import uiStyle from "./Register.module.css";
+
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
+
 import defaultImage from "./assets/logo192.png";
+
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+
 import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 

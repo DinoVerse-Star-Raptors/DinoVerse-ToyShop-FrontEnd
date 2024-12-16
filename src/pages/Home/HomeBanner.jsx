@@ -9,7 +9,7 @@ const HomeBanner = () => {
       <Link to="/shop">
         <img
           src={Banner}
-          className="h-auto max-h-[600px] w-full object-cover object-bottom"
+          className="h-auto max-h-[700px] w-full object-cover object-center"
           alt="Shop By Age Banner"
         />
       </Link>

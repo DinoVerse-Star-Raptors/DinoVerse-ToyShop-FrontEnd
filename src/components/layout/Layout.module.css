@@ -17,10 +17,7 @@
   }
 
   .nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    background-color: #FBA3B9;
   }
 
   .search_section {
@@ -31,9 +28,16 @@
   }
 
   .nav_right {
-    @apply flex w-full items-center justify-end space-x-4;
-    max-width: calc(100% - 600px);
+    @apply flex items-center justify-end space-x-4;
+    max-width: calc(100% - 400px);
     @apply md:max-w-screen-sm lg:max-w-screen-md;
+    /* margin-right: 10rem; */
+  }
+
+  .search_button {
+    border-color: #3a311c;
+    border-width: 3px;
+    color: #3a311c;
   }
 
   /* HomePage */
@@ -41,11 +45,12 @@
   .HomeHero {
     display: flex;
     background-image: url("./assets/images/Homebanner.png");
-    height: calc(100vh - 60px);
-    min-height: 500px;
+    padding-top: 80px;
+    /* height: calc(100vh - 4rem); */
+    /* min-height: 500px;  */
     background-position: center;
-    background-repeat: no-repeat;
-    background-size: auto;
+    /* background-repeat: no-repeat; */
+    /* background-size: auto; */
     position: relative;
   }
 

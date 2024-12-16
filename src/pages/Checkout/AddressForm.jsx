@@ -93,13 +93,16 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="mb-4 text-2xl font-semibold text-gray-800">
-        Shipping Address Form
-      </h2>
+      <div>
+        <h2 className="mb-1 text-2xl font-semibold text-gray-800">
+          Shipping Address
+        </h2>
+        <p className="mb-8">Enter your delivery address:</p>
+      </div>
 
       <div>
         <label htmlFor="recipientFullName" className="block text-gray-700">
-          Recipient Full Name
+          Full Name
         </label>
         <input
           type="text"
@@ -112,24 +115,6 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
         />
         {errors?.recipientFullName && (
           <p className="text-sm text-red-600">{errors?.recipientFullName}</p>
-        )}
-      </div>
-
-      <div>
-        <label htmlFor="recipientPhone" className="block text-gray-700">
-          Recipient Phone Number
-        </label>
-        <input
-          type="text"
-          id="recipientPhone"
-          name="recipientPhone"
-          value={address?.recipientPhone || ""}
-          onChange={handleChange}
-          className="w-full rounded-lg border px-4 py-2"
-          required
-        />
-        {errors?.recipientPhone && (
-          <p className="text-sm text-red-600">{errors?.recipientPhone}</p>
         )}
       </div>
 
@@ -151,58 +136,77 @@ const AddressForm = ({ onSubmit, selectedAddress = {} }) => {
         )}
       </div>
 
-      <div>
-        <label htmlFor="province" className="block text-gray-700">
-          Province
-        </label>
-        <input
-          type="text"
-          id="province"
-          name="province"
-          value={address?.province || ""}
-          onChange={handleChange}
-          className="w-full rounded-lg border px-4 py-2"
-          required
-        />
-        {errors?.province && (
-          <p className="text-sm text-red-600">{errors?.province}</p>
-        )}
-      </div>
+      <div className="flex justify-between">
+        <div>
+          <label htmlFor="province" className="block text-gray-700">
+            Province
+          </label>
+          <input
+            type="text"
+            id="province"
+            name="province"
+            value={address?.province || ""}
+            onChange={handleChange}
+            className="w-full rounded-lg border px-4 py-2"
+            required
+          />
+          {errors?.province && (
+            <p className="text-sm text-red-600">{errors?.province}</p>
+          )}
+        </div>
 
-      <div>
-        <label htmlFor="country" className="block text-gray-700">
-          Country
-        </label>
-        <input
-          type="text"
-          id="country"
-          name="country"
-          value={address?.country || ""}
-          onChange={handleChange}
-          className="w-full rounded-lg border px-4 py-2"
-          required
-        />
-        {errors?.country && (
-          <p className="text-sm text-red-600">{errors?.country}</p>
-        )}
-      </div>
+        <div>
+          <label htmlFor="country" className="block text-gray-700">
+            Country
+          </label>
+          <input
+            type="text"
+            id="country"
+            name="country"
+            value={address?.country || ""}
+            onChange={handleChange}
+            className="w-full rounded-lg border px-4 py-2"
+            required
+          />
+          {errors?.country && (
+            <p className="text-sm text-red-600">{errors?.country}</p>
+          )}
+        </div>
 
-      <div>
-        <label htmlFor="zipcode" className="block text-gray-700">
-          Postal Code
-        </label>
-        <input
-          type="text"
-          id="zipcode"
-          name="zipcode"
-          value={address?.zipcode || ""}
-          onChange={handleChange}
-          className="w-full rounded-lg border px-4 py-2"
-          required
-        />
-        {errors?.zipcode && (
-          <p className="text-sm text-red-600">{errors?.zipcode}</p>
-        )}
+        <div>
+          <label htmlFor="zipcode" className="block text-gray-700">
+            Postal Code
+          </label>
+          <input
+            type="text"
+            id="zipcode"
+            name="zipcode"
+            value={address?.zipcode || ""}
+            onChange={handleChange}
+            className="w-full rounded-lg border px-4 py-2"
+            required
+          />
+          {errors?.zipcode && (
+            <p className="text-sm text-red-600">{errors?.zipcode}</p>
+          )}
+        </div>
+        <div>
+          <label htmlFor="recipientPhone" className="block text-gray-700">
+            Phone Number
+          </label>
+          <input
+            type="text"
+            id="recipientPhone"
+            name="recipientPhone"
+            value={address?.recipientPhone || ""}
+            onChange={handleChange}
+            className="w-full rounded-lg border px-4 py-2"
+            required
+          />
+          {errors?.recipientPhone && (
+            <p className="text-sm text-red-600">{errors?.recipientPhone}</p>
+          )}
+        </div>
       </div>
 
       <div className="hidden">

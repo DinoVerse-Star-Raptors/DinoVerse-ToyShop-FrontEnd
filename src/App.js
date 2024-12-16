@@ -8,13 +8,14 @@ import { Suspense } from "react";
 function App() {
   return (
     <>
-      <Navbar />
       <main id="detail" className="min-h-svh max-w-[1440px]">
+      {/* <main id="detail" className="min-h-svh"> */}
+        <Navbar />
         <Suspense fallback={<div>loading...</div>}>
           <Outlet />
         </Suspense>
+        <SimpleFooter />
       </main>
-      <SimpleFooter />
     </>
   );
 }

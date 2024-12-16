@@ -9,7 +9,7 @@ import AddressList from "./AddressList";
 import AddressCard from "./AddressCard";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import process from "process";
+// import process from "process";
 import axiosInstance from "../../services/axiosInstance";
 
 // Stripe.js
@@ -202,16 +202,16 @@ const Checkout = () => {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen w-full flex-col items-center px-4 py-8">
-      <h1 className="mb-6 text-3xl font-bold text-gray-800">Checkout</h1>
+    <div className="mx-8">
+     <h2 className="mt-4 text-2xl font-bold mb-6">Checkout</h2>
       <AddressSelection
         onAddressForm={handleShowForm}
         onUseDefault={handleUseDefault}
         onOtherAddress={handleOtherAddress}
       />
-      <div className="flex w-full">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         {/* Address Form Section */}
-        <div className="w-[60%] px-6">
+        <div className="space-y-6 lg:col-span-2">
           {showAddressForm && (
             <AddressForm
               onSubmit={handleAddAddress}
@@ -228,8 +228,8 @@ const Checkout = () => {
         </div>
 
         {/* Order Summary Section */}
-        <div className="min-h-svh w-[40%] rounded-lg bg-gray-100 p-6 shadow-lg">
-          <h2 className="mb-4 text-2xl font-semibold text-gray-700">
+        <div className="self-start rounded-lg bg-gray-50 p-6 shadow-md mb-5">
+          <h2 className="mb-6 text-2xl font-bold text-gray-800">
             Order Summary
           </h2>
           {error && <div className="mb-4 hidden text-red-500">{error}</div>}
@@ -252,6 +252,8 @@ const Checkout = () => {
               </div>
             )}
           </div>
+
+          {/*แสดงสินค้าที่กำลังจะทำหารจ่ายเงืน */}
           <div className="mb-6 mt-6 space-y-4">
             {loading ? (
               <p className="text-center text-gray-500">Loading cart...</p>
@@ -260,37 +262,41 @@ const Checkout = () => {
                 <div
                   title={item?.product?.name}
                   key={index}
-                  className="flex justify-between text-lg text-gray-600"
+                  className="flex justify-between"
                 >
-                  <span className="block w-[75%] truncate">
+                  <span className="block w-[75%] truncate text-gray-600">
                     {item?.product?.name}
                   </span>
-                  <span>
+                  <span className="font-semibold">
                     {item?.quantity} x ฿{item?.product?.price}
                   </span>
                 </div>
               ))
             ) : (
-              <div className="text-center text-gray-500">
+              <div className="text-center">
                 <p>No items in your cart.</p>
               </div>
             )}
           </div>
 
           {/* Display Shipping Fee */}
-          <div className="mb-6 flex justify-between font-semibold text-gray-700">
-            <span>Shipping Fee:</span>
-            <span>฿{shippingFee}</span>
+          <div className="mb-6 flex justify-between">
+            <span className="text-gray-600">Shipping Fee</span>
+            <span className="font-semibold">
+              ฿{shippingFee}
+            </span>
           </div>
 
-          <div className="mb-6 flex justify-between font-semibold text-gray-700">
-            <span>Total: </span>
-            <span>฿{calculateTotal(cart)}</span>
+          <div className="mb-6 mt-4 flex justify-between text-xl font-boldmb-6 mt-4 flex justify-between text-xl font-bold">
+            <span>Total </span>
+            <span className="font-semibold">
+              ฿{calculateTotal(cart)}
+            </span>
           </div>
           <div className="mt-6 flex justify-center space-x-4">
             <button
               onClick={handleCheckout}
-              className="w-full rounded-lg bg-green-600 px-6 py-3 text-lg text-white hover:bg-green-700"
+              className="w-full rounded-lg bg-green-400 px-6 py-3 text-lg text-white hover:bg-green-700"
               disabled={loadingOfCOD || !shippingAddress}
             >
               {loadingOfCOD ? "Processing..." : "Cash on Delivery (COD)"}

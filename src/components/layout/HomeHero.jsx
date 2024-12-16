@@ -6,7 +6,7 @@ function HomeHero() {
   return (
     <section className={`${uiStyle.HomeHero}`}>
       {/* <div className={`${uiStyle.HomeHeroText}`}> */}
-      <div className= "flex flex-col justify-center p-12 text-left">
+      <div className= "flex flex-col justify-center p-12  text-left">
         <h1 className="font-bold text-8xl">
           Play, Learn
           <br />

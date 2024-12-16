@@ -42,8 +42,8 @@ const AgeTagSection = () => {
   }
 
   return (
-    <section className="w-full p-8 pt-10">
-      <h2 className="mb-8 text-center text-5xl font-bold text-gray-700">
+    <section className="w-full p-8 pt-10 bg-[#76C6B3]">
+      <h2 className="my-8 text-center text-5xl font-bold text-gray-700">
         Shop By Age
       </h2>
       <div className="grid grid-cols-2 gap-x-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">

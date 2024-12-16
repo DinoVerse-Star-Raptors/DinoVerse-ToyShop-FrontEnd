@@ -113,8 +113,9 @@ const ShopFilter = () => {
   }
 
   return (
-    <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-md">
-      <h3 className="mb-4 text-2xl font-semibold">Filter</h3>
+    <div className="mx-auto max-w-md rounded-lg bg-gray-50 p-6 shadow-md">
+      <h3 className="mb-4 text-2xl font-bold text-gray-800">Filter</h3>
+      
 
       {/* Development Filter */}
       <div className="mb-4">

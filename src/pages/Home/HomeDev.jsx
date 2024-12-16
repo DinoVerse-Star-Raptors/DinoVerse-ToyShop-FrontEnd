@@ -43,8 +43,8 @@ const DevTagSection = () => {
   }
 
   return (
-    <section className="w-full p-8 pt-10">
-      <h2 className="mb-8 text-center text-5xl font-bold text-gray-700">
+    <section className="w-full px-8 pb-8">
+      <h2 className="mx-8 mt-8 mb-12 text-center text-5xl font-bold text-gray-700">
         Categories
       </h2>
 

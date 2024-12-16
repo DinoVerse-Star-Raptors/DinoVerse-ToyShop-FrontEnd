@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Search, ShoppingCart, Menu, User, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; // Adjust the path as needed
-import logo from "./assets/images/DinoVerse-logo.png";
+// import logo from "./assets/images/DinoVerse-logo.png";
+import brown from "./assets/images/LOGO_BROWN.png";
 import uiStyle from "./Layout.module.css";
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 
@@ -48,14 +49,16 @@ export default function Navbar() {
   };
 
   return (
-    <header className="flex max-h-16 justify-center bg-white shadow-sm">
-      <nav className="flex w-full max-w-[1440px] items-center justify-between px-4 py-2">
+    <header className="sticky left-0 top-0 z-10 flex max-h-16 justify-center bg-white shadow-sm">
+      <nav
+        className={`${uiStyle.nav} flex w-full items-center justify-between px-8 py-2`}
+      >
         <Link
           to="/"
-          className="flex min-w-[240px] grow-0 items-center space-x-2"
+          className="mr-12 flex min-w-[150px] grow-0 items-center space-x-2"
         >
           <img
-            src={logo}
+            src={brown}
             alt="Logo"
             width={149}
             height={33}
@@ -64,40 +67,40 @@ export default function Navbar() {
         </Link>
 
         <div className="hidden min-h-[19px] w-full min-w-[360px] max-w-[360px] items-center justify-between lg:flex">
-          <Link to="/" className="text-black hover:text-gray-900">
+          <Link to="/" className="text-black hover:text-gray-900 font-bold">
             Home
           </Link>
-          <Link to="/about" className="text-black hover:text-gray-900">
+          <Link to="/about" className="text-[#3a311c] hover:text-gray-900 font-bold">
             About
           </Link>
-          <a href="/shop" className="text-black hover:text-gray-900">
+          <a href="/shop" className="text-[#3a311c] hover:text-gray-900 font-bold">
             Toys
           </a>
-          <a href="/shop?tag=age" className="text-black hover:text-gray-900">
+          <a href="/shop?tag=age" className="text-[#3a311c] hover:text-gray-900 font-bold">
             Age
           </a>
-          <a href="#contactus" className="text-black hover:text-gray-900">
+          <a href="#contactus" className="text-[#3a311c] hover:text-gray-900 font-bold ">
             Contact
           </a>
         </div>
 
-        <div className="hidden lg:flex lg:grow" />
+        {/* <div className="hidden lg:flex lg:grow" /> */}
+
+        <button
+          onClick={toggleSearchModal}
+          className={`${uiStyle.search_button} relative w-4/12 min-w-[125px] rounded-3xl border-2 py-1 pl-10 mx-auto shadow-sm`}
+        >
+          <input
+            type="text"
+            placeholder="Search"
+            className="w-full cursor-pointer bg-transparent focus:outline-none placeholder:text-[#3a311c]"
+            readOnly
+            value={searchQuery} // Display current search query
+          />
+          <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 transform" />
+        </button>
 
         <div className={`${uiStyle.nav_right}`}>
-          <button
-            onClick={toggleSearchModal}
-            className="relative w-full min-w-[125px] rounded-lg border-2 py-1 pl-10 pr-4 shadow-sm hover:border-gray-400 focus:ring focus:ring-blue-300"
-          >
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full cursor-pointer bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none"
-              readOnly
-              value={searchQuery} // Display current search query
-            />
-            <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
-          </button>
-
           <Link to="/cart" className="relative">
             <ShoppingCart className="h-[24px] min-h-[24px] w-[24px] min-w-[24px] text-gray-600" />
             {cartItemCount > 0 && (

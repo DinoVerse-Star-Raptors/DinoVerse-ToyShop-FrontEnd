@@ -63,7 +63,7 @@ const ItemInfo = ({ product = {} }) => {
 
   return (
     <>
-      <div className="ml-14">
+      <div className="mx-8">
         {/* Page Title */}
         <h2 className="mt-4 text-2xl font-bold">{product?.ageGroup}</h2>
         {/* Breadcrumb Navigation - Path */}
@@ -112,12 +112,12 @@ const ItemInfo = ({ product = {} }) => {
             )}
 
             <div className="flex justify-between py-3">
-              <h1 className="text-3xl font-bold">{product?.name}</h1>
+              <h1 className="text-4xl font-bold">{product?.name}</h1>
               <Link to="#" className="text-red-500 hover:text-red-700">
                 <p>Add to Wishlist</p>
               </Link>
             </div>
-            <div className="mt-10">
+            <div className="mt-2">
               <h3 className="mb-2 text-xl font-semibold text-gray-800">
                 Product Description
               </h3>
@@ -227,7 +227,7 @@ const ItemInfo = ({ product = {} }) => {
         </div>
       </div>
 
-      <section className="mt-6 rounded-lg bg-white p-6 shadow-md">
+      <section className="mt-6 p-6 ">
         <h2 className="mb-4 text-xl font-semibold">Tags:</h2>
         {/* Pass the tags array as a prop to the TagGrid component */}
         <TagGrid tags={tags} />

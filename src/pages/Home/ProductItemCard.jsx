@@ -13,7 +13,7 @@ function ProductCard({ product, borderColor, bgColors }) {
         fill={i < stars ? "currentColor" : "none"}
         viewBox="0 0 24 24"
         stroke="currentColor"
-        className={`h-5 w-5 p-[2px] ${i < stars ? "text-yellow-600" : "text-gray-200"}`}
+        className={`h-5 w-5 p-[2px] ${i < stars ? "text-yellow-400" : "text-gray-200"}`}
       >
         <path
           strokeLinecap="round"
@@ -44,11 +44,9 @@ function ProductCard({ product, borderColor, bgColors }) {
         </Link>
       </div>
 
-      <div
-        className={`p-4 ${bgColors} ${borderClass} border-b-0 border-l-0 border-r-0`}
-      >
+      <div className={`p-4 ${bgColors} ${borderClass} border-b-0 border-l-0 border-r-0`}>
         {/* Changed to bg-blue-50 */}
-        <h3 className="mb-2 text-left text-lg font-semibold text-gray-800">
+        <h3 className="mb-2 text-left text-xl font-bold text-gray-800">
           <Link
             to={`/item/${product?.productId}`}
             className="block overflow-hidden text-ellipsis whitespace-nowrap"
@@ -57,17 +55,17 @@ function ProductCard({ product, borderColor, bgColors }) {
             {product.name}
           </Link>
         </h3>
-        <div className="mb-2 flex items-center justify-between">
-          <span className="text-xl font-bold text-gray-900">
-            ฿{product.price}
-          </span>
-
-          <div className="flex items-center">
+        
+        <div className="mb-2 justify-items-start">
+          <div className="flex mb-1">
             {renderStars(product.rating.rate)}
             {/* <span className="ml-2 text-sm text-gray-500">
               ({product.rating.rate.toFixed(1)})
             </span> */}
           </div>
+          <span className="text-xl font-bold text-gray-900">
+            ฿{product.price}
+          </span>
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ import FiveYears from "./assets/5yrs-circle.png";
 import aboutbanner from "./assets/aboutbanner.png";
 // import Footer from "../../components/layout/Footer";
 import FactorForChild from "../../components/layout/FactorsForChild";
-// import ChooseByAge from "../../components/layout/ByAge";
+import ChooseByAge from "../../components/layout/ByAge";
 
 const About = () => {
   return (
@@ -160,7 +160,7 @@ const About = () => {
       </section>
 
       <section>
-        {/* <ChooseByAge/> */}
+        <ChooseByAge/>
       </section>
 
        {/* Factors For Child Development */}

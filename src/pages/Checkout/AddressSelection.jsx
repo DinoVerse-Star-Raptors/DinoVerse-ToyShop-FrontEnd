@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 
 const AddressSelection = ({ onAddressForm, onUseDefault, onOtherAddress }) => {
   return (
-    <div className="mb-4 flex w-full items-center rounded-lg bg-gray-50 p-3">
-      <div className="flex-grow space-x-2">
+    <div className="mb-4 flex w-full items-center">
+      <div className="flex gap-2">
         {/* Button to Add Address */}
         <button
           onClick={onAddressForm}
-          className="rounded-lg bg-teal-500 px-4 py-2 font-medium text-white transition-colors hover:bg-teal-600"
+          className="hidden rounded-lg bg-teal-500 px-4 py-2 font-medium text-white transition-colors hover:bg-teal-600"
         >
           Address Form
         </button>

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
+
 import { Eye } from "lucide-react";
 import SimpleNavbar from "../../components/layout/SimpleNavbar";
 import SimpleFooter from "../../components/layout/SimpleFooter";
 import uiStyle from "./Login.module.css";
+
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 import Cookies from "js-cookie"; // Import js-cookie
 import { useNavigate } from "react-router-dom"; // Import react-router-dom for redirection
 import { useAuth } from "../../context/AuthContext"; // Import the Auth context
 import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
+
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 
 function Login() {

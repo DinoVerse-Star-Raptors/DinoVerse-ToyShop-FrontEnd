@@ -231,12 +231,10 @@ const Cart = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-8 text-center text-4xl font-bold text-gray-800">
-        Your Cart
-      </h1>
+    <div className="h-svh mx-8">
+      <h2 className="mt-4 text-2xl font-bold mb-6">Cart</h2>
 
-      <div className="mb-4 flex items-center rounded-lg bg-gray-50 p-3">
+      <div className="mb-4 flex items-center">
         <div className="flex-grow space-x-2">
           {/* Select All Button */}
           {
