@@ -94,11 +94,10 @@ const ItemInfo = ({ product = {} }) => {
 
       <div className="container mx-auto grid grid-cols-2 gap-10">
         {/* Product Image */}
-        <div>
+        <div className="w-full">
           <img
             src={product?.imageUrl}
             alt={product?.name}
-            className="max-w-[700px] hover:scale-100"
           />
         </div>
 
