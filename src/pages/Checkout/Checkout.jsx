@@ -11,13 +11,15 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import process from "process";
 import axiosInstance from "../../services/axiosInstance";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 
 // Stripe.js
 // import { loadStripe } from "@stripe/stripe-js";
 // const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const Checkout = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { user, getCart } = useAuth();
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,6 +29,7 @@ const Checkout = () => {
   const [showAddressForm, setShowAddressForm] = useState(true);
   const [showAddressList, setShowAddressList] = useState(false);
   const [loadingOfCOD, setLoadingOfCOD] = useState(false); // Added loadingOfCOD state
+  const [checkoutItem, setCheckoutItem] = useState([]);
 
   const mockData = [
     {
@@ -200,6 +203,17 @@ const Checkout = () => {
       console.error("Stripe payment error:", error);
     }
   };
+
+  useEffect(() => {
+    const item = JSON.parse(localStorage.getItem("buyNowItem"));
+    console.log(item)
+    if (item) {
+      setCheckoutItem(item); // Assuming you have a state to handle the checkout item
+    } else {
+      // Handle the case where no item is found
+      navigate("/shop"); // Redirect back to the shop or an appropriate page
+    }
+  }, []);
 
   return (
     <div className="mx-8">

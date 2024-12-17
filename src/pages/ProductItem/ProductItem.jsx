@@ -9,6 +9,7 @@ import factorsDevFn from "./data/factorsDev.js"; // Import the factorsDev functi
 import axiosInstance from "../../services/axiosInstance"; // Import axiosInstance
 import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
 import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const ItemInfo = ({ product = {} }) => {
   // const { addToCart } = useAuth(); // Use the context to access addToCart
@@ -43,6 +44,38 @@ const ItemInfo = ({ product = {} }) => {
     }
   };
 
+  const navigate = useNavigate();
+
+  const handleBuyNow = async () => {
+    if (!product || loading) return;
+  
+    // Check if the user is authenticated before adding to the cart
+    if (!checkAuth()) {
+      toast.error("Please log in to add items to your cart.");
+      return; // If not authenticated, stop the function execution
+    }
+  
+    setLoading(true); // Set loading state to true
+    toast.info("Preparing your purchase..."); // Show a loading notification
+  
+    try {
+      // Temporarily store the item for checkout
+      const selectedItem = { ...product, quantity };
+      localStorage.setItem("buyNowItem", JSON.stringify(selectedItem));
+
+      console.log(selectedItem);
+  
+      toast.dismiss(); // Dismiss the toast
+      navigate("/checkout"); // Redirect to the checkout page
+    } catch (error) {
+      toast.dismiss(); // Dismiss the toast
+      toast.error("Failed to proceed to checkout. Please try again."); // Show error notification
+    } finally {
+      setLoading(false); // Reset the loading state
+    }
+  };
+  
+  
   if (!product) return <></>;
 
   const rating = product?.rating?.rate || 0;
@@ -175,7 +208,9 @@ const ItemInfo = ({ product = {} }) => {
               >
                 Add to Cart
               </button>
-              <button className="flex w-full items-center justify-center rounded-full bg-indigo-600 py-3 font-semibold text-white hover:bg-indigo-700">
+              <button
+                onClick={handleBuyNow}
+                className="flex w-full items-center justify-center rounded-full bg-indigo-600 py-3 font-semibold text-white hover:bg-indigo-700">
                 Buy Now
               </button>
             </div>
