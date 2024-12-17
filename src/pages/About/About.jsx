@@ -1,11 +1,11 @@
 import React from "react";
 import uiStyle from "./About.module.css";
-import ZeroToSix from "./assets/0-6M-circle.png";
-import SixMonths from "./assets/6M-circle.png";
-import TwelveMonths from "./assets/12M-circle.png";
-import EighteenMonths from "./assets/18M-circle.png";
-import TwoYears from "./assets/2yrs-circle.png";
-import FiveYears from "./assets/5yrs-circle.png";
+// import ZeroToSix from "./assets/0-6M-circle.png";
+// import SixMonths from "./assets/6M-circle.png";
+// import TwelveMonths from "./assets/12M-circle.png";
+// import EighteenMonths from "./assets/18M-circle.png";
+// import TwoYears from "./assets/2yrs-circle.png";
+// import FiveYears from "./assets/5yrs-circle.png";
 import aboutbanner from "./assets/aboutbanner.png";
 // import Footer from "../../components/layout/Footer";
 import FactorForChild from "../../components/layout/FactorsForChild";
@@ -168,7 +168,7 @@ const About = () => {
 
        {/* Factors For Child Development */}
       <section>
-        <h2 className="mt-10 font-bold text-3xl">
+        <h2 className="mt-10 mx-8 font-bold text-3xl">
           Let’s find out more information about the development of children
         </h2>
         <FactorForChild/>

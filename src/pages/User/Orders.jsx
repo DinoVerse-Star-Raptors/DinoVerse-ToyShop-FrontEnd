@@ -13,7 +13,7 @@ function Orders() {
   const [orderData, setorderData] = useState([]);
 
 
-  const currency = "฿";
+  // const currency = "฿";
   // const loadOrderData = async () => {
   //   try {
   //       setIsLoading(true);
@@ -52,7 +52,7 @@ function Orders() {
           console.log(response.data)
   
         if (response.data.success) {
-          let allOrdersItem = [];
+          // let allOrdersItem = [];
           // response.data.orders.map((order) => {
           //   order.items.map((item) => {
           //     item["status"] = order.status;

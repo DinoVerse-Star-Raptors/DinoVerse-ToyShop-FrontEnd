@@ -1,11 +1,13 @@
 import ZeroToSix from "../../pages/About/assets/0-6M-circle.png";
 import SixMonths from "../../pages/About/assets/6M-circle.png";
+import TwelveMonths from "../../pages/About/assets/12M-circle.png";
+import EighteenMonths from "../../pages/About/assets/18M-circle.png";
+import TwoYears from "../../pages/About/assets/2yrs-circle.png";
+import FiveYears from "../../pages/About/assets/5yrs-circle.png";
+
+
 import React, { useState } from "react";
 
-// import TwelveMonths from "./assets/12M-circle.png";
-// import EighteenMonths from "./assets/18M-circle.png";
-// import TwoYears from "./assets/2yrs-circle.png";
-// import FiveYears from "./assets/5yrs-circle.png";
 
 const ByAgeList = [{   
         id:0,
@@ -56,24 +58,24 @@ export default function ChooseByAge() {
               <h3>6M+</h3>
           </button>
           <button onClick={() => setIndex(2)} className="flex flex-col items-center justify-center">
-              <img src={SixMonths} alt="0-6m"/>
+              <img src={TwelveMonths} alt="0-6m"/>
               <h3>12M+</h3>
           </button>
           <button onClick={() => setIndex(3)} className="flex flex-col items-center justify-center">
-              <img src={SixMonths} alt="0-6m"/>
+              <img src={EighteenMonths} alt="0-6m"/>
               <h3>18M+</h3>
           </button>
           <button onClick={() => setIndex(4)} className="flex flex-col items-center justify-center">
-              <img src={SixMonths} alt="0-6m"/>
+              <img src={TwoYears} alt="0-6m"/>
               <h3>2Yrs+</h3>
           </button>
           <button onClick={() => setIndex(5)} className="flex flex-col items-center justify-center">
-              <img src={SixMonths} alt="0-6m"/>
+              <img src={FiveYears} alt="0-6m"/>
               <h3>5Yrs+</h3>
           </button>
         </div>
 
-        <h2 key={ByAge.index}>
+        <h2 key={ByAge.index} className="mx-12 text-2xl p-16 rounded-lg bg-gray-50 shadow-md">
           {ByAge.text}
         </h2>
       </>

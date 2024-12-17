@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import PropTypes from "prop-types";
-import axios from "axios"; // Import axios
+// import axios from "axios"; // Import axios
 import AddressCard from "./AddressCard"; // Import the AddressCard component
 
 const AddressList = ({
