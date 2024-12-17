@@ -18,7 +18,8 @@ const About = () => {
         <img src={aboutbanner} alt="aboutbanner" />
       </section>
       <h2 className="mt-10 font-bold text-3xl text-center">Choose Your Child Age</h2>
-      <section className="flex flex-col gap-10">
+
+      {/* <section className="flex flex-col gap-10">
         <div className="m-5 grid grid-cols-1 gap-4 sm:grid-cols-6">
           <div className="flex flex-col items-center justify-center">
             <a className="flex flex-col items-center justify-center" href="#0-6m">
@@ -72,9 +73,11 @@ const About = () => {
             </a>
           </div>
         </div>
-      </section>
+      </section> */}
+
       {/* บทความ */}
-      <section className={uiStyle.text}>
+
+      {/* <section className={uiStyle.text}>
         <h2 id="0-6m">1. เด็กแรกเกิดถึง 6 เดือน</h2>
         <ul>
           <li>
@@ -157,7 +160,7 @@ const About = () => {
             พัฒนาทักษะด้านการเข้าสังคมและการทำงานร่วมกับผู้อื่น
           </li>
         </ul>
-      </section>
+      </section> */}
 
       <section>
         <ChooseByAge/>
@@ -165,7 +168,7 @@ const About = () => {
 
        {/* Factors For Child Development */}
       <section>
-        <h2 className="mt-10 font-bold text-3xl mx-10">
+        <h2 className="mt-10 font-bold text-3xl">
           Let’s find out more information about the development of children
         </h2>
         <FactorForChild/>

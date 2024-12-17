@@ -287,7 +287,7 @@ const Checkout = () => {
             </span>
           </div>
 
-          <div className="mb-6 mt-4 flex justify-between text-xl font-boldmb-6 mt-4 flex justify-between text-xl font-bold">
+          <div className="mb-6 mt-4 flex justify-between text-xl font-boldmb-6">
             <span>Total </span>
             <span className="font-semibold">
               ฿{calculateTotal(cart)}

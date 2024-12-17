@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
   // Update the quantity of an item in the cart via API
   const updateCartQty = async (itemId, productId, quantity) => {
     try {
-      const response = await axiosInstance.patch(
+      const response = await axiosInstance.put(
         `/api/cart/update/${itemId}`,
         { productId, quantity },
         {

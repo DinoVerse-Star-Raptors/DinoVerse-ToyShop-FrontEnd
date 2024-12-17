@@ -55,13 +55,13 @@ export default function SimpleFooter() {
                 </div>
 
                 <div>
-                  <p className="font-bold">Phasu</p>
-                  <p className="text-sm">email</p>
+                  <p className="font-bold">Phasu Nithiworasakul</p>
+                  <p className="text-sm">Makephasu.work@gmail.com</p>
                 </div>
 
                 <div>
-                  <p className="font-bold">Silayuth</p>
-                  <p className="text-sm">email</p>
+                  <p className="font-bold">Silayuth Suwanakoot</p>
+                  <p className="text-sm">rockysilayuth@gmail.com</p>
                 </div>
 
                 <div>
