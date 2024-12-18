@@ -93,6 +93,18 @@ const Checkout = () => {
   };
 
   useEffect(() => {
+    const item = 
+    JSON.parse(localStorage.getItem("buyNowItem"));
+    console.log(item)
+    if (item) {
+      setCheckoutItem(item); // Assuming you have a state to handle the checkout item
+    } else {
+      // Handle the case where no item is found
+      navigate("/shop"); // Redirect back to the shop or an appropriate page
+    }
+  }, [checkoutItem]);
+
+  useEffect(() => {
     if (user) {
       const fetchCart = async () => {
         setLoading(true);
@@ -203,17 +215,6 @@ const Checkout = () => {
       console.error("Stripe payment error:", error);
     }
   };
-
-  useEffect(() => {
-    const item = JSON.parse(localStorage.getItem("buyNowItem"));
-    console.log(item)
-    if (item) {
-      setCheckoutItem(item); // Assuming you have a state to handle the checkout item
-    } else {
-      // Handle the case where no item is found
-      navigate("/shop"); // Redirect back to the shop or an appropriate page
-    }
-  }, []);
 
   return (
     <div className="mx-8">
