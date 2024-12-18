@@ -18,7 +18,7 @@ export default function SimpleFooter() {
 
           <div className="flex w-7/12 pr-36 justify-between">
             <div>
-              <h1 className="font-bold mb-5 text-xl">Shop Toys Bt Categories</h1>
+              <h1 className="font-bold mb-5 text-xl">Shop Toys By Categories</h1>
               <div className="flex flex-col gap-2">
                 <p>Fine Motor</p>
                 <p>Gross Motor</p>
@@ -31,7 +31,7 @@ export default function SimpleFooter() {
             </div>
 
             <div>
-              <h1 className="font-bold mb-5 text-xl">Shop Toys Bt Age</h1>
+              <h1 className="font-bold mb-5 text-xl">Shop Toys By Age</h1>
               <div className="flex flex-col gap-2">
                 <p>0-6M</p>
                 <p>6M+</p>
