@@ -12,10 +12,7 @@ export default function SimpleFooter() {
           <div className="w-4/12">
             <h1 className="font-bold mb-4 text-xl">About US</h1>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              Hi! We are DinoVerse, DinoVerse Star Raptors from the Junior Software Developer Generation Thailand Bootcamp.<br/> It’s a pleasure to meet you. Thank you for visiting our website. Enjoy shopping!
             </p>
           </div>
 
